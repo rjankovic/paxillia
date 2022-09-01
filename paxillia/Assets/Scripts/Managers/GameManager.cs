@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private GameManager _instance;
+
+    public GameManager Instance { get => _instance; }
+    private GameStateEnum _gameState = GameStateEnum.MainMenu;
+    public GameStateEnum GameState { get => _gameState; }
+
+
+    private void Awake()
+    {
+        _instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +26,51 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+
+
+    public enum AnimationEnum
+    { 
+        Intro
+    }
+
+    public enum LevelEnum
+    {
+        Home,
+        Dog,
+        AppleTree,
+        GrandmasBalls,
+        GrandmasKraut,
+        EscapeFromGrandma
+    }
+
+    public enum GameStateEnum
+    { 
+        MainMenu,
+        PauseMenu,
+        Animation,
+        Level,
+        World
+    }
+
+    public void GoToLevel(LevelEnum level)
+    { 
+    
+    }
+
+    public void GoToAnimation(AnimationEnum animation)
+    { 
+    
+    }
+
+    public void GoToMainMenu()
+    { 
+    
+    }
+
+    public void GoToPauseMenu()
+    { 
+    
     }
 }
