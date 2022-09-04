@@ -22,8 +22,8 @@ public class DialogManager : MonoBehaviour
     private Queue<Message> _messages;
     private Message _message;
 
-    [SerializeField]
-    private Animator _animator;
+    //[SerializeField]
+    //private Animator _animator;
     
     
     public event DialogEventHandler OnDialogStart;
@@ -50,7 +50,7 @@ public class DialogManager : MonoBehaviour
             _messages.Enqueue(message);
         }
 
-        _animator.SetBool("DialogOpen", true);
+        //_animator.SetBool("DialogOpen", true);
 
         if (OnDialogStart != null)
         {
@@ -72,7 +72,7 @@ public class DialogManager : MonoBehaviour
 
     private void EndDialog()
     {
-        _animator.SetBool("DialogOpen", false);
+        //_animator.SetBool("DialogOpen", false);
 
         if (OnDialogEnd != null)
         {
