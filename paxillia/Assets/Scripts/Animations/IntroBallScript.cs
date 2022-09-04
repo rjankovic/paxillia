@@ -5,8 +5,8 @@ using UnityEngine;
 public class IntroBallScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    Rigidbody2D rigidbody = null;
-    private Vector2 _velocity;
+    new Rigidbody2D rigidbody = null;
+    //private Vector2 _velocity;
 
     [SerializeField] private float _ballSpeed = 5;
 
