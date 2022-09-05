@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DialogEventArgs : EventArgs
 { 
@@ -60,14 +61,17 @@ public class DialogManager : MonoBehaviour
         DisplayNextMessage();
     }
 
-    private void DisplayNextMessage()
+    public void DisplayNextMessage()
     {
         if (_messages.Count == 0)
         {
             EndDialog();
         }
-        _message = _messages.Dequeue();
-        _currentText.text = _message.Text;
+        else
+        {
+            _message = _messages.Dequeue();
+            _currentText.text = _message.Text;
+        }
     }
 
     private void EndDialog()
@@ -77,6 +81,16 @@ public class DialogManager : MonoBehaviour
         if (OnDialogEnd != null)
         {
             OnDialogEnd(this, new DialogEventArgs() { Dialog = _dialog });
+        }
+        _dialog = null;
+    }
+
+    public void OnSubmit(InputValue value)
+    {
+        Debug.Log("Dialog manager submit");
+        if (_dialog != null)
+        {
+            DisplayNextMessage();
         }
     }
 

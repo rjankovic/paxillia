@@ -12,14 +12,15 @@ public class IntroScript : MonoBehaviour
 
     IEnumerator OpenIntroDialog()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
 
         Debug.Log("Starting dialog");
         DialogManager.Instance.StartDialog(new Dialog()
         {
             Messages = new List<Message>
             {
-                new Message() { Text = "You are Pad, a paddle." }
+                new Message() { Text = "You are Pal, a paddle." },
+                new Message() { Text = "Here you are in your room, bouncing a ball off the wall." }
             }
         });
         // Code to execute after the delay
