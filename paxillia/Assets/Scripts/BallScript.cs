@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IntroBallScript : MonoBehaviour
+public class BallScript : MonoBehaviour
 {
     // Start is called before the first frame update
     new Rigidbody2D rigidbody = null;
@@ -21,5 +21,14 @@ public class IntroBallScript : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Debug.Log("Ball collision enter " + collision.collider.name);
+        if (collision.collider.name == "Player")
+        {
+            EventHub.Instance.BallBumpOffPlayer();
+        }
     }
 }

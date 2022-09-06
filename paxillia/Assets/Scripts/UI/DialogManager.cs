@@ -10,7 +10,7 @@ public class DialogEventArgs : EventArgs
     public Dialog Dialog { get; set; }
 }
 
-public delegate void DialogEventHandler(object sender, DialogEventArgs args);
+//public delegate void DialogEventHandler(object sender, DialogEventArgs args);
 
 public class DialogManager : MonoBehaviour
 {
@@ -27,8 +27,8 @@ public class DialogManager : MonoBehaviour
     //private Animator _animator;
     
     
-    public event DialogEventHandler OnDialogStart;
-    public event DialogEventHandler OnDialogEnd;
+    //public event DialogEventHandler OnDialogStart;
+    //public event DialogEventHandler OnDialogEnd;
 
     private void Awake()
     {
@@ -53,10 +53,11 @@ public class DialogManager : MonoBehaviour
 
         //_animator.SetBool("DialogOpen", true);
 
-        if (OnDialogStart != null)
-        {
-            OnDialogStart(this, new DialogEventArgs() { Dialog = _dialog });
-        }
+        EventHub.Instance.DialogOpen(_dialog);
+        //if (OnDialogStart != null)
+        //{
+        //    OnDialogStart(this, new DialogEventArgs() { Dialog = _dialog });
+        //}
 
         DisplayNextMessage();
     }
@@ -78,10 +79,12 @@ public class DialogManager : MonoBehaviour
     {
         //_animator.SetBool("DialogOpen", false);
 
-        if (OnDialogEnd != null)
-        {
-            OnDialogEnd(this, new DialogEventArgs() { Dialog = _dialog });
-        }
+
+        EventHub.Instance.DialogClose(_dialog);
+        //if (OnDialogEnd != null)
+        //{
+        //    OnDialogEnd(this, new DialogEventArgs() { Dialog = _dialog });
+        //}
         _dialog = null;
     }
 

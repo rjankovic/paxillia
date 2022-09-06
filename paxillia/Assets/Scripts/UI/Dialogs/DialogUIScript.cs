@@ -10,16 +10,19 @@ public class DialogUIScript : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        DialogManager.Instance.OnDialogStart += OnDialogStart;
-        DialogManager.Instance.OnDialogEnd += OnDialogEnd;
+        EventHub.Instance.OnDialogOpen += OnDialogStart;
+        EventHub.Instance.OnDialogClose += OnDialogEnd;
+
+        //DialogManager.Instance.OnDialogStart += OnDialogStart;
+        //DialogManager.Instance.OnDialogEnd += OnDialogEnd;
     }
 
-    private void OnDialogStart(object sender, DialogEventArgs args)
+    private void OnDialogStart(Dialog dialog)
     {
         Debug.Log("Dialog UI - dialog start");
         animator.SetBool("DialogOpen", true);
     }
-    private void OnDialogEnd(object sender, DialogEventArgs args)
+    private void OnDialogEnd(Dialog dialog)
     {
         Debug.Log("Dialog UI - dialog end");
         animator.SetBool("DialogOpen", false);
