@@ -11,9 +11,17 @@ public class IntroScript : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
+    [SerializeField]
+    private GameObject door;
+
+    [SerializeField]
+    private Sprite openDoorSprite;
+
 
     private bool movingRight = false;
+    private bool movingRightToLeave = false;
     private int windowsToBreak = 2;
+    private float exitSpeed = 0.05f;
 
     // Start is called before the first frame update
     void Start()
@@ -84,6 +92,24 @@ public class IntroScript : MonoBehaviour
                 new Message() { Text = "The window be damned, but that was Rolly, your favorite ball! So round and bally...you have to get it back!" }
             }
         });
+
+        EventHub.Instance.OnDialogClose += LostBallDialogClosed;
+    }
+
+    private void LostBallDialogClosed(Dialog obj)
+    {
+        EventHub.Instance.OnDialogClose -= LostBallDialogClosed;
+
+        StartCoroutine(OpenDoor());
+    }
+
+    IEnumerator OpenDoor()
+    {
+        yield return new WaitForSeconds(1.0f);
+        var doorRenderer = door.GetComponent<SpriteRenderer>();
+        doorRenderer.sprite = openDoorSprite;
+        yield return new WaitForSeconds(.5f);
+        movingRightToLeave = true;
     }
 
     private void FixedUpdate()
@@ -97,6 +123,16 @@ public class IntroScript : MonoBehaviour
             else
             {
                 player.transform.Translate(new Vector3(0.03f, 0, 0));
+            }
+        }
+
+        if (movingRightToLeave)
+        {
+            player.transform.Translate(new Vector3(exitSpeed, 0, 0));
+            exitSpeed += 0.01f;
+            if (player.transform.position.x >= 20)
+            {
+                movingRightToLeave = false;
             }
         }
     }
