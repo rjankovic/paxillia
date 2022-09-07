@@ -10,9 +10,10 @@ public class IntroScript : MonoBehaviour
 
     [SerializeField]
     private GameObject player;
-    
+
 
     private bool movingRight = false;
+    private int windowsToBreak = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +40,7 @@ public class IntroScript : MonoBehaviour
         });
 
         EventHub.Instance.OnDialogClose += IntroDialog_End;
-        
+
         //DialogManager.Instance.OnDialogEnd += IntroDialog_End;
         // Code to execute after the delay
     }
@@ -59,8 +60,30 @@ public class IntroScript : MonoBehaviour
         var velocity = rigidbody.velocity;
 
         rigidbody.velocity = MathUtils.RotateVector(velocity, 0.7f);
-        
+
         EventHub.Instance.OnBallBumOffPlayer -= BounceOffToWindow;
+
+        EventHub.Instance.OnWindowBroken += WindowBroken;
+    }
+
+    private void WindowBroken()
+    {
+        windowsToBreak--;
+
+        if (windowsToBreak > 0)
+        {
+            return;
+        }
+        EventHub.Instance.OnWindowBroken -= WindowBroken;
+
+        DialogManager.Instance.StartDialog(new Dialog()
+        {
+            Messages = new List<Message>
+            {
+                new Message() { Text = "Whoopsie, too much thinking distracted you and that window paid the price..." },
+                new Message() { Text = "The window be damned, but that was Rolly, your favorite ball! So round and bally...you have to get it back!" }
+            }
+        });
     }
 
     private void FixedUpdate()

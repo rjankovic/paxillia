@@ -34,6 +34,8 @@ public class EventHub : MonoBehaviour
 
     public event Action<Dialog> OnDialogClose;
 
+    public event Action OnWindowBroken;
+
     public void BallBumpOffWall()
     {
         if(OnBallBumpOffWall != null)
@@ -56,6 +58,12 @@ public class EventHub : MonoBehaviour
     {
         if (OnDialogClose != null)
             OnDialogClose(dialog);
+    }
+
+    public void WindowBroken()
+    {
+        if (OnWindowBroken != null)
+            OnWindowBroken();
     }
 
 

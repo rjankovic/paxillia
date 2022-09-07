@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7179329258891202760}
   m_Layer: 0
   m_Name: Window
-  m_TagString: Untagged
+  m_TagString: Window
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a06b98ba958584cb266579e4dbb7c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brokenSprite: {fileID: 21300000, guid: c5e74a117293e7d42a3239888d450c16, type: 3}
 --- !u!50 &3066366289687976600
 Rigidbody2D:
   serializedVersion: 4
