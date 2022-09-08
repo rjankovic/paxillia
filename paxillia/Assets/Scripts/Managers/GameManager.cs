@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private GameManager _instance;
+    private static GameManager _instance;
 
-    public GameManager Instance { get => _instance; }
+    public static GameManager Instance { get => _instance; }
     private GameStateEnum _gameState = GameStateEnum.MainMenu;
     public GameStateEnum GameState { get => _gameState; }
 
+    private int ballCount;
+
+    public int BallCount
+    {
+        get => ballCount;
+        set { ballCount = value; EventHub.Instance.BallCountUpdate(value); }
+    }
 
     private void Awake()
     {

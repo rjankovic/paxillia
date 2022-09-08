@@ -36,6 +36,8 @@ public class EventHub : MonoBehaviour
 
     public event Action OnWindowBroken;
 
+    public event Action<int> OnBallCountUpdate;
+
     public void BallBumpOffWall()
     {
         if(OnBallBumpOffWall != null)
@@ -64,6 +66,12 @@ public class EventHub : MonoBehaviour
     {
         if (OnWindowBroken != null)
             OnWindowBroken();
+    }
+
+    public void BallCountUpdate(int ballCount)
+    {
+        if (OnBallCountUpdate != null)
+            OnBallCountUpdate(ballCount);
     }
 
 
