@@ -20,8 +20,10 @@ public class IntroScript : MonoBehaviour
 
     private bool movingRight = false;
     private bool movingRightToLeave = false;
+    private bool movingToBall = false;
     private int windowsToBreak = 2;
     private float exitSpeed = 0.05f;
+    private bool doorOpen = false;
 
     // Start is called before the first frame update
     void Start()
@@ -89,7 +91,8 @@ public class IntroScript : MonoBehaviour
             Messages = new List<Message>
             {
                 new Message() { Text = "Whoopsie, too much thinking distracted you and that window paid the price..." },
-                new Message() { Text = "The window be damned, but that was Rolly, your favorite ball! So round and bally...you have to get it back!" }
+                new Message() { Text = "The window be damned, but that was Rolly, your favorite ball! So round and bally...you have to get it back!" },
+                new Message() { Text = "But first, let's get a few balls, just in case." }
             }
         });
 
@@ -100,14 +103,31 @@ public class IntroScript : MonoBehaviour
     {
         EventHub.Instance.OnDialogClose -= LostBallDialogClosed;
 
+        StartCoroutine(TakeBalls());
+    }
+
+
+    IEnumerator TakeBalls()
+    {
+        yield return new WaitForSeconds(1.0f);
+        movingToBall = true;
+    }
+
+    IEnumerator TakeBalls2()
+    {
+        yield return new WaitForSeconds(1.0f);
+        GameManager.Instance.BallCount++;
+        yield return new WaitForSeconds(0.2f);
+        GameManager.Instance.BallCount++;
+        yield return new WaitForSeconds(0.2f);
+        GameManager.Instance.BallCount++;
+        yield return new WaitForSeconds(0.2f);
         StartCoroutine(OpenDoor());
     }
 
     IEnumerator OpenDoor()
     {
         yield return new WaitForSeconds(1.0f);
-        var doorRenderer = door.GetComponent<SpriteRenderer>();
-        doorRenderer.sprite = openDoorSprite;
         yield return new WaitForSeconds(.5f);
         movingRightToLeave = true;
     }
@@ -126,8 +146,25 @@ public class IntroScript : MonoBehaviour
             }
         }
 
+        if (movingToBall)
+        {
+            player.transform.Translate(new Vector3(-0.1f, 0, 0));
+            if (player.transform.position.x <= -6f)
+            {
+                movingToBall = false;
+                StartCoroutine(TakeBalls2());
+            }
+        }
+
         if (movingRightToLeave)
         {
+            if (doorOpen == false && player.transform.position.x >= 1)
+            {
+                var doorRenderer = door.GetComponent<SpriteRenderer>();
+                doorRenderer.sprite = openDoorSprite;
+                doorOpen = true;
+            }
+
             player.transform.Translate(new Vector3(exitSpeed, 0, 0));
             exitSpeed += 0.01f;
             if (player.transform.position.x >= 20)
