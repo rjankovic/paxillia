@@ -84,6 +84,17 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    private IEnumerator DisplayIngameDialog()
+    {
+        while (_ingameMessages.Count > 0)
+        { 
+            _ingameMessage = _ingameMessages.Dequeue();
+            _currentIngameText.text = _message.Text;
+            yield return new WaitForSeconds(_ingameMessage.Duration);
+        }
+        EndIngameDialog();
+    }
+
     private void EndDialog()
     {
         //_animator.SetBool("DialogOpen", false);
@@ -95,6 +106,12 @@ public class DialogManager : MonoBehaviour
         //    OnDialogEnd(this, new DialogEventArgs() { Dialog = _dialog });
         //}
         _dialog = null;
+    }
+
+    private void EndIngameDialog()
+    {
+        EventHub.Instance.IngameDialogClose(_ingameDialog);
+        _ingameDialog = null;
     }
 
     public void OnSubmit(InputValue value)
@@ -110,7 +127,15 @@ public class DialogManager : MonoBehaviour
     {
         _ingameDialog = dialog;
 
+        _ingameMessages = new Queue<Message>();
+        foreach (var message in dialog.Messages)
+        {
+            _ingameMessages.Enqueue(message);
+        }
+
         EventHub.Instance.IngameDialogOpen(_dialog);
+
+        StartCoroutine(DisplayIngameDialog());
     }
 
 
