@@ -72,6 +72,7 @@ public class DialogManager : MonoBehaviour
 
     public void DisplayNextMessage()
     {
+        Debug.Log("Display next message");
         if (_messages.Count == 0)
         {
             EndDialog();
