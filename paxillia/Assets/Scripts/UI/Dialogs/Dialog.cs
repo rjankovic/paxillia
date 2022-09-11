@@ -8,6 +8,8 @@ public class Message
 { 
     public string Text { get; set; }
 
+    public string Character { get; set; }
+
     public int Duration { get; set; } = 10;
 }
 

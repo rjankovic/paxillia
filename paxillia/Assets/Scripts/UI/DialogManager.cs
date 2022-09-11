@@ -89,7 +89,8 @@ public class DialogManager : MonoBehaviour
         while (_ingameMessages.Count > 0)
         { 
             _ingameMessage = _ingameMessages.Dequeue();
-            _currentIngameText.text = _message.Text;
+            _currentIngameText.text = _ingameMessage.Text;
+            _currentIngameDialogCharacter.text = _ingameMessage.Character ?? string.Empty;
             yield return new WaitForSeconds(_ingameMessage.Duration);
         }
         EndIngameDialog();
@@ -105,6 +106,7 @@ public class DialogManager : MonoBehaviour
         //{
         //    OnDialogEnd(this, new DialogEventArgs() { Dialog = _dialog });
         //}
+        _ingameMessage = null;
         _dialog = null;
     }
 
@@ -133,7 +135,8 @@ public class DialogManager : MonoBehaviour
             _ingameMessages.Enqueue(message);
         }
 
-        EventHub.Instance.IngameDialogOpen(_dialog);
+        Debug.Log(EventHub.Instance);
+        EventHub.Instance.IngameDialogOpen(_ingameDialog);
 
         StartCoroutine(DisplayIngameDialog());
     }
