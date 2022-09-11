@@ -28,6 +28,7 @@ public class IntroScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.Instance.BallCount = 0;
         StartCoroutine(OpenIntroDialog());
     }
 

@@ -34,6 +34,10 @@ public class EventHub : MonoBehaviour
 
     public event Action<Dialog> OnDialogClose;
 
+    public event Action<Dialog> OnIngameDialogOpen;
+
+    public event Action<Dialog> OnIngameDialogClose;
+
     public event Action OnWindowBroken;
 
     public event Action<int> OnBallCountUpdate;
@@ -60,6 +64,18 @@ public class EventHub : MonoBehaviour
     {
         if (OnDialogClose != null)
             OnDialogClose(dialog);
+    }
+
+    public void IngameDialogOpen(Dialog dialog)
+    {
+        if (OnIngameDialogOpen != null)
+            OnIngameDialogOpen(dialog);
+    }
+
+    public void IngameDialogClose(Dialog dialog)
+    {
+        if (OnIngameDialogClose != null)
+            OnIngameDialogClose(dialog);
     }
 
     public void WindowBroken()

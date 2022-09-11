@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private GameStateEnum _gameState = GameStateEnum.MainMenu;
     public GameStateEnum GameState { get => _gameState; }
 
-    private int ballCount;
+    private int ballCount = 3;
 
     public int BallCount
     {

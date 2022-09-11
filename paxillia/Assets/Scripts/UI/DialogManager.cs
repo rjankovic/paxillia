@@ -23,10 +23,18 @@ public class DialogManager : MonoBehaviour
     private Queue<Message> _messages;
     private Message _message;
 
+    [SerializeField]
+    private TextMeshProUGUI _currentIngameDialogCharacter;
+    [SerializeField]
+    private TextMeshProUGUI _currentIngameText;
+    private Dialog _ingameDialog;
+    private Queue<Message> _ingameMessages;
+    private Message _ingameMessage;
+
     //[SerializeField]
     //private Animator _animator;
-    
-    
+
+
     //public event DialogEventHandler OnDialogStart;
     //public event DialogEventHandler OnDialogEnd;
 
@@ -95,6 +103,13 @@ public class DialogManager : MonoBehaviour
         {
             DisplayNextMessage();
         }
+    }
+
+    public void StartIngameDialog(Dialog dialog)
+    {
+        _ingameDialog = dialog;
+
+        EventHub.Instance.IngameDialogOpen(_dialog);
     }
 
 

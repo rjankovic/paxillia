@@ -7,6 +7,8 @@ using UnityEngine;
 public class Message
 { 
     public string Text { get; set; }
+
+    public int Duration { get; set; } = 10;
 }
 
 public class Dialog

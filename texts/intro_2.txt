@@ -36,6 +36,12 @@ D	What the... you little...!
 
 ---
 
+You need to escepe with at least two balls. Press SPACE to serve a ball, arrows to move LEFT/RIGHT, UP/DOWN. Get your balls out through the upper door or the hallway.
+
+---
+--- gameplay ---
+---
+
 D	You're not going anywhere, young paddle!
 
 D	No ball playing for a month, you hear me? You'll sit and play videogames as a punishment! Not a single bounce for you!

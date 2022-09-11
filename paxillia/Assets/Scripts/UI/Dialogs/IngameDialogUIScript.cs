@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogUIScript : MonoBehaviour
+public class IngameDialogUIScript : MonoBehaviour
 {
     private Animator animator;
 
@@ -10,11 +10,8 @@ public class DialogUIScript : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        EventHub.Instance.OnDialogOpen += OnDialogStart;
-        EventHub.Instance.OnDialogClose += OnDialogEnd;
-
-        //DialogManager.Instance.OnDialogStart += OnDialogStart;
-        //DialogManager.Instance.OnDialogEnd += OnDialogEnd;
+        EventHub.Instance.OnIngameDialogOpen += OnDialogStart;
+        EventHub.Instance.OnIngameDialogClose += OnDialogEnd;
     }
 
     private void OnDialogStart(Dialog dialog)
@@ -32,6 +29,6 @@ public class DialogUIScript : MonoBehaviour
     //// Update is called once per frame
     //void Update()
     //{
-        
+
     //}
 }
