@@ -100,19 +100,19 @@ public class DialogManager : MonoBehaviour
     {
         //_animator.SetBool("DialogOpen", false);
 
-
         EventHub.Instance.DialogClose(_dialog);
         //if (OnDialogEnd != null)
         //{
         //    OnDialogEnd(this, new DialogEventArgs() { Dialog = _dialog });
         //}
-        _ingameMessage = null;
+        _message = null;
         _dialog = null;
     }
 
     private void EndIngameDialog()
     {
         EventHub.Instance.IngameDialogClose(_ingameDialog);
+        _ingameMessage = null;
         _ingameDialog = null;
     }
 

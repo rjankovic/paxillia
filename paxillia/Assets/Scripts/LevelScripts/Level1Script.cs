@@ -28,7 +28,26 @@ public class Level1Script : MonoBehaviour
                 new Message() { Character = Constants.CHAR_DAD, Text = "What the... you little...!", Duration = 2 }
             }
         });
+
+        EventHub.Instance.OnIngameDialogClose += IntroDialogClosed;
     }
+
+    private void IntroDialogClosed(Dialog obj)
+    {
+        EventHub.Instance.OnIngameDialogClose -= IntroDialogClosed;
+
+        DialogManager.Instance.StartDialog(new Dialog()
+        {
+            Messages = new List<Message>
+            { 
+                new Message() { Text = "You need to escepe with at least two balls. Press SPACE to serve a ball, arrows to move LEFT/RIGHT, UP/DOWN. Get your balls out through the upper door of the hallway." }
+            }
+        });
+    }
+
+
+    // You need to escepe with at least two balls. Press SPACE to serve a ball, arrows to move LEFT/RIGHT, UP/DOWN. Get your balls out through the upper door or the hallway.
+
 
     // Update is called once per frame
     void Update()
