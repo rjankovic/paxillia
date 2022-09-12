@@ -109,7 +109,7 @@ public class DialogManager : MonoBehaviour
         _dialog = null;
     }
 
-    private void EndIngameDialog()
+    public void EndIngameDialog()
     {
         EventHub.Instance.IngameDialogClose(_ingameDialog);
         _ingameMessage = null;
