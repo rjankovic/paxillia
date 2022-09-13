@@ -442,7 +442,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1429674641920021497, guid: f5e86c8aaa0d0c3499883994a3b216e7, type: 3}
       propertyPath: m_Name
-      value: SquareWall (22)
+      value: SquareWall (R)
       objectReference: {fileID: 0}
     - target: {fileID: 1429674641920021499, guid: f5e86c8aaa0d0c3499883994a3b216e7, type: 3}
       propertyPath: m_RootOrder
@@ -752,7 +752,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1429674641920021497, guid: f5e86c8aaa0d0c3499883994a3b216e7, type: 3}
       propertyPath: m_Name
-      value: SquareWall (9)
+      value: SquareWall (L)
       objectReference: {fileID: 0}
     - target: {fileID: 1429674641920021499, guid: f5e86c8aaa0d0c3499883994a3b216e7, type: 3}
       propertyPath: m_RootOrder
