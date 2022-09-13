@@ -31,7 +31,7 @@ public class PlayerScript : MonoBehaviour
         var cf = new ContactFilter2D();
         cf.layerMask = new LayerMask();
         cf.layerMask.value = 6;
-        var cast = Physics2D.BoxCast(new Vector2(worldPosition.x + deltaPosition.x, transform.position.y), new Vector2(transform.localScale.x, transform.localScale.y), 0, new Vector2(0,0) /*deltaPosition*/, 
+        var cast = Physics2D.BoxCast(new Vector2((worldPosition.x + transform.position.x) / 2, transform.position.y), new Vector2(Mathf.Abs(worldPosition.x - transform.position.x) + transform.localScale.x, transform.localScale.y), 0, new Vector2(0,0) /*deltaPosition*/, 
             cf, result);
         if (cast > 0)
         {
@@ -42,7 +42,7 @@ public class PlayerScript : MonoBehaviour
                 if (result[i].point.x >= transform.position.x)
                 {
                     Debug.Log("Block right");
-                    deltaPosition.x = (result[i].collider.gameObject.transform.position.x - result[i].collider.gameObject.transform.localScale.x / 2 - transform.localScale.x / 2) - transform.position.x;
+                    deltaPosition.x = (result[i].collider.gameObject.transform.position.x - result[i].collider.gameObject.transform.localScale.x / 2 - transform.localScale.x / 2) - transform.position.x - 0.01f;
                 }
                 Debug.Log("Collision: " + result[i].collider.gameObject.name);
             }
