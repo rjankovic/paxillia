@@ -28,54 +28,54 @@ public class PlayerScript : MonoBehaviour
 
         RaycastHit2D[] result = new RaycastHit2D[10];
 
+        // find any collisions that can occur when moving from transform.position to worldPosition on the X axis - check the rectangle between the original and new position (including)
+        var collisionRectCenter = new Vector2((worldPosition.x + transform.position.x) / 2, transform.position.y);
+        // the size is [deltaX + paddle width; paddle height]
+        var collisionRectangleSize = new Vector2(Mathf.Abs(worldPosition.x - transform.position.x) + transform.localScale.x, transform.localScale.y);
+
+        // filter the collisions to layer 6 - Walls
         var cf = new ContactFilter2D();
         cf.layerMask = new LayerMask();
         cf.layerMask.value = 6;
-        var cast = Physics2D.BoxCast(new Vector2((worldPosition.x + transform.position.x) / 2, transform.position.y), new Vector2(Mathf.Abs(worldPosition.x - transform.position.x) + transform.localScale.x, transform.localScale.y), 0, new Vector2(0,0) /*deltaPosition*/, 
-            cf, result);
+
+        // returns the number of boxcast hits
+        var cast = Physics2D.BoxCast(collisionRectCenter, collisionRectangleSize, 0, new Vector2(0,0), cf, result);
         if (cast > 0)
         {
 
             for (int i = 0; i < cast; i++)
             {
-                // wall on the right
-                if (result[i].point.x >= transform.position.x)
+                // wall on the right and we're moving to the right
+                if (result[i].point.x >= transform.position.x && deltaPosition.x > 0)
                 {
-                    Debug.Log("Block right");
-                    deltaPosition.x = (result[i].collider.gameObject.transform.position.x - result[i].collider.gameObject.transform.localScale.x / 2 - transform.localScale.x / 2) - transform.position.x - 0.01f;
+                    //Debug.Log("Block right");
+                    
+                    // cannot use this, because the collision point can be within the obstackle, not on the edge
+                    //deltaPosition.x = (result[i].point.x - transform.localScale.x / 2) - transform.position.x;
+
+                    // the target position is left from the obstackle by half of obstckle's width + half of paddle's width
+                    var targetPositionX = result[i].collider.gameObject.transform.position.x - result[i].collider.gameObject.transform.localScale.x / 2 - transform.localScale.x / 2;
+                    var candidatePosition = targetPositionX - transform.position.x;
+                    if (candidatePosition < deltaPosition.x)
+                    {
+                        deltaPosition.x = candidatePosition;
+                    }
                 }
-                Debug.Log("Collision: " + result[i].collider.gameObject.name);
+                // wall on the left and moving to the left
+                else if (result[i].point.x <= transform.position.x && deltaPosition.x < 0)
+                {
+                    //Debug.Log("Block left");
+                    
+                    var targetPositionX = result[i].collider.gameObject.transform.position.x + result[i].collider.gameObject.transform.localScale.x / 2 + transform.localScale.x / 2;
+                    var candidatePosition = targetPositionX - transform.position.x;
+                    if (candidatePosition > deltaPosition.x)
+                    {
+                        deltaPosition.x = candidatePosition;
+                    }
+                }
+                //Debug.Log("Collision: " + result[i].collider.gameObject.name);
             }
-            //return;
-            
         }
         transform.Translate(deltaPosition);
-
-        
-            /*
-             *  if (Physics.BoxCast(new Vector3(0, 5, -1), new Vector3(0.5f, 0.5f, 0.5f), Vector3.forward, out hitInfo, Quaternion.identity, 1.0f
- {
-       print(hitInfo.collider.name);
- }
- else
- {
-       print("Nothing hit");
- }
-             */
-
-        //Debug.Log("Mouse position: " + worldPosition);
-
-        //var targetPositionX = transform.position.x + deltaVector.x / 30.0f;
-        //if (targetPositionX > 8 - transform.lossyScale.x / 2)
-        //{
-        //    targetPositionX = 8f - transform.lossyScale.x / 2;
-        //}
-        //else if (targetPositionX < -8f + transform.lossyScale.x / 2)
-        //{
-        //    targetPositionX = -8f + transform.lossyScale.x / 2;
-        //}
-
-        ////Debug.Log($"OnLook [{deltaVector.x},{deltaVector.y}]");
-        //transform.Translate(new Vector2(targetPositionX - transform.position.x, 0));
     }
 }
