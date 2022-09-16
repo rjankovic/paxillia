@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8975714257907313200}
   - component: {fileID: 8975714257907313201}
   - component: {fileID: 2610004155742985188}
+  - component: {fileID: 848357284210572872}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -177,3 +178,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f8f1f5e368a88a49b6c4f728d0e5793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputEnabled: 0
+  _ballPrefab: {fileID: 2700187895984707813, guid: 63121ea35fdeb9344b6946008b173011, type: 3}
+--- !u!61 &848357284210572872
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975714257907313214}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

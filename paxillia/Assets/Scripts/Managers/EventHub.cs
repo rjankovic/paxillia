@@ -42,6 +42,8 @@ public class EventHub : MonoBehaviour
 
     public event Action<int> OnBallCountUpdate;
 
+    public event Action<bool> OnInputEnabled;
+
     public void BallBumpOffWall()
     {
         if(OnBallBumpOffWall != null)
@@ -88,6 +90,12 @@ public class EventHub : MonoBehaviour
     {
         if (OnBallCountUpdate != null)
             OnBallCountUpdate(ballCount);
+    }
+
+    public void InputEnabled(bool enabled = true)
+    {
+        if (OnInputEnabled != null)
+            OnInputEnabled(enabled);
     }
 
 

@@ -5,10 +5,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
+    [SerializeField]
+    private bool _inputEnabled = false;
+
+    [SerializeField]
+    private GameObject _ballPrefab = null;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        EventHub.Instance.OnInputEnabled += OnInputEnabled;
+    }
+
+    private void OnInputEnabled(bool enabled)
+    {
+        _inputEnabled = enabled;
     }
 
     // Update is called once per frame
@@ -19,12 +30,20 @@ public class PlayerScript : MonoBehaviour
 
     public void OnLook(InputValue inputValue)
     {
+        if (!_inputEnabled)
+        {
+            return;
+        }
+
+        //Debug.Log("Look");
+
         //var deltaVector = inputValue.Get<Vector2>();
         var absoluteVector = Mouse.current.position.ReadValue();
         var screenV3 = new Vector3(absoluteVector.x, absoluteVector.y, 0);
         var worldPosition = Camera.main.ScreenToWorldPoint(screenV3);
 
         var deltaPosition = new Vector2(worldPosition.x - transform.position.x, 0);
+        //Debug.Log($"DX {deltaPosition.x}");
 
         RaycastHit2D[] result = new RaycastHit2D[10];
 
@@ -45,10 +64,21 @@ public class PlayerScript : MonoBehaviour
 
             for (int i = 0; i < cast; i++)
             {
+                if (result[i].collider.gameObject.name == "Player")
+                {
+                    continue;
+                }
+
+                // skip the first physics collider
+                //if (!result[i].collider.isTrigger)
+                //{
+                //    continue;
+                //}
+
                 // wall on the right and we're moving to the right
                 if (result[i].point.x >= transform.position.x && deltaPosition.x > 0)
                 {
-                    //Debug.Log("Block right");
+                    Debug.Log($"Block right - tX {worldPosition.x} dX {deltaPosition.x} CPX {result[i].point.x} COL {result[i].collider.gameObject.name}");
                     
                     // cannot use this, because the collision point can be within the obstackle, not on the edge
                     //deltaPosition.x = (result[i].point.x - transform.localScale.x / 2) - transform.position.x;
@@ -64,7 +94,7 @@ public class PlayerScript : MonoBehaviour
                 // wall on the left and moving to the left
                 else if (result[i].point.x <= transform.position.x && deltaPosition.x < 0)
                 {
-                    //Debug.Log("Block left");
+                    Debug.Log("Block left");
                     
                     var targetPositionX = result[i].collider.gameObject.transform.position.x + result[i].collider.gameObject.transform.localScale.x / 2 + transform.localScale.x / 2;
                     var candidatePosition = targetPositionX - transform.position.x;
@@ -77,5 +107,27 @@ public class PlayerScript : MonoBehaviour
             }
         }
         transform.Translate(deltaPosition);
+    }
+
+    public void OnFire(InputValue input)
+    {
+        if (!_inputEnabled)
+        {
+            return;
+        }
+
+        if (GameManager.Instance.BallCount < 1)
+        {
+            return;
+        }
+
+        Debug.Log("Serving ball");
+
+        var ballPosition = new Vector3(transform.position.x, transform.position.y + transform.localScale.y / 2 + _ballPrefab.transform.localScale.y / 2, 0);
+        Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+
+        GameManager.Instance.BallCount--;
+
+        //Debug.Log("Fire pressed");
     }
 }

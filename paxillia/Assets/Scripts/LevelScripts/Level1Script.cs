@@ -40,9 +40,19 @@ public class Level1Script : MonoBehaviour
         {
             Messages = new List<Message>
             { 
-                new Message() { Text = "You need to escepe with at least two balls. Press SPACE to serve a ball, arrows to move LEFT/RIGHT, UP/DOWN. Get your balls out through the upper door of the hallway." }
+                new Message() { Text = "You need to escepe with at least two balls. Left click to serve a ball, mouse to move left / right. Get your balls out through the upper door of the hallway." }
             }
         });
+
+        EventHub.Instance.OnDialogClose += GoalMessageClosed;
+    }
+
+    private void GoalMessageClosed(Dialog obj)
+    {
+        EventHub.Instance.OnDialogClose -= GoalMessageClosed;
+
+        Debug.Log("Enabling input");
+        EventHub.Instance.InputEnabled(true);
     }
 
 
