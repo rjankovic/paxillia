@@ -59,7 +59,9 @@ public class BallScript : MonoBehaviour
         
         var normalAdjusted = MathUtils.RotateVector(normal, -1 * relativePoint);
         var reflection = Vector2.Reflect(_velocity, normalAdjusted);
-        Debug.Log($"Relative point: {relativePoint}, normal {normal}, normalA {normalAdjusted} origVelocity: {_velocity} reflection: {reflection}");
+        
+        //Debug.Log($"Relative point: {relativePoint}, normal {normal}, normalA {normalAdjusted} origVelocity: {_velocity} reflection: {reflection}");
+        
         var perpendicular = new Vector2(0, _ballSpeed);
         var angle = Vector2.SignedAngle(perpendicular, reflection);
         var maxAngle = 75;

@@ -64,7 +64,8 @@ public class PlayerScript : MonoBehaviour
 
             for (int i = 0; i < cast; i++)
             {
-                if (result[i].collider.gameObject.name == "Player")
+                if (result[i].collider.gameObject.tag == "Player"
+                    || result[i].collider.gameObject.tag == "Ball")
                 {
                     continue;
                 }
@@ -94,8 +95,8 @@ public class PlayerScript : MonoBehaviour
                 // wall on the left and moving to the left
                 else if (result[i].point.x <= transform.position.x && deltaPosition.x < 0)
                 {
-                    Debug.Log("Block left");
-                    
+                    Debug.Log($"Block left - tX {worldPosition.x} dX {deltaPosition.x} CPX {result[i].point.x} COL {result[i].collider.gameObject.name}");
+
                     var targetPositionX = result[i].collider.gameObject.transform.position.x + result[i].collider.gameObject.transform.localScale.x / 2 + transform.localScale.x / 2;
                     var candidatePosition = targetPositionX - transform.position.x;
                     if (candidatePosition > deltaPosition.x)
