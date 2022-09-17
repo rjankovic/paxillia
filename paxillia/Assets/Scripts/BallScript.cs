@@ -54,16 +54,24 @@ public class BallScript : MonoBehaviour
         var relativePoint = relativePosition / width;
 
 
-        var normal = collision.contacts[0].normal;
+        //Debug.Log($"normal: {collision.contacts[0].normal}");
+        var normal = new Vector2(0, 1); // collision.contacts[0].normal;
 
         
         var normalAdjusted = MathUtils.RotateVector(normal, -1 * relativePoint);
-        var reflection = Vector2.Reflect(_velocity, normalAdjusted);
+
+        var defaultVelocity = new Vector2(0, -1 * _ballSpeed);
         
+        var reflection = Vector2.Reflect(defaultVelocity, normalAdjusted);
+
+        //var reflection = Vector2.Reflect(_velocity, normalAdjusted);
+
         //Debug.Log($"Relative point: {relativePoint}, normal {normal}, normalA {normalAdjusted} origVelocity: {_velocity} reflection: {reflection}");
-        
+
         var perpendicular = new Vector2(0, _ballSpeed);
-        var angle = Vector2.SignedAngle(perpendicular, reflection);
+        //var angle = Vector2.SignedAngle(perpendicular, reflection);
+        
+        /*
         var maxAngle = 75;
 
         if (angle > maxAngle)
@@ -74,7 +82,7 @@ public class BallScript : MonoBehaviour
         {
             reflection = MathUtils.RotateVector(reflection, Mathf.Deg2Rad * (-1 * maxAngle - angle)).normalized * _ballSpeed;
         }
-
+        */
         rigidbody.velocity = reflection;
 
     }

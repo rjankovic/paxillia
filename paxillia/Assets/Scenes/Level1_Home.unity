@@ -744,7 +744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1429674641920021499, guid: f5e86c8aaa0d0c3499883994a3b216e7, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1429674641920021499, guid: f5e86c8aaa0d0c3499883994a3b216e7, type: 3}
       propertyPath: m_LocalScale.x
@@ -1001,9 +1001,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 54956705}
-  - {fileID: 168224635}
   - {fileID: 186105876}
   - {fileID: 1559131652}
+  - {fileID: 168224635}
   - {fileID: 1477501277}
   - {fileID: 191807069}
   m_Father: {fileID: 0}
