@@ -44,6 +44,10 @@ public class EventHub : MonoBehaviour
 
     public event Action<bool> OnInputEnabled;
 
+    public event Action<GameObject> OnBallServed;
+
+    public event Action<GameObject> OnBallLost;
+
     public void BallBumpOffWall()
     {
         if(OnBallBumpOffWall != null)
@@ -98,10 +102,21 @@ public class EventHub : MonoBehaviour
             OnInputEnabled(enabled);
     }
 
+    public void BallServed(GameObject ball)
+    {
+        if (OnBallServed != null)
+            OnBallServed(ball);
+    }
+
+    public void BallLost(GameObject ball)
+    {
+        if (OnBallLost != null)
+            OnBallLost(ball);
+    }
 
     //// Update is called once per frame
     //void Update()
     //{
-        
+
     //}
 }

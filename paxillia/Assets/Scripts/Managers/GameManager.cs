@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     private int ballCount = 3;
 
+    public GameObject Ball { get; private set; }
+
     public int BallCount
     {
         get => ballCount;
@@ -26,7 +28,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -79,5 +80,17 @@ public class GameManager : MonoBehaviour
     public void GoToPauseMenu()
     { 
     
+    }
+
+    public void BallServed(GameObject ballObject)
+    {
+        Ball = ballObject;
+        EventHub.Instance.BallServed(ballObject);
+    }
+
+    public void BallLost(GameObject ballObject)
+    {
+        Ball = null;
+        EventHub.Instance.BallLost(ballObject);
     }
 }

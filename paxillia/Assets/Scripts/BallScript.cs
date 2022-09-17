@@ -19,6 +19,12 @@ public class BallScript : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.velocity = new Vector2(0, 1 * _ballSpeed);
     }
+    void OnBecameInvisible()
+    {
+        Debug.Log("Ball lost");
+        GameManager.Instance.BallLost(gameObject);
+        Destroy(gameObject);
+    }
 
     void FixedUpdate()
     {

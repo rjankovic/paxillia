@@ -122,10 +122,16 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
+        if (GameManager.Instance.Ball != null)
+        {
+            return;
+        }
+
         Debug.Log("Serving ball");
 
         var ballPosition = new Vector3(transform.position.x, transform.position.y + transform.localScale.y / 2 + _ballPrefab.transform.localScale.y / 2 + 0.1f, 0);
-        Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+        var ballObject = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+        GameManager.Instance.BallServed(ballObject);
 
         GameManager.Instance.BallCount--;
 
