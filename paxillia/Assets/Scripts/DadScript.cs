@@ -31,4 +31,9 @@ public class DadScript : MonoBehaviour
     {
         
     }
+
+    private void FixedUpdate()
+    {
+        
+    }
 }
