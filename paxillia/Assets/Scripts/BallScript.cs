@@ -9,7 +9,7 @@ public class BallScript : MonoBehaviour
     new Rigidbody2D rigidbody = null;
     //private Vector2 _velocity;
 
-    [SerializeField] private float _ballSpeed = 5;
+    [SerializeField] private float _ballSpeed = 10;
 
     private Vector2 _velocity;
 
