@@ -150,7 +150,8 @@ public class DialogManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        EventHub.Instance.OnPaused += Pause;
+        EventHub.Instance.OnUnpaused += Resume;
     }
 
     public void OnEscape(InputValue inputValue)
@@ -177,7 +178,7 @@ public class DialogManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    private void Resume()
+    public void Resume()
     {
         _gamePaused = false;
         _pausePanel.SetActive(false);

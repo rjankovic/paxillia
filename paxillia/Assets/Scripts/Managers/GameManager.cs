@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject Ball { get; private set; }
 
+    public int BallEscapeCount { get; set; }
+    public int BallEscapeTarget { get; set; }
+
     public int BallCount
     {
         get => ballCount;

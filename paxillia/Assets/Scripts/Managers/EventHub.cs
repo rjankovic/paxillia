@@ -50,6 +50,9 @@ public class EventHub : MonoBehaviour
 
     public event Action OnBallPassed;
 
+    public event Action OnPaused;
+    public event Action OnUnpaused;
+
     public void BallBumpOffWall()
     {
         if(OnBallBumpOffWall != null)
@@ -120,6 +123,18 @@ public class EventHub : MonoBehaviour
     {
         if (OnBallPassed != null)
             OnBallPassed();
+    }
+
+    public void Pause()
+    {
+        if (OnPaused != null)
+            OnPaused();
+    }
+
+    public void Unpause()
+    {
+        if (OnUnpaused != null)
+            OnUnpaused();
     }
 
     //// Update is called once per frame

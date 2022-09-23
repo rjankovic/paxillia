@@ -16,12 +16,19 @@ public class EscapeCounterScript : MonoBehaviour
     {
         UpdateText();
         EventHub.Instance.OnBallPassed += BallPassed;
+        GameManager.Instance.BallEscapeTarget = _targetCount;
     }
 
     private void BallPassed()
     {
         _passCounter++;
+        GameManager.Instance.BallEscapeCount = _passCounter;
         UpdateText();
+
+        //if (GameManager.Instance.BallCount == 0 && _passCounter >= _targetCount)
+        //{
+        //    EventHub.Instance.Pause();
+        //}
     }
 
     private void UpdateText()

@@ -29,7 +29,24 @@ public class Level1Script : MonoBehaviour
             }
         });
 
+        EventHub.Instance.OnBallLost += Instance_OnBallLost;
+
         EventHub.Instance.OnIngameDialogClose += IntroDialogClosed;
+    }
+
+    private void Instance_OnBallLost(GameObject obj)
+    {
+        if (GameManager.Instance.BallCount == 0)
+        {
+            if (GameManager.Instance.BallEscapeTarget <= GameManager.Instance.BallEscapeCount)
+            {
+                Debug.Log("LEVEL 1 VICTORY");
+            }
+            else
+            {
+                Debug.Log("LEVEL 1 DEFEAT");
+            }
+        }
     }
 
     private void IntroDialogClosed(Dialog obj)
