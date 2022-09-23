@@ -1164,6 +1164,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1058580701}
+    - target: {fileID: 5526144097444079703, guid: 328a460e29b587d499a923ed9d715380, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5526144097444079704, guid: 328a460e29b587d499a923ed9d715380, type: 3}
       propertyPath: m_Name
       value: UiCanvas

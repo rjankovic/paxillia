@@ -31,6 +31,11 @@ public class DialogManager : MonoBehaviour
     private Queue<Message> _ingameMessages;
     private Message _ingameMessage;
 
+    [SerializeField]
+    private GameObject _pausePanel;
+
+    private bool _gamePaused = false;
+
     //[SerializeField]
     //private Animator _animator;
 
@@ -148,9 +153,41 @@ public class DialogManager : MonoBehaviour
         
     }
 
+    public void OnEscape(InputValue inputValue)
+    {
+        Debug.Log("OnExcape!");
+
+        if (!_gamePaused)
+        {
+            Pause();
+        }
+        else
+        {
+            Resume();
+        }
+        //Debug.Log(inputValue.Get().GetType());
+        //Debug.Log(inputValue.Get());
+    }
+
+    private void Pause()
+    {
+        _gamePaused = true;
+        _pausePanel.SetActive(true);
+        EventHub.Instance.InputEnabled(false);
+        Time.timeScale = 0;
+    }
+
+    private void Resume()
+    {
+        _gamePaused = false;
+        _pausePanel.SetActive(false);
+        EventHub.Instance.InputEnabled(true);
+        Time.timeScale = 1;
+    }
+
     //// Update is called once per frame
     //void Update()
     //{
-        
+
     //}
 }
