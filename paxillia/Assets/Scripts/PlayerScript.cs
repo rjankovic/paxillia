@@ -2,6 +2,7 @@ using Assets.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
@@ -11,6 +12,9 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField]
     private GameObject _ballPrefab = null;
+
+    [SerializeField]
+    private bool _verticalMovementEnable = false;
 
     // Start is called before the first frame update
     void Start()
@@ -73,5 +77,36 @@ public class PlayerScript : MonoBehaviour
         GameManager.Instance.BallCount--;
 
         //Debug.Log("Fire pressed");
+    }
+
+    public void OnMove(AxisEventData eventData)
+    {
+        Debug.Log($"Move {eventData.moveDir} [{eventData.moveVector}]");
+    }
+
+    public void OnMove(InputValue inputValue)
+    {
+        Debug.Log($"MOVE");
+        //inputValue.isPressed
+        //if (inputValue == null)
+        //{
+        //    Debug.Log("Empty input value");
+        //    return;
+        //}
+        //Debug.Log(inputValue.isPressed);
+
+
+        var val = inputValue.Get();
+        
+        // released
+        if (val == null)
+        {
+            Debug.Log("NULL GET");
+        }
+        // pressed
+        else
+        {
+            Debug.Log($"Move IV {val.GetType()} [{val.ToString()}]");
+        }
     }
 }
