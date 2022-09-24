@@ -54,19 +54,19 @@ public class DadScript : MonoBehaviour
         }
 
         var targetPositionX = ballPosition.x;
-        if (targetPositionX - myPosition.x < movementSpeed * -1)
-        {
-            targetPositionX = myPosition.x - movementSpeed;
-        }
-        else if (targetPositionX - myPosition.x > movementSpeed)
-        {
-            targetPositionX = myPosition.x + movementSpeed;
-        }
+        //if (targetPositionX - myPosition.x < movementSpeed * -1)
+        //{
+        //    targetPositionX = myPosition.x - movementSpeed;
+        //}
+        //else if (targetPositionX - myPosition.x > movementSpeed)
+        //{
+        //    targetPositionX = myPosition.x + movementSpeed;
+        //}
         //Debug.Log($"Delta {targetPositionX - myPosition.x}");
 
         var targetPosition = new Vector3(targetPositionX, myPosition.y, myPosition.z);
 
-        var deltaPosition = MathUtils.TryMoveHorizontally(myPosition, targetPosition, transform.localScale);
+        var deltaPosition = MathUtils.TryMove(myPosition, targetPosition, transform.localScale, movementSpeed);
         transform.Translate(deltaPosition);
     }
 }
