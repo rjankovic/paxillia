@@ -14,7 +14,13 @@ public class PlayerScript : MonoBehaviour
     private GameObject _ballPrefab = null;
 
     [SerializeField]
-    private bool _verticalMovementEnable = false;
+    private bool _verticalMovementEnabled = false;
+
+    private bool _movingUp = false;
+    private bool _movingDown = false;
+
+    [SerializeField]
+    private float movementSpeed = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -86,27 +92,45 @@ public class PlayerScript : MonoBehaviour
 
     public void OnMove(InputValue inputValue)
     {
-        Debug.Log($"MOVE");
-        //inputValue.isPressed
-        //if (inputValue == null)
-        //{
-        //    Debug.Log("Empty input value");
-        //    return;
-        //}
-        //Debug.Log(inputValue.isPressed);
-
-
+        //Debug.Log($"MOVE");
         var val = inputValue.Get();
         
         // released
         if (val == null)
         {
-            Debug.Log("NULL GET");
+            _movingUp = false;
+            _movingDown = false;
+            //Debug.Log("NULL GET");
         }
         // pressed
         else
         {
-            Debug.Log($"Move IV {val.GetType()} [{val.ToString()}]");
+            var vector = (Vector2)val;
+            if (vector.y > 0)
+            {
+                _movingUp = true;
+                //Debug.Log("Moving up");
+            }
+            else if (vector.y < 0)
+            {
+                _movingDown = true;
+                //Debug.Log("Moving down");
+            }
+            //Debug.Log($"Move IV {val.GetType()} [{val.ToString()}]");
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_movingUp)
+        {
+            var deltaPosition = new Vector2(0, movementSpeed); //MathUtils.TryMoveHorizontally(myPosition, targetPosition, transform.localScale);
+            transform.Translate(deltaPosition);
+        }
+        else if (_movingDown)
+        {
+            var deltaPosition = new Vector2(0, -1 * movementSpeed); //MathUtils.TryMoveHorizontally(myPosition, targetPosition, transform.localScale);
+            transform.Translate(deltaPosition);
         }
     }
 }

@@ -270,6 +270,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2610004155742985188, guid: 61a47398652600d4caf0869dc8af6f4e, type: 3}
+      propertyPath: _inputEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610004155742985188, guid: 61a47398652600d4caf0869dc8af6f4e, type: 3}
+      propertyPath: _verticalMovementEnabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8975714257907313205, guid: 61a47398652600d4caf0869dc8af6f4e, type: 3}
       propertyPath: m_RootOrder
       value: 1
