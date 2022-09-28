@@ -61,12 +61,14 @@ public class BallScript : MonoBehaviour
 
 
         //Debug.Log($"normal: {collision.contacts[0].normal}");
-        var normal = new Vector2(0, 1); // collision.contacts[0].normal;
+        var upDown = Mathf.Sign(collision.contacts[0].normal.y);
+        
+        var normal = new Vector2(0, upDown); // collision.contacts[0].normal;
 
         
-        var normalAdjusted = MathUtils.RotateVector(normal, -1 * relativePoint);
+        var normalAdjusted = MathUtils.RotateVector(normal, -1 * relativePoint * upDown);
 
-        var defaultVelocity = new Vector2(0, -1 * _ballSpeed);
+        var defaultVelocity = new Vector2(0, -1 * _ballSpeed * upDown);
         
         var reflection = Vector2.Reflect(defaultVelocity, normalAdjusted);
 

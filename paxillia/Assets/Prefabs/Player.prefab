@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8975714257907313200}
   - component: {fileID: 8975714257907313201}
   - component: {fileID: 2610004155742985188}
-  - component: {fileID: 848357284210572872}
+  - component: {fileID: 4096430840688523140}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -180,7 +180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputEnabled: 0
   _ballPrefab: {fileID: 2700187895984707813, guid: 63121ea35fdeb9344b6946008b173011, type: 3}
---- !u!61 &848357284210572872
+  _verticalMovementEnabled: 0
+--- !u!61 &4096430840688523140
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
