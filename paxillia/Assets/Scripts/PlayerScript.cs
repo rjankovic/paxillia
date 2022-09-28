@@ -29,7 +29,7 @@ public class PlayerScript : MonoBehaviour
     //private bool _inWall = false;
 
     private Vector2 _previousDeltaMovement = Vector2.zero;
-    private Vector2 _normalizedCollision = Vector2.zero;
+    //private Vector2 _normalizedCollision = Vector2.zero;
 
     // Start is called before the first frame update
     void Start()
@@ -113,14 +113,16 @@ public class PlayerScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log($"Colliding {collision.collider.tag}");
-        if (collision.collider.tag == "Wall")
-        {
-            //_inWall = true;
-            rigidBody.velocity = Vector2.zero;
-            _normalizedCollision = _previousDeltaMovement.normalized;
-            //Debug.Log("NC " + _normalizedCollision.ToString());
-        }
+        ////Debug.Log($"Colliding {collision.collider.tag}");
+        //if (collision.collider.tag == "Wall")
+        //{
+        //    //_inWall = true;
+        //    //rigidBody.velocity = Vector2.zero;
+            
+        //    //_normalizedCollision = _previousDeltaMovement.normalized;
+            
+        //    //Debug.Log("NC " + _normalizedCollision.ToString());
+        //}
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -168,11 +170,15 @@ public class PlayerScript : MonoBehaviour
         if (_targetWorldPosition.x != -1 /*&& !_inWall*/)
         {
             var delta = (Vector2)_targetWorldPosition - rigidBody.position;
+            
+
             if (!_verticalMovementEnabled)
             {
                 //Debug.Log("NV");
                 delta.y = 0;
             }
+
+            Debug.Log($"Delta {delta}");
 
             if (delta.magnitude > 1)
             {
@@ -181,26 +187,30 @@ public class PlayerScript : MonoBehaviour
 
             //var restrictedDelta = MathUtils.RestrictToMovementSpeed(delta, movementSpeed);
             
-            if (_normalizedCollision == delta.normalized)
-            {
-                return;
-            }
-            else
-            {
-                _normalizedCollision = Vector2.zero;
-            }
+            //if (_normalizedCollision == delta.normalized)
+            //{
+            //    return;
+            //}
+            //else
+            //{
+            //    _normalizedCollision = Vector2.zero;
+            //}
             
-            if (delta == _previousDeltaMovement)
-            {
-                return;
-            }
+            //if (delta == _previousDeltaMovement)
+            //{
+            //    return;
+            //}
+
+
 
             //var moveToPosition = restrictedDelta + rigidBody.position;
 
             //Debug.Log("Movement changed to " + restrictedDelta.ToString());
-            _previousDeltaMovement = delta;
+            
+            
+            //_previousDeltaMovement = delta;
 
-            //Debug.Log("MV " + restrictedDelta.ToString());
+            //Debug.Log("MV " + delta * movementSpeed);
             rigidBody.velocity = delta * movementSpeed;
             //rigidBody.MovePosition(restrictedDelta + rigidBody.position);
             //Debug.Log($"RB move [{restrictedDelta}]");
