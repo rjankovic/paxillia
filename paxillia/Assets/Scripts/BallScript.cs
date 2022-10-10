@@ -7,9 +7,11 @@ public class BallScript : MonoBehaviour
 {
     // Start is called before the first frame update
     new Rigidbody2D rigidbody = null;
+    new SpriteRenderer renderer = null;
     //private Vector2 _velocity;
 
     [SerializeField] private float _ballSpeed = 10;
+    private int _ballLostDelay = 0; //5;
 
     private Vector2 _velocity;
 
@@ -18,12 +20,27 @@ public class BallScript : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.velocity = new Vector2(0, 1 * _ballSpeed);
+        renderer = GetComponent<SpriteRenderer>();
     }
     void OnBecameInvisible()
     {
-        Debug.Log("Ball lost");
-        GameManager.Instance.BallLost(gameObject);
-        Destroy(gameObject);
+        StartCoroutine(WaitBallLost());
+    }
+
+    private void OnBecameVisible()
+    {
+        
+    }
+
+    IEnumerator WaitBallLost()
+    {
+        yield return new WaitForSeconds(_ballLostDelay);
+        if (!renderer.isVisible)
+        {
+            Debug.Log("Ball lost");
+            GameManager.Instance.BallLost(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     void FixedUpdate()
@@ -72,25 +89,7 @@ public class BallScript : MonoBehaviour
         
         var reflection = Vector2.Reflect(defaultVelocity, normalAdjusted);
 
-        //var reflection = Vector2.Reflect(_velocity, normalAdjusted);
 
-        //Debug.Log($"Relative point: {relativePoint}, normal {normal}, normalA {normalAdjusted} origVelocity: {_velocity} reflection: {reflection}");
-
-        var perpendicular = new Vector2(0, _ballSpeed);
-        //var angle = Vector2.SignedAngle(perpendicular, reflection);
-        
-        /*
-        var maxAngle = 75;
-
-        if (angle > maxAngle)
-        {
-            reflection = MathUtils.RotateVector(reflection, Mathf.Deg2Rad * (maxAngle - angle)).normalized * _ballSpeed;
-        }
-        if (angle < -1 * maxAngle)
-        {
-            reflection = MathUtils.RotateVector(reflection, Mathf.Deg2Rad * (-1 * maxAngle - angle)).normalized * _ballSpeed;
-        }
-        */
         rigidbody.velocity = reflection;
 
     }

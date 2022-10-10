@@ -16,8 +16,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private bool _verticalMovementEnabled = false;
 
-    private bool _movingUp = false;
-    private bool _movingDown = false;
+    //private bool _movingUp = false;
+    //private bool _movingDown = false;
 
     //[SerializeField]
     private float movementSpeed = 10f; //0.2f;

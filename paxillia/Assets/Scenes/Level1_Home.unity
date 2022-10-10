@@ -1195,34 +1195,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5526144097444079702, guid: 328a460e29b587d499a923ed9d715380, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5526144097444079702, guid: 328a460e29b587d499a923ed9d715380, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5526144097444079702, guid: 328a460e29b587d499a923ed9d715380, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 1280
-      objectReference: {fileID: 0}
-    - target: {fileID: 5526144097444079702, guid: 328a460e29b587d499a923ed9d715380, type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 720
-      objectReference: {fileID: 0}
     - target: {fileID: 5526144097444079703, guid: 328a460e29b587d499a923ed9d715380, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1058580701}
-    - target: {fileID: 5526144097444079703, guid: 328a460e29b587d499a923ed9d715380, type: 3}
-      propertyPath: m_RenderMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5526144097444079703, guid: 328a460e29b587d499a923ed9d715380, type: 3}
-      propertyPath: m_PlaneDistance
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5526144097444079704, guid: 328a460e29b587d499a923ed9d715380, type: 3}
       propertyPath: m_Name
       value: UiCanvas
@@ -1237,7 +1213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6648617352065149477, guid: 328a460e29b587d499a923ed9d715380, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1270
+      value: 1280
       objectReference: {fileID: 0}
     - target: {fileID: 7020613247738596406, guid: 328a460e29b587d499a923ed9d715380, type: 3}
       propertyPath: m_IsActive
