@@ -2,6 +2,7 @@ using Assets.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BallScript : MonoBehaviour
 {
@@ -21,6 +22,14 @@ public class BallScript : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.velocity = new Vector2(0, 1 * _ballSpeed);
         renderer = GetComponent<SpriteRenderer>();
+
+        if (GameManager.Instance.GameState == GameManager.GameStateEnum.World)
+        {
+            Debug.Log("Ball in world - 5s lost delay");
+            _ballLostDelay = 5;
+        }
+        //var sceneName = SceneManager.GetActiveScene().name;
+        //Debug.Log($"scene {sceneName}");
     }
     void OnBecameInvisible()
     {

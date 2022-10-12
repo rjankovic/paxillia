@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
     public static GameManager Instance { get => _instance; }
-    private GameStateEnum _gameState = GameStateEnum.MainMenu;
-    public GameStateEnum GameState { get => _gameState; }
+    //private GameStateEnum _gameState = GameStateEnum.MainMenu;
+    //public GameStateEnum GameState { get => _gameState; }
 
     private int ballCount = 3;
 
@@ -40,7 +41,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-
     public enum AnimationEnum
     { 
         Intro
@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviour
         AppleTree,
         GrandmasBalls,
         GrandmasKraut,
-        EscapeFromGrandma
+        EscapeFromGrandma,
+        NA
     }
 
     public enum GameStateEnum
@@ -62,7 +63,41 @@ public class GameManager : MonoBehaviour
         PauseMenu,
         Animation,
         Level,
-        World
+        World,
+        NA
+    }
+
+    public LevelEnum CurrentLevel
+    {
+        get {
+            switch (SceneManager.GetActiveScene().name)
+            {
+                case "Level1_Home": 
+                    return LevelEnum.Home;
+                case "Level_Dog":
+                    return LevelEnum.Dog;
+                case "Level_AppleTree":
+                    return LevelEnum.AppleTree;
+                default:
+                    return LevelEnum.NA;
+            }
+        }
+    }
+
+    public GameStateEnum GameState
+    {
+        get
+        {
+            switch (SceneManager.GetActiveScene().name)
+            {
+                case "MainMenu":
+                    return GameStateEnum.MainMenu;
+                case "WorldMap":
+                    return GameStateEnum.World;
+                default:
+                    return GameStateEnum.NA;
+            }
+        }
     }
 
     public void GoToLevel(LevelEnum level)
