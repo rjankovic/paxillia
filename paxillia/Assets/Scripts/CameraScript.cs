@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    private float _movementSpeed = 1f;
+    private float _movementSpeed = 2f;
 
     [SerializeField]
     private Transform _targetPosition;

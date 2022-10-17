@@ -78,11 +78,15 @@ public class BallScript : MonoBehaviour
 
     private void BumpOffPlayer(Collision2D collision)
     {
-        var collisionObject = collision.contacts[0].collider.gameObject;
+        var collider = collision.contacts[0].collider;
+        var collisionObject = collider.gameObject;
 
         //Debug.Log("VP " + _velocity);
         var relativePosition = rigidbody.position.x - collisionObject.transform.position.x;
-        var width = collisionObject.transform.localScale.x;
+        //var collidingBody = collisionObject.GetComponent<BoxCollider2D>();
+
+        var width = collider.bounds.size.x; //collisionObject.  //collisionObject.transform.localScale.x;
+        Debug.Log($"Bump width: {width}");
         var relativePoint = relativePosition / width;
 
 
