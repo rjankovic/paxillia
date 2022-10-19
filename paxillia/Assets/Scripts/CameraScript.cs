@@ -20,15 +20,24 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_cameraMoves)
-        {
-            var newPos = new Vector3(_targetPosition.position.x, _targetPosition.position.y + 1f, -20f);
-            transform.position = Vector3.Slerp(transform.position, newPos, _movementSpeed * Time.deltaTime);
-        }
+        //if (_cameraMoves)
+        //{
+        //    var newPos = new Vector3(_targetPosition.position.x, _targetPosition.position.y + 1f, -20f);
+        //    transform.position = Vector3.Slerp(transform.position, newPos, _movementSpeed * Time.deltaTime);
+        //}
 #if UNITY_EDITOR
         if (_camera)
             ScaleViewport();
 #endif
+    }
+
+    private void FixedUpdate()
+    {
+        if (_cameraMoves)
+        {
+            var newPos = new Vector3(_targetPosition.position.x, _targetPosition.position.y + 1f, -20f);
+            transform.position = Vector3.Slerp(transform.position, newPos, _movementSpeed * Time.fixedDeltaTime);
+        }
     }
 
     private Camera _camera;
