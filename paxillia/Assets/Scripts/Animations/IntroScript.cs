@@ -70,7 +70,7 @@ public class IntroScript : MonoBehaviour
         var rigidbody = ball.GetComponent<Rigidbody2D>();
         var velocity = rigidbody.velocity;
 
-        rigidbody.velocity = MathUtils.RotateVector(velocity, 0.7f);
+        rigidbody.velocity = MathUtils.RotateVector(velocity, 0.8f);
 
         EventHub.Instance.OnBallBumOffPlayer -= BounceOffToWindow;
 
@@ -137,7 +137,7 @@ public class IntroScript : MonoBehaviour
     {
         if (movingRight)
         {
-            if (player.transform.position.x >= -0.2f)
+            if (player.transform.position.x >= -0.1f)
             {
                 movingRight = false;
             }
