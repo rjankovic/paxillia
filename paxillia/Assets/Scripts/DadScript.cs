@@ -67,6 +67,14 @@ public class DadScript : MonoBehaviour
         var targetPosition = new Vector3(targetPositionX, myPosition.y, myPosition.z);
 
         var deltaPosition = MathUtils.TryMove(myPosition, targetPosition, transform.localScale, movementSpeed);
+        if (deltaPosition.x + transform.position.x + 1.5f > 8)
+        {
+            deltaPosition.x = 8 - (transform.position.x + 1.5f);
+        }
+        if (deltaPosition.x + transform.position.x - 1.5f < -8)
+        {
+            deltaPosition.x = -8 - transform.position.x + 1.5f;
+        }
         transform.Translate(deltaPosition);
     }
 }

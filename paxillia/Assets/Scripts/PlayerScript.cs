@@ -201,6 +201,8 @@ public class PlayerScript : MonoBehaviour
 
             //rigidBody.MovePosition(rigidBody.position + delta * movementSpeed * Time.fixedDeltaTime);
             rigidBody.velocity = delta * movementSpeed;
+
+            gameObject.GetInstanceID();
         }
     }
 }
