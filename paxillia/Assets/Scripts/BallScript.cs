@@ -71,8 +71,9 @@ public class BallScript : MonoBehaviour
         //Debug.Log("Ball collision enter " + collision.collider.name);
         if (collision.collider.name == "Player")
         {
-            EventHub.Instance.BallBumpOffPlayer();
+            
             BumpOffPlayer(collision);
+            EventHub.Instance.BallBumpOffPlayer();
         }
     }
 

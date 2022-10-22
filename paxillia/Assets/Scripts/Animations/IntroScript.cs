@@ -21,7 +21,7 @@ public class IntroScript : MonoBehaviour
     private bool movingRight = false;
     private bool movingRightToLeave = false;
     private bool movingToBall = false;
-    private int windowsToBreak = 2;
+    private int windowsToBreak = 1;
     private float exitSpeed = 0.05f;
     private bool doorOpen = false;
 
@@ -70,7 +70,7 @@ public class IntroScript : MonoBehaviour
         var rigidbody = ball.GetComponent<Rigidbody2D>();
         var velocity = rigidbody.velocity;
 
-        rigidbody.velocity = MathUtils.RotateVector(velocity, 0.8f);
+        rigidbody.velocity = MathUtils.RotateVector(velocity, 2f);
 
         EventHub.Instance.OnBallBumOffPlayer -= BounceOffToWindow;
 
@@ -163,6 +163,7 @@ public class IntroScript : MonoBehaviour
             {
                 var doorRenderer = door.GetComponent<SpriteRenderer>();
                 doorRenderer.sprite = openDoorSprite;
+                door.transform.Translate(.5f, 0f, 0f);
                 doorOpen = true;
             }
 
