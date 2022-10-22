@@ -163,7 +163,7 @@ public class IntroScript : MonoBehaviour
             {
                 var doorRenderer = door.GetComponent<SpriteRenderer>();
                 doorRenderer.sprite = openDoorSprite;
-                door.transform.Translate(.5f, 0f, 0f);
+                door.transform.Translate(.45f, 0f, 0f);
                 doorOpen = true;
             }
 
