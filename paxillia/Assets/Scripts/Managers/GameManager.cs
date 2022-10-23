@@ -11,7 +11,11 @@ public class GameManager : MonoBehaviour
     //private GameStateEnum _gameState = GameStateEnum.MainMenu;
     //public GameStateEnum GameState { get => _gameState; }
 
+    [SerializeField]
+    private Animator crossFader;
+
     private int ballCount = 3;
+    private int switch_on;
 
     public GameObject Ball { get; private set; }
 
@@ -54,6 +58,9 @@ public class GameManager : MonoBehaviour
         GrandmasBalls,
         GrandmasKraut,
         EscapeFromGrandma,
+        IntroAnimation,
+        MainMenu,
+        World,
         NA
     }
 
@@ -78,10 +85,60 @@ public class GameManager : MonoBehaviour
                     return LevelEnum.Dog;
                 case "Level_AppleTree":
                     return LevelEnum.AppleTree;
+                case "MainMenu":
+                    return LevelEnum.MainMenu;
+                case "Anim_Intro":
+                    return LevelEnum.IntroAnimation;
+                case "World":
+                    return LevelEnum.World;
                 default:
                     return LevelEnum.NA;
             }
         }
+    }
+
+    private string LevelEnumToScene(LevelEnum level)
+    {
+        switch (level)
+        {
+            case LevelEnum.Home:
+                return "Level1_Home";
+            case LevelEnum.Dog:
+                return "Level_Dog";
+            case LevelEnum.AppleTree:
+                return "Level_AppleTree";
+            //case LevelEnum.GrandmasBalls:
+            //    break;
+            //case LevelEnum.GrandmasKraut:
+            //    break;
+            //case LevelEnum.EscapeFromGrandma:
+            //    break;
+            case LevelEnum.IntroAnimation:
+                return "Anim_Intro";
+            case LevelEnum.MainMenu:
+                return "MainMenu";
+            case LevelEnum.World:
+                return "World";
+            case LevelEnum.NA:
+                throw new KeyNotFoundException();
+                //break;
+        }
+        throw new KeyNotFoundException();
+    }
+
+    public void GotoLevel(LevelEnum level)
+    {
+        var levelName = LevelEnumToScene(level);
+        StartCoroutine(LoadLevel(levelName));
+    }
+
+    private IEnumerator LoadLevel(string levelName)
+    {
+        crossFader.SetTrigger("Fadeout");
+
+        yield return new WaitForSeconds(0.5f);
+
+        SceneManager.LoadScene(levelName);
     }
 
     public GameStateEnum GameState
@@ -100,15 +157,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GoToLevel(LevelEnum level)
-    { 
+    //public void GoToLevel(LevelEnum level)
+    //{ 
     
-    }
+    //}
 
-    public void GoToAnimation(AnimationEnum animation)
-    { 
+    //public void GoToAnimation(AnimationEnum animation)
+    //{ 
     
-    }
+    //}
 
     public void GoToMainMenu()
     { 
