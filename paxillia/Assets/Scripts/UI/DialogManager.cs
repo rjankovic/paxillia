@@ -150,6 +150,8 @@ public class DialogManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _gamePaused = false;
+        _pausePanel.SetActive(false);
         EventHub.Instance.OnPaused += Pause;
         EventHub.Instance.OnUnpaused += Resume;
     }
@@ -170,20 +172,38 @@ public class DialogManager : MonoBehaviour
         //Debug.Log(inputValue.Get());
     }
 
+    private bool _inputWasEnabled = false;
+
     private void Pause()
     {
         _gamePaused = true;
         _pausePanel.SetActive(true);
-        EventHub.Instance.InputEnabled(false);
+        _inputWasEnabled = GameManager.Instance.InputEnabled;
         Time.timeScale = 0;
+        EventHub.Instance.InputEnabled(false);
     }
 
     public void Resume()
     {
         _gamePaused = false;
         _pausePanel.SetActive(false);
-        EventHub.Instance.InputEnabled(true);
+        if (_inputWasEnabled)
+        {
+            EventHub.Instance.InputEnabled(true);
+        }
         Time.timeScale = 1;
+    }
+
+    public void ExitGameFromPause()
+    {
+        GameManager.Instance.GoToMainMenu();
+        Resume();
+    }
+
+    public void LoadGameFromPause()
+    {
+        GameManager.Instance.LoadGame();
+        Resume();
     }
 
     //// Update is called once per frame

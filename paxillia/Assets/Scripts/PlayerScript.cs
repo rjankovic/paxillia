@@ -40,7 +40,7 @@ public class PlayerScript : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         EventHub.Instance.OnInputEnabled += OnInputEnabled;
 
-
+        EventHub.Instance.InputEnabled(_inputEnabled);
         //rigidBody.velocity = new Vector2(10f, 0f);
     }
 

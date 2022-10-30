@@ -1,5 +1,9 @@
+using Assets.Scripts.Managers;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     private int ballCount = 3;
     private int switch_on;
+    private bool _inputEnabled;
+    private string _savePath;
 
     public GameObject Ball { get; private set; }
 
@@ -31,11 +37,21 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        _savePath = Path.Combine(Application.persistentDataPath, "save.json");
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        if (EventHub.Instance != null)
+        {
+            EventHub.Instance.OnInputEnabled += EventHub_OnInputEnabled;
+        }
+    }
+
+    private void EventHub_OnInputEnabled(bool val)
+    {
+        _inputEnabled = val;
     }
 
     // Update is called once per frame
@@ -151,25 +167,29 @@ public class GameManager : MonoBehaviour
                     return GameStateEnum.MainMenu;
                 case "WorldMap":
                     return GameStateEnum.World;
+                case "Anim_Intro":
+                    return GameStateEnum.Animation;
                 default:
-                    return GameStateEnum.NA;
+                    return GameStateEnum.Level;
             }
         }
     }
 
+    public bool InputEnabled { get => _inputEnabled; }
+
     //public void GoToLevel(LevelEnum level)
     //{ 
-    
+
     //}
 
     //public void GoToAnimation(AnimationEnum animation)
     //{ 
-    
+
     //}
 
     public void GoToMainMenu()
-    { 
-    
+    {
+        GotoLevel(LevelEnum.MainMenu);
     }
 
     public void GoToPauseMenu()
@@ -187,5 +207,45 @@ public class GameManager : MonoBehaviour
     {
         Ball = null;
         EventHub.Instance.BallLost(ballObject);
+    }
+
+    public bool LoadGame()
+    {
+        if (!File.Exists(_savePath))
+        {
+            return false;
+        }
+
+        Debug.Log($"Loading from {_savePath}");
+        var saveData = File.ReadAllText(_savePath, Encoding.UTF8);
+        var saveState = JsonConvert.DeserializeObject<SaveState>(saveData);
+        ApplySaveState(saveState);
+
+        return true;
+    }
+
+    public bool SaveGame()
+    {
+        if (GameState != GameStateEnum.Level)
+        {
+            return false;
+        }
+
+        Debug.Log($"Saving to {_savePath}");
+        var saveState = GetSaveState();
+        var saveData = JsonConvert.SerializeObject(saveState);
+        File.WriteAllText(_savePath, saveData, Encoding.UTF8);
+
+        return true;
+    }
+
+    private SaveState GetSaveState()
+    {
+        return null;
+    }
+
+    private void ApplySaveState(SaveState saveState)
+    { 
+    
     }
 }

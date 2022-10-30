@@ -33,7 +33,10 @@ public class BallScript : MonoBehaviour
     }
     void OnBecameInvisible()
     {
-        StartCoroutine(WaitBallLost());
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(WaitBallLost());
+        }
     }
 
     private void OnBecameVisible()

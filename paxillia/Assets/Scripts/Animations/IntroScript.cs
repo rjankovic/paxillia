@@ -131,6 +131,13 @@ public class IntroScript : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         yield return new WaitForSeconds(.5f);
         movingRightToLeave = true;
+        StartCoroutine(NextLevel());
+    }
+
+    IEnumerator NextLevel()
+    {
+        yield return new WaitForSeconds(2.0f);
+        GameManager.Instance.GotoLevel(GameManager.LevelEnum.Home);
     }
 
     private void FixedUpdate()

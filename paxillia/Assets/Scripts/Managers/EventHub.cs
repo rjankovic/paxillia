@@ -7,7 +7,7 @@ public class EventHub : MonoBehaviour
 {
 
     public static EventHub Instance { get; private set; }
-
+    
     private void Awake()
     {
         if (Instance == null)
@@ -52,6 +52,8 @@ public class EventHub : MonoBehaviour
 
     public event Action OnPaused;
     public event Action OnUnpaused;
+
+    private bool _inputEnabled;
 
     public void BallBumpOffWall()
     {
