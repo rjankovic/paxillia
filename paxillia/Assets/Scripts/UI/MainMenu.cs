@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     public void Continue()
     {
         Debug.Log("Continue pressed");
+        GameManager.Instance.LoadGame();
     }
 
     public void Exit()

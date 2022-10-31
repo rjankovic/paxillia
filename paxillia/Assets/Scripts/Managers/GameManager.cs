@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +24,12 @@ public class GameManager : MonoBehaviour
     private bool _inputEnabled;
     private string _savePath;
 
+    private GameObject _player;
+    private Rigidbody2D _playerRigidBody;
+
+    private Dictionary<string, GameObjectSaveState> _worldSaveStates = new Dictionary<string, GameObjectSaveState>();
+
+
     public GameObject Ball { get; private set; }
 
     public int BallEscapeCount { get; set; }
@@ -31,11 +38,18 @@ public class GameManager : MonoBehaviour
     public int BallCount
     {
         get => ballCount;
-        set { ballCount = value; EventHub.Instance.BallCountUpdate(value); }
+        set { ballCount = value; if(EventHub.Instance != null) EventHub.Instance.BallCountUpdate(value); }
     }
 
     private void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Object.Destroy(gameObject);
+            return;
+        }
+
+
         _instance = this;
         _savePath = Path.Combine(Application.persistentDataPath, "save.json");
     }
@@ -43,10 +57,34 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
+        if (_instance != null && _instance != this)
+        {
+            Object.Destroy(gameObject);
+            return;
+        }
+
         if (EventHub.Instance != null)
         {
             EventHub.Instance.OnInputEnabled += EventHub_OnInputEnabled;
+            EventHub.Instance.OnWorldSaveStateUpdated += OnWorldSaveStateUpdated;
         }
+    }
+
+    private void OnWorldSaveStateUpdated(GameObjectSaveState obj)
+    {
+        _worldSaveStates[obj.ObjectName] = obj;
+    }
+
+    public void SetPlayer(GameObject gameObject)
+    {
+        _player = gameObject;
+        _playerRigidBody = _player.GetComponent<Rigidbody2D>();
+
+        //Debug.Log("Getting player script");
+        //var playerScript = gameObject.GetComponent<PlayerScript>();
+        //Debug.Log(playerScript.GetType().FullName);
     }
 
     private void EventHub_OnInputEnabled(bool val)
@@ -155,6 +193,14 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         SceneManager.LoadScene(levelName);
+
+        if (CurrentLevel == LevelEnum.World)
+        {
+            LoadWorldState();
+        }
+
+        crossFader.SetTrigger("Fadein");
+
     }
 
     public GameStateEnum GameState
@@ -218,7 +264,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"Loading from {_savePath}");
         var saveData = File.ReadAllText(_savePath, Encoding.UTF8);
-        var saveState = JsonConvert.DeserializeObject<SaveState>(saveData);
+        var saveState = JsonConvert.DeserializeObject<SaveState>(saveData, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented });
         ApplySaveState(saveState);
 
         return true;
@@ -233,7 +279,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"Saving to {_savePath}");
         var saveState = GetSaveState();
-        var saveData = JsonConvert.SerializeObject(saveState);
+        var saveData = JsonConvert.SerializeObject(saveState, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented });
         File.WriteAllText(_savePath, saveData, Encoding.UTF8);
 
         return true;
@@ -241,11 +287,47 @@ public class GameManager : MonoBehaviour
 
     private SaveState GetSaveState()
     {
-        return null;
+        var sceneName = SceneManager.GetActiveScene().name;
+        SaveState saveState = new SaveState()
+        {
+            SavedWorldItems = _worldSaveStates.Select(x => x.Value).ToList(),
+            Level = sceneName,
+            BallCount = BallCount,
+        };
+
+        if (_playerRigidBody != null)
+        {
+            saveState.PositionX = _playerRigidBody.position.x;
+            saveState.PositionY = _playerRigidBody.position.y;
+        }
+
+        return saveState;
     }
 
     private void ApplySaveState(SaveState saveState)
-    { 
-    
+    {
+        _worldSaveStates = saveState.SavedWorldItems.ToDictionary(x => x.ObjectName, x => x);
+
+        Debug.Log($"Loading level {saveState.Level}");
+        StartCoroutine(LoadLevel(saveState.Level));
+        BallCount = saveState.BallCount;
+        if (_playerRigidBody != null && saveState.PositionX != 0f)
+        {
+            _playerRigidBody.position = new Vector2(saveState.PositionX, saveState.PositionY);
+        }   
+    }
+
+    private void LoadWorldState()
+    {
+        var saveObjects = GameObject.FindGameObjectsWithTag("SaveState");
+
+        foreach (GameObject saveObject in saveObjects)
+        {
+            SaveableWorldObject saveComponent = saveObject.GetComponent<SaveableWorldObject>();
+            if (_worldSaveStates.ContainsKey(saveObject.name))
+            {
+                saveComponent.ApplySaveState(_worldSaveStates[saveObject.name]);
+            }
+        }
     }
 }

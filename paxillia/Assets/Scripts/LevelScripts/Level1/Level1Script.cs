@@ -7,7 +7,7 @@ public class Level1Script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        GameManager.Instance.SaveGame();
         StartCoroutine(ParentalDialog());
     }
 

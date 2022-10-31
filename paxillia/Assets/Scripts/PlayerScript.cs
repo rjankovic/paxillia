@@ -38,6 +38,7 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        GameManager.Instance.SetPlayer(gameObject);
         EventHub.Instance.OnInputEnabled += OnInputEnabled;
 
         EventHub.Instance.InputEnabled(_inputEnabled);

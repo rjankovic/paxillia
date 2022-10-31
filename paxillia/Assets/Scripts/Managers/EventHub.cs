@@ -1,3 +1,4 @@
+using Assets.Scripts.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -52,6 +53,8 @@ public class EventHub : MonoBehaviour
 
     public event Action OnPaused;
     public event Action OnUnpaused;
+
+    public event Action<GameObjectSaveState> OnWorldSaveStateUpdated;
 
     private bool _inputEnabled;
 
@@ -137,6 +140,12 @@ public class EventHub : MonoBehaviour
     {
         if (OnUnpaused != null)
             OnUnpaused();
+    }
+
+    public void WordlSaveStateUpdate(GameObjectSaveState saveState)
+    {
+        if (OnWorldSaveStateUpdated != null)
+            OnWorldSaveStateUpdated(saveState);
     }
 
     //// Update is called once per frame
