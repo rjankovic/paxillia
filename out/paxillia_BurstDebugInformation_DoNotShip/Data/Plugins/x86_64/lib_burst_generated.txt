@@ -147,6 +147,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.2D.Animation.Runtime.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
+--root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Internal.dll
@@ -158,7 +159,6 @@ Library: lib_burst_generated
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.2D.Common.Runtime.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.2D.IK.Runtime.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Device.dll
---root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.2D.Tilemap.Extras.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Networking.dll
@@ -318,6 +318,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.2D.Animation.Runtime.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
+--root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Internal.dll
@@ -329,7 +330,6 @@ Library: lib_burst_generated
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.2D.Common.Runtime.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.2D.IK.Runtime.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Device.dll
---root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.2D.Tilemap.Extras.dll
 --root-assembly=C:\Projects\paxillia\paxillia\Temp\StagingArea\Data\Managed\Unity.Services.Core.Networking.dll

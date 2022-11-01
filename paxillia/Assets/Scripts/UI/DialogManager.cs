@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class DialogEventArgs : EventArgs
-{ 
+{
     public Dialog Dialog { get; set; }
 }
 
@@ -89,16 +89,45 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    private IEnumerator DisplayIngameDialog()
+    //private IEnumerator DisplayIngameDialog()
+    //{
+    //    while (_ingameMessages.Count > 0)
+    //    { 
+    //        _ingameMessage = _ingameMessages.Dequeue();
+    //        _currentIngameText.text = _ingameMessage.Text;
+    //        _currentIngameDialogCharacter.text = _ingameMessage.Character ?? string.Empty;
+    //        yield return new WaitForSeconds(_ingameMessage.Duration);
+    //    }
+    //    EndIngameDialog();
+    //}
+
+    private IEnumerator DisplayNextIngameMessage(int remainingCount)
     {
-        while (_ingameMessages.Count > 0)
-        { 
+        if (_ingameMessages.Count == 0)
+        {
+            EndIngameDialog();
+            yield return null;
+        }
+
+        if (_ingameMessages.Count < remainingCount)
+        {
+            yield return null;
+        }
+        if (_ingameMessages.Count > 0)
+        {
+
             _ingameMessage = _ingameMessages.Dequeue();
             _currentIngameText.text = _ingameMessage.Text;
             _currentIngameDialogCharacter.text = _ingameMessage.Character ?? string.Empty;
             yield return new WaitForSeconds(_ingameMessage.Duration);
+
+            StartCoroutine(DisplayNextIngameMessage(_ingameMessages.Count));
         }
-        EndIngameDialog();
+    }
+
+    public void SkipIngameMessage()
+    {
+        StartCoroutine(DisplayNextIngameMessage(_ingameMessages.Count));
     }
 
     private void EndDialog()
@@ -143,7 +172,8 @@ public class DialogManager : MonoBehaviour
         Debug.Log(EventHub.Instance);
         EventHub.Instance.IngameDialogOpen(_ingameDialog);
 
-        StartCoroutine(DisplayIngameDialog());
+        StartCoroutine(DisplayNextIngameMessage(_ingameMessages.Count));
+        //StartCoroutine(DisplayIngameDialog());
     }
 
 
