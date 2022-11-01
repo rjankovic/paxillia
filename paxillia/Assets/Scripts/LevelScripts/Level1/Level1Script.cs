@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Level1Script : MonoBehaviour
 {
+
+    private int _currentEscapeCount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,19 +38,78 @@ public class Level1Script : MonoBehaviour
 
     private void Instance_OnBallLost(GameObject obj)
     {
-        if (GameManager.Instance.BallCount == 0)
+        if (GameManager.Instance.BallCount > 0)
+        {
+            if (GameManager.Instance.BallEscapeCount > _currentEscapeCount)
+            {
+                if (GameManager.Instance.BallEscapeCount == 1)
+                {
+                    DialogManager.Instance.StartIngameDialog(new Dialog()
+                    {
+                        Messages = new List<Message>() {
+                            new Message() { Character = Constants.CHAR_DAD, Text = "You just threw one ball through the window and now you're throwing another one out?? What's that?", Duration = 7 }
+                        }
+                    });
+                }
+                else if (GameManager.Instance.BallEscapeCount == 2)
+                {
+                    DialogManager.Instance.StartIngameDialog(new Dialog()
+                    {
+                        Messages = new List<Message>() {
+                            new Message() { Character = Constants.CHAR_DAD, Text = "You trying make this household ballless?", Duration = 7 }
+                        }
+                    });
+                }
+            }
+
+            _currentEscapeCount = GameManager.Instance.BallEscapeCount;
+        }
+        else // (GameManager.Instance.BallCount == 0)
         {
             if (GameManager.Instance.BallEscapeTarget <= GameManager.Instance.BallEscapeCount)
             {
-                Debug.Log("LEVEL 1 VICTORY");
+                //Time.timeScale = 0;
+                EventHub.Instance.InputEnabled(false);
+
+                DialogManager.Instance.StartDialog(new Dialog()
+                {
+                    Messages = new List<Message>()
+                    {
+                        new Message() { Text = $"Great! You managed to escape with {GameManager.Instance.BallEscapeCount} balls! Now let's get out and find Rolly."}
+                    }
+                });
+                EventHub.Instance.OnDialogClose += (x) =>
+                {
+                    //Time.timeScale = 1;
+                    EventHub.Instance.InputEnabled(true);
+                    GameManager.Instance.GotoLevel(GameManager.LevelEnum.World);
+                };
+
             }
             else
             {
-                Debug.Log("LEVEL 1 DEFEAT");
+                //Time.timeScale = 0;
+                EventHub.Instance.InputEnabled(false);
+
+                DialogManager.Instance.StartDialog(new Dialog()
+                {
+                    Messages = new List<Message>()
+                    {
+                        new Message() { Text = $"Welp.. You managed to escape with {GameManager.Instance.BallEscapeCount} balls. You'll need at least {GameManager.Instance.BallEscapeTarget}. Try again."}
+                    }
+                });
+
+                EventHub.Instance.OnDialogClose += (x) =>
+                {
+                    //Time.timeScale = 1;
+                    EventHub.Instance.InputEnabled(true);
+                    GameManager.Instance.LoadGame();
+                };
             }
         }
     }
 
+    
     private void IntroDialogClosed(Dialog obj)
     {
         EventHub.Instance.OnIngameDialogClose -= IntroDialogClosed;
