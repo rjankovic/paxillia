@@ -56,7 +56,9 @@ public class EventHub : MonoBehaviour
 
     public event Action<GameObjectSaveState> OnWorldSaveStateUpdated;
 
-    private bool _inputEnabled;
+    //private bool _inputEnabled;
+
+    public event Action OnBallServeRequest;
 
     public void BallBumpOffWall()
     {
@@ -146,6 +148,12 @@ public class EventHub : MonoBehaviour
     {
         if (OnWorldSaveStateUpdated != null)
             OnWorldSaveStateUpdated(saveState);
+    }
+
+    public void BallServeRequest()
+    {
+        if (OnBallServeRequest != null)
+            OnBallServeRequest();
     }
 
     //// Update is called once per frame

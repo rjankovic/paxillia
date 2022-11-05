@@ -14,14 +14,20 @@ public class WorldScript : MonoBehaviour
         }
 
 
-        StartCoroutine(ParentalDialog());
+        StartCoroutine(WorldIntroDialog());
+
+        EventHub.Instance.OnBallLost += OnBallLost;
     }
 
-    private IEnumerator ParentalDialog()
+    
+
+    private IEnumerator WorldIntroDialog()
     {
         yield return new WaitForSeconds(1f);
 
-        DialogManager.Instance.StartIngameDialog(new Dialog()
+        EventHub.Instance.OnDialogClose += IntroDialogClosed;
+
+        DialogManager.Instance.StartDialog(new Dialog()
         {
             Messages = new List<Message>
             {
@@ -38,6 +44,29 @@ public class WorldScript : MonoBehaviour
         //EventHub.Instance.OnBallLost += Instance_OnBallLost;
 
         //EventHub.Instance.OnIngameDialogClose += IntroDialogClosed;
+    }
+
+    private void IntroDialogClosed(Dialog obj)
+    {
+        EventHub.Instance.OnDialogClose -= IntroDialogClosed;
+        Debug.Log("Intro dialog closed");
+        StartCoroutine(ServeNextBall(1));
+    }
+
+    private void OnBallLost(GameObject obj)
+    {
+        if (GameManager.Instance.BallCount > 0)
+        {
+            StartCoroutine(ServeNextBall());
+            return;
+        }
+    }
+
+    private IEnumerator ServeNextBall(float delay = 3)
+    {
+        yield return new WaitForSeconds(delay);
+        Debug.Log("Requesting a ball");
+        EventHub.Instance.BallServeRequest();
     }
 
     // Update is called once per frame

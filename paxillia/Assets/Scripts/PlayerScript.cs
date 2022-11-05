@@ -42,6 +42,8 @@ public class PlayerScript : MonoBehaviour
         EventHub.Instance.OnInputEnabled += OnInputEnabled;
 
         EventHub.Instance.InputEnabled(_inputEnabled);
+
+        EventHub.Instance.OnBallServeRequest += ServeBallInner;
         //rigidBody.velocity = new Vector2(10f, 0f);
     }
 
@@ -109,6 +111,16 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
+        if (GameManager.Instance.CurrentLevel == LevelEnum.World)
+        {
+            return;
+        }
+
+        ServeBallInner();
+    }
+
+    private void ServeBallInner()
+    {
         Debug.Log("Serving ball");
 
         var ballPosition = new Vector3(transform.position.x, transform.position.y + transform.localScale.y / 2 + _ballPrefab.transform.localScale.y / 2 + 0.1f, 0);
