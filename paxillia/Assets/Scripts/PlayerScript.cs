@@ -184,7 +184,7 @@ public class PlayerScript : MonoBehaviour
             frameRelative = (frameRelative++) % frequency;
             if (frameRelative == 0)
             {
-                Debug.Log($"T {_targetWorldPosition.y}\tR {rigidBody.position.y}\t{delta}");
+                //Debug.Log($"T {_targetWorldPosition.y}\tR {rigidBody.position.y}\t{delta}");
             }
 
             if (!_verticalMovementEnabled)

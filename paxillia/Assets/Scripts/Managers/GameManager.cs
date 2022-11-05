@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     private Animator crossFader;
 
     private int ballCount = 3;
-    private int switch_on;
+    //private int switch_on;
     private bool _inputEnabled;
     private string _savePath;
 
@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviour
         get => ballCount;
         set { ballCount = value; if(EventHub.Instance != null) EventHub.Instance.BallCountUpdate(value); }
     }
+
+    private bool _saveOnLevelStart = false;
+    public bool SaveOnLevelStart { get => _saveOnLevelStart; set => _saveOnLevelStart = value; }
+
 
     private void Awake()
     {
@@ -70,6 +74,9 @@ public class GameManager : MonoBehaviour
             EventHub.Instance.OnInputEnabled += EventHub_OnInputEnabled;
             EventHub.Instance.OnWorldSaveStateUpdated += OnWorldSaveStateUpdated;
         }
+
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+
     }
 
     private void OnWorldSaveStateUpdated(GameObjectSaveState obj)
@@ -193,14 +200,27 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         SceneManager.LoadScene(levelName);
+        
 
+        //crossFader.SetTrigger("Fadein");
+
+        //if (SaveOnLevelStart)
+        //{
+        //    SaveGame();
+        //    SaveOnLevelStart = false;
+        //}
+
+    }
+
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        
         if (CurrentLevel == LevelEnum.World)
         {
             LoadWorldState();
         }
 
         crossFader.SetTrigger("Fadein");
-
     }
 
     public GameStateEnum GameState
@@ -222,7 +242,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool InputEnabled { get => _inputEnabled; }
-
+    
     //public void GoToLevel(LevelEnum level)
     //{ 
 

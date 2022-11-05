@@ -78,6 +78,10 @@ public class Level1Script : MonoBehaviour
                         new Message() { Text = $"Great! You managed to escape with {GameManager.Instance.BallEscapeCount} balls! Now let's get out and find Rolly."}
                     }
                 });
+
+                GameManager.Instance.BallCount = GameManager.Instance.BallEscapeCount;
+                GameManager.Instance.SaveOnLevelStart = true;
+
                 EventHub.Instance.OnDialogClose += (x) =>
                 {
                     //Time.timeScale = 1;

@@ -90,7 +90,7 @@ public class BallScript : MonoBehaviour
         //var collidingBody = collisionObject.GetComponent<BoxCollider2D>();
 
         var width = collider.bounds.size.x; //collisionObject.  //collisionObject.transform.localScale.x;
-        Debug.Log($"Bump width: {width}");
+        //Debug.Log($"Bump width: {width}");
         var relativePoint = relativePosition / width;
 
 

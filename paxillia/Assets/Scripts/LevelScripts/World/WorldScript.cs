@@ -7,6 +7,12 @@ public class WorldScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameManager.Instance.SaveOnLevelStart)
+        {
+            GameManager.Instance.SaveGame();
+            GameManager.Instance.SaveOnLevelStart = false;
+        }
+
 
         StartCoroutine(ParentalDialog());
     }
