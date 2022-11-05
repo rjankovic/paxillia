@@ -28,7 +28,7 @@ namespace Assets.Scripts.Managers
     {
     }
 
-    public abstract class SaveableWorldObject
+    public abstract class SaveableWorldObject : MonoBehaviour
     {
         public abstract GameObjectSaveState GetSaveState();
 

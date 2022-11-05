@@ -1,3 +1,4 @@
+using Assets.Scripts.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,17 @@ public class BallsCollectibleScript : MonoBehaviour
         {
             Destroy(gameObject);
             GameManager.Instance.BallCount += 3;
+            DialogManager.Instance.StartIngameDialog(new Dialog()
+            {
+                Messages = new List<Message>()
+                {
+                    new Message() { Character = Constants.CHAR_PAL, Text = "Yay, a few more balls!", Duration = 4 }
+                }
+            });
+
+            GenericCollectible saveComponent = GetComponent<GenericCollectible>();
+            //Debug.Log("Balls collected");
+            saveComponent.SetCollected();
         }
     }
 }

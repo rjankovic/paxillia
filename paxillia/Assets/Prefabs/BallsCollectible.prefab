@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1826818960941664700}
   - component: {fileID: 8949894792637954513}
   - component: {fileID: 8130979448238452044}
+  - component: {fileID: 3764947146822043433}
   m_Layer: 0
   m_Name: BallsCollectible
   m_TagString: SaveState
@@ -122,5 +123,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9ddb524209c6fc4ca9e6f39f1912b15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3764947146822043433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826818960941664703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cc19e6260ea1b546a6ea124e5d31b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

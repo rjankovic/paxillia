@@ -57,6 +57,14 @@ public class WorldScript : MonoBehaviour
     {
         if (GameManager.Instance.BallCount > 0)
         {
+            DialogManager.Instance.StartIngameDialog(new Dialog()
+            { 
+                Messages = new List<Message>()
+                { 
+                    new Message() { Character = Constants.CHAR_PAL, Text = "Ooh, another ball out os sight... better take a new one.", Duration = 5 }
+                }
+            });
+
             StartCoroutine(ServeNextBall());
             return;
         }

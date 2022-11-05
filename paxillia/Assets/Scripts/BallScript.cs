@@ -23,7 +23,7 @@ public class BallScript : MonoBehaviour
         rigidbody.velocity = new Vector2(0, 1 * _ballSpeed);
         renderer = GetComponent<SpriteRenderer>();
 
-        if (GameManager.Instance.GameState == GameManager.GameStateEnum.World)
+        if (GameManager.Instance.CurrentLevel == GameManager.LevelEnum.World)
         {
             Debug.Log("Ball in world - 5s lost delay");
             _ballLostDelay = 5;

@@ -146,6 +146,7 @@ public class EventHub : MonoBehaviour
 
     public void WordlSaveStateUpdate(GameObjectSaveState saveState)
     {
+        Debug.Log($"Save state of {saveState.ObjectName}");
         if (OnWorldSaveStateUpdated != null)
             OnWorldSaveStateUpdated(saveState);
     }
