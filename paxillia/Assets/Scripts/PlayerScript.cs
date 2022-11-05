@@ -149,6 +149,9 @@ public class PlayerScript : MonoBehaviour
         //}
     }
 
+    private int frequency = 30;
+    private int frameRelative = 0;
+
     private void FixedUpdate()
     {
         if (!_inputEnabled)
@@ -167,17 +170,22 @@ public class PlayerScript : MonoBehaviour
         //var deltaVector = inputValue.Get<Vector2>();
         var absoluteVector = Mouse.current.position.ReadValue();
         var screenV3 = new Vector3(absoluteVector.x, absoluteVector.y, 0);
-        _targetWorldPosition = Camera.main.ScreenToWorldPoint(screenV3) - _initMouseWorldPosition;
+        _targetWorldPosition = Camera.main.ScreenToWorldPoint(screenV3); // - _initMouseWorldPosition;
 
         if (!_verticalMovementEnabled)
         {
-            _targetWorldPosition.y = transform.position.y;
+            _targetWorldPosition.y = rigidBody.position.y; // transform.position.y;
         }
 
         if (_targetWorldPosition.x != -1 /*&& !_inWall*/)
         {
             var delta = (Vector2)_targetWorldPosition - rigidBody.position;
-            
+
+            frameRelative = (frameRelative++) % frequency;
+            if (frameRelative == 0)
+            {
+                Debug.Log($"T {_targetWorldPosition.y}\tR {rigidBody.position.y}\t{delta}");
+            }
 
             if (!_verticalMovementEnabled)
             {
