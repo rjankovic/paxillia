@@ -61,6 +61,8 @@ public class EventHub : MonoBehaviour
 
     public event Action<Vector2> OnCameraFocus;
 
+    public event Action<Vector2> OnPausedBallVelocity;
+
     //private bool _inputEnabled;
 
     public event Action OnBallServeRequest;
@@ -180,7 +182,15 @@ public class EventHub : MonoBehaviour
     public void CameraFocus(Vector2 position)
     {
         if (OnCameraFocus != null)
-            CameraFocus(position);
+            OnCameraFocus(position);
+    }
+
+    public void PausedBallVelocity(Vector2 velocity)
+    {
+        if (OnPausedBallVelocity != null)
+        {
+            OnPausedBallVelocity(velocity);
+        }
     }
 
 

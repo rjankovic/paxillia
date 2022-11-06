@@ -20,6 +20,7 @@ public class CameraScript : MonoBehaviour
 
     private void Instance_OnCameraFocus(Vector2 obj)
     {
+        Debug.Log($"Set camera position to {obj}");
         transform.position = new Vector3(obj.x, obj.y, 0f);
     }
 

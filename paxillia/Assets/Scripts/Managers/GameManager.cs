@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject _player;
     private Rigidbody2D _playerRigidBody;
+    private Vector2 _pausedBallVelocity = Vector2.zero;
 
     private Dictionary<string, GameObjectSaveState> _worldSaveStates = new Dictionary<string, GameObjectSaveState>();
 
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour
         {
             EventHub.Instance.OnInputEnabled += EventHub_OnInputEnabled;
             EventHub.Instance.OnWorldSaveStateUpdated += OnWorldSaveStateUpdated;
+            EventHub.Instance.OnPausedBallVelocity += (v) => _pausedBallVelocity = v;
         }
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
@@ -365,8 +367,17 @@ public class GameManager : MonoBehaviour
                 saveState.BallInGame = true;
                 saveState.BallPositionX = ballRigidBody.position.x;
                 saveState.BallPositionY = ballRigidBody.position.y;
-                saveState.BallVelocityX = ballRigidBody.velocity.x;
-                saveState.BallVelocityY = ballRigidBody.velocity.y;
+
+                if (ballRigidBody.velocity.magnitude > 0)
+                {
+                    saveState.BallVelocityX = ballRigidBody.velocity.x;
+                    saveState.BallVelocityY = ballRigidBody.velocity.y;
+                }
+                else
+                {
+                    saveState.BallVelocityX = _pausedBallVelocity.x;
+                    saveState.BallVelocityY = _pausedBallVelocity.y;
+                }
             }
         }
 

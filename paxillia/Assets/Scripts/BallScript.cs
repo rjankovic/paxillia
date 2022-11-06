@@ -20,7 +20,10 @@ public class BallScript : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.velocity = new Vector2(0, 1 * _ballSpeed);
+        if (rigidbody.velocity.magnitude == 0)
+        {
+            rigidbody.velocity = new Vector2(0, 1 * _ballSpeed);
+        }
         renderer = GetComponent<SpriteRenderer>();
 
         if (GameManager.Instance.CurrentLevel == GameManager.LevelEnum.World)
@@ -46,6 +49,7 @@ public class BallScript : MonoBehaviour
         {
             return;
         }
+        EventHub.Instance.PausedBallVelocity(rigidbody.velocity);
         rigidbody.velocity = Vector2.zero;
     }
 
