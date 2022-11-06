@@ -63,6 +63,8 @@ public class EventHub : MonoBehaviour
 
     public event Action OnBallServeRequest;
 
+    //public event Action OnLevelLoaded;
+
     public void BallBumpOffWall()
     {
         if(OnBallBumpOffWall != null)
@@ -173,6 +175,11 @@ public class EventHub : MonoBehaviour
             OnBallServeRequest();
     }
 
+    //public void LevelLoaded()
+    //{
+    //    if (OnLevelLoaded != null)
+    //        OnLevelLoaded();
+    //}
     //// Update is called once per frame
     //void Update()
     //{

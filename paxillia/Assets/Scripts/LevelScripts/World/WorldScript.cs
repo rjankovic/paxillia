@@ -13,8 +13,10 @@ public class WorldScript : MonoBehaviour
             GameManager.Instance.SaveOnLevelStart = false;
         }
 
-
-        StartCoroutine(WorldIntroDialog());
+        if (!GameManager.Instance.LoadedLevelStart)
+        {
+            StartCoroutine(WorldIntroDialog());
+        }
 
         EventHub.Instance.OnBallLost += OnBallLost;
     }

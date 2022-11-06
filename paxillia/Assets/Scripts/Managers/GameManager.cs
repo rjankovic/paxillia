@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Animator crossFader;
 
+    [SerializeField]
+    private GameObject _ballPrefab = null;
+
     private int ballCount = 3;
     //private int switch_on;
     private bool _inputEnabled;
@@ -29,11 +32,12 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<string, GameObjectSaveState> _worldSaveStates = new Dictionary<string, GameObjectSaveState>();
 
-
     public GameObject Ball { get; private set; }
 
     public int BallEscapeCount { get; set; }
     public int BallEscapeTarget { get; set; }
+
+    public bool LoadedLevelStart { get; private set; }
 
     public int BallCount
     {
@@ -103,9 +107,18 @@ public class GameManager : MonoBehaviour
 
                 _saveStateAfterLoad.PositionX = 0f;
             }
-
+            if (Ball == null && _saveStateAfterLoad.BallInGame)
+            {
+                var ballPosition = new Vector3(_saveStateAfterLoad.BallPositionX, _saveStateAfterLoad.BallPositionY, 0);
+                var ballObject = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
+                Ball = ballObject;
+                var ballRigidbody = ballObject.GetComponent<Rigidbody2D>();
+                ballRigidbody.velocity = new Vector2(_saveStateAfterLoad.BallVelocityX, _saveStateAfterLoad.BallVelocityY);
+            }
             //_saveStateAfterLoad = null;
         }
+
+        
 
         //Debug.Log("Getting player script");
         //var playerScript = gameObject.GetComponent<PlayerScript>();
@@ -208,6 +221,7 @@ public class GameManager : MonoBehaviour
     public void GotoLevel(LevelEnum level)
     {
         var levelName = LevelEnumToScene(level);
+        LoadedLevelStart = false;
         StartCoroutine(LoadLevel(levelName));
     }
 
@@ -339,6 +353,20 @@ public class GameManager : MonoBehaviour
             saveState.PositionY = _playerRigidBody.position.y;
         }
 
+        if (Ball != null)
+        {
+            var ballRigidBody = Ball.GetComponent<Rigidbody2D>();
+
+            if (ballRigidBody != null)
+            {
+                saveState.BallInGame = true;
+                saveState.BallPositionX = ballRigidBody.position.x;
+                saveState.BallPositionY = ballRigidBody.position.y;
+                saveState.BallVelocityX = ballRigidBody.velocity.x;
+                saveState.BallVelocityY = ballRigidBody.velocity.y;
+            }
+        }
+
         return saveState;
     }
 
@@ -348,6 +376,7 @@ public class GameManager : MonoBehaviour
         _saveStateAfterLoad = saveState;
 
         Debug.Log($"Loading level {saveState.Level}");
+        LoadedLevelStart = true;
         StartCoroutine(LoadLevel(saveState.Level));
         BallCount = saveState.BallCount;
 

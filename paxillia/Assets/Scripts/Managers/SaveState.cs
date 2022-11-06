@@ -12,6 +12,14 @@ namespace Assets.Scripts.Managers
         public string Level { get; set; }
         public float PositionX { get; set; }
         public float PositionY { get; set; }
+
+        public float BallPositionX { get; set; }
+        public float BallPositionY { get; set; }
+        public float BallVelocityX { get; set; }
+        public float BallVelocityY { get; set; }
+
+        public bool BallInGame { get; set; }
+
         public int BallCount { get; set; }
         public List<GameObjectSaveState> SavedWorldItems { get; set; }
 

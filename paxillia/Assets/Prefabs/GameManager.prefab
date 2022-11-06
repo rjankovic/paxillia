@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crossFader: {fileID: 4173753110811633164}
+  _ballPrefab: {fileID: 2700187895984707813, guid: 63121ea35fdeb9344b6946008b173011, type: 3}
 --- !u!1001 &4366127604328741428
 PrefabInstance:
   m_ObjectHideFlags: 0

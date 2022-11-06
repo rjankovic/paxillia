@@ -7,7 +7,7 @@ public class SaveSign : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(ActivateDelay());
     }
 
     // Update is called once per frame
@@ -16,9 +16,15 @@ public class SaveSign : MonoBehaviour
 
     }
 
+    private bool _saveActive = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!_saveActive)
+        {
+            return;
+        }
+
         if (collision.gameObject.tag != Constants.TAG_BALL)
         {
             return;
@@ -51,6 +57,12 @@ public class SaveSign : MonoBehaviour
         });
 
 
+    }
+
+    private IEnumerator ActivateDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        _saveActive = true;
     }
 
     //private void OnSaveDialogClose(Dialog obj)
