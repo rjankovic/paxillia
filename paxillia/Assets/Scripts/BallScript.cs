@@ -41,6 +41,11 @@ public class BallScript : MonoBehaviour
     
     private void OnDialogPaused()
     {
+        if (gameObject == null)
+        {
+            return;
+        }
+
         if (rigidbody == null)
         {
             rigidbody = GetComponent<Rigidbody2D>();
