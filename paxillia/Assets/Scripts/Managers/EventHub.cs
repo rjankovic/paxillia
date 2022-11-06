@@ -54,6 +54,9 @@ public class EventHub : MonoBehaviour
     public event Action OnPaused;
     public event Action OnUnpaused;
 
+    public event Action OnDialogPaused;
+    public event Action OnDialogUnpaused;
+
     public event Action<GameObjectSaveState> OnWorldSaveStateUpdated;
 
     //private bool _inputEnabled;
@@ -143,6 +146,19 @@ public class EventHub : MonoBehaviour
         if (OnUnpaused != null)
             OnUnpaused();
     }
+
+    public void DialogPause()
+    {
+        if (OnDialogPaused != null)
+            OnDialogPaused();
+    }
+
+    public void DialogUnpause()
+    {
+        if (OnDialogUnpaused != null)
+            OnDialogUnpaused();
+    }
+
 
     public void WordlSaveStateUpdate(GameObjectSaveState saveState)
     {

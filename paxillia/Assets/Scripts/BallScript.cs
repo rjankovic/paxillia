@@ -30,7 +30,31 @@ public class BallScript : MonoBehaviour
         }
         //var sceneName = SceneManager.GetActiveScene().name;
         //Debug.Log($"scene {sceneName}");
+
+        EventHub.Instance.OnDialogPaused += OnDialogPaused;
+        EventHub.Instance.OnDialogUnpaused += OnDialogUnpaused;
     }
+
+    
+    private void OnDialogPaused()
+    {
+        if (rigidbody == null)
+        {
+            rigidbody = GetComponent<Rigidbody2D>();
+        }
+        if (rigidbody == null)
+        {
+            return;
+        }
+        rigidbody.velocity = Vector2.zero;
+    }
+
+    private void OnDialogUnpaused()
+    {
+        rigidbody.velocity = _velocity;
+    }
+
+
     void OnBecameInvisible()
     {
         if (gameObject.activeSelf)

@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
         set { ballCount = value; if(EventHub.Instance != null) EventHub.Instance.BallCountUpdate(value); }
     }
 
+    private SaveState _saveStateAfterLoad;
     private bool _saveOnLevelStart = false;
     public bool SaveOnLevelStart { get => _saveOnLevelStart; set => _saveOnLevelStart = value; }
 
@@ -86,8 +87,25 @@ public class GameManager : MonoBehaviour
 
     public void SetPlayer(GameObject gameObject)
     {
+        //Debug.Log("Set player in GM");
         _player = gameObject;
         _playerRigidBody = _player.GetComponent<Rigidbody2D>();
+
+        if (_saveStateAfterLoad != null)
+        {
+            //Debug.Log("save state after load");
+            //Debug.Log($"{_playerRigidBody}");
+
+            if (_playerRigidBody != null && _saveStateAfterLoad.PositionX != 0f)
+            {
+                //Debug.Log($"setting position {_saveStateAfterLoad.PositionX} {_saveStateAfterLoad.PositionY}");
+                _playerRigidBody.position = new Vector2(_saveStateAfterLoad.PositionX, _saveStateAfterLoad.PositionY);
+
+                _saveStateAfterLoad.PositionX = 0f;
+            }
+
+            //_saveStateAfterLoad = null;
+        }
 
         //Debug.Log("Getting player script");
         //var playerScript = gameObject.GetComponent<PlayerScript>();
@@ -327,14 +345,13 @@ public class GameManager : MonoBehaviour
     private void ApplySaveState(SaveState saveState)
     {
         _worldSaveStates = saveState.SavedWorldItems.ToDictionary(x => x.ObjectName, x => x);
+        _saveStateAfterLoad = saveState;
 
         Debug.Log($"Loading level {saveState.Level}");
         StartCoroutine(LoadLevel(saveState.Level));
         BallCount = saveState.BallCount;
-        if (_playerRigidBody != null && saveState.PositionX != 0f)
-        {
-            _playerRigidBody.position = new Vector2(saveState.PositionX, saveState.PositionY);
-        }   
+
+        
     }
 
     private void LoadWorldState()

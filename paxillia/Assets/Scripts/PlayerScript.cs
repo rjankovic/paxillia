@@ -11,6 +11,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private bool _inputEnabled = false;
 
+    private bool _inputEnabledBeforePause = false;
+
     [SerializeField]
     private GameObject _ballPrefab = null;
 
@@ -34,6 +36,8 @@ public class PlayerScript : MonoBehaviour
     private Vector2 _previousDeltaMovement = Vector2.zero;
     //private Vector2 _normalizedCollision = Vector2.zero;
 
+    private Vector2 _previousVelocity = Vector2.zero;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +49,23 @@ public class PlayerScript : MonoBehaviour
 
         EventHub.Instance.OnBallServeRequest += ServeBallInner;
         //rigidBody.velocity = new Vector2(10f, 0f);
+
+        EventHub.Instance.OnDialogPaused += OnDialogPaused;
+        EventHub.Instance.OnDialogUnpaused += OnDialogUnpaused;
+    }
+
+    private void OnDialogPaused()
+    {
+        _previousVelocity = rigidBody.velocity;
+        rigidBody.velocity = Vector2.zero;
+        _inputEnabledBeforePause = _inputEnabled;
+        _inputEnabled = false;
+    }
+
+    private void OnDialogUnpaused()
+    {
+        _inputEnabled = _inputEnabledBeforePause;
+        rigidBody.velocity = _previousVelocity;
     }
 
     private void OnInputEnabled(bool enabled)

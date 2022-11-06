@@ -34,6 +34,17 @@ public class DialogManager : MonoBehaviour
     [SerializeField]
     private GameObject _pausePanel;
 
+    [SerializeField]
+    private GameObject _yesButton;
+    [SerializeField]
+    private GameObject _noButton;
+    [SerializeField]
+    private GameObject _okButton;
+
+    private Action _yesAction;
+    private Action _noAction;
+
+
     private bool _gamePaused = false;
 
     //[SerializeField]
@@ -53,10 +64,26 @@ public class DialogManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+    }
+
+    private void SetButtonsForDialog()
+    {
+        _yesButton.SetActive(false);
+        _noButton.SetActive(false);
+        _okButton.SetActive(true);
+    }
+
+    private void SetButtonsForYesNo()
+    {
+        _yesButton.SetActive(true);
+        _noButton.SetActive(true);
+        _okButton.SetActive(false);
     }
 
     public void StartDialog(Dialog dialog)
     {
+        SetButtonsForDialog();
         _dialog = dialog;
         _messages = new Queue<Message>();
         foreach (var message in dialog.Messages)
@@ -75,6 +102,25 @@ public class DialogManager : MonoBehaviour
         DisplayNextMessage();
     }
 
+
+    public void StartYesNoDialog(Dialog dialog, Action yesAction, Action noAction)
+    {
+        SetButtonsForYesNo();
+        _yesAction = yesAction;
+        _noAction = noAction;
+
+        _dialog = dialog;
+        _messages = new Queue<Message>();
+        foreach (var message in dialog.Messages)
+        {
+            _messages.Enqueue(message);
+        }
+
+        EventHub.Instance.DialogOpen(_dialog);
+
+        DisplayNextMessage();
+    }
+
     public void DisplayNextMessage()
     {
         Debug.Log("Display next message");
@@ -86,6 +132,24 @@ public class DialogManager : MonoBehaviour
         {
             _message = _messages.Dequeue();
             _currentText.text = _message.Text;
+        }
+    }
+
+    public void YesClick()
+    {
+        EndDialog();
+        if (_yesAction != null)
+        {
+            _yesAction();
+        }
+    }
+
+    public void NoClick()
+    {
+        EndDialog();
+        if (_noAction != null)
+        {
+            _noAction();
         }
     }
 
