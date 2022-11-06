@@ -49,10 +49,12 @@ public class SaveSign : MonoBehaviour
                     new Message() { Text = "Game saved." }
                 }
             });
+            ActivateDelay();
             EventHub.Instance.DialogUnpause();
         },
         noAction: () =>
         {
+            ActivateDelay();
             EventHub.Instance.DialogUnpause();
         });
 
@@ -61,7 +63,8 @@ public class SaveSign : MonoBehaviour
 
     private IEnumerator ActivateDelay()
     {
-        yield return new WaitForSeconds(3f);
+        _saveActive = false;
+        yield return new WaitForSeconds(6f);
         _saveActive = true;
     }
 

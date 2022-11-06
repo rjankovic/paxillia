@@ -114,6 +114,8 @@ public class GameManager : MonoBehaviour
                 Ball = ballObject;
                 var ballRigidbody = ballObject.GetComponent<Rigidbody2D>();
                 ballRigidbody.velocity = new Vector2(_saveStateAfterLoad.BallVelocityX, _saveStateAfterLoad.BallVelocityY);
+
+                Debug.Log($"Loaded ball to position\t {ballRigidbody.position}");
             }
             //_saveStateAfterLoad = null;
         }
