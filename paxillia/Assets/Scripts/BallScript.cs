@@ -51,7 +51,10 @@ public class BallScript : MonoBehaviour
 
     private void OnDialogUnpaused()
     {
-        rigidbody.velocity = _velocity;
+        if (rigidbody != null)
+        {
+            rigidbody.velocity = _velocity;
+        }
     }
 
 

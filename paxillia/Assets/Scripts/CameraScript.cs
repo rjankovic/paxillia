@@ -14,7 +14,13 @@ public class CameraScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log(EventHub.Instance);
+        EventHub.Instance.OnCameraFocus += Instance_OnCameraFocus;
+    }
+
+    private void Instance_OnCameraFocus(Vector2 obj)
+    {
+        transform.position = new Vector3(obj.x, obj.y, 0f);
     }
 
     // Update is called once per frame

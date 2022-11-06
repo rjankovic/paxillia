@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour
                 var ballRigidbody = ballObject.GetComponent<Rigidbody2D>();
                 ballRigidbody.velocity = new Vector2(_saveStateAfterLoad.BallVelocityX, _saveStateAfterLoad.BallVelocityY);
 
+                EventHub.Instance.CameraFocus(new Vector2(_saveStateAfterLoad.BallPositionX, _saveStateAfterLoad.BallPositionY));
                 Debug.Log($"Loaded ball to position\t {ballRigidbody.position}");
             }
             //_saveStateAfterLoad = null;

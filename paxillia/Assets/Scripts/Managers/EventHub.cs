@@ -59,6 +59,8 @@ public class EventHub : MonoBehaviour
 
     public event Action<GameObjectSaveState> OnWorldSaveStateUpdated;
 
+    public event Action<Vector2> OnCameraFocus;
+
     //private bool _inputEnabled;
 
     public event Action OnBallServeRequest;
@@ -174,6 +176,13 @@ public class EventHub : MonoBehaviour
         if (OnBallServeRequest != null)
             OnBallServeRequest();
     }
+
+    public void CameraFocus(Vector2 position)
+    {
+        if (OnCameraFocus != null)
+            CameraFocus(position);
+    }
+
 
     //public void LevelLoaded()
     //{
