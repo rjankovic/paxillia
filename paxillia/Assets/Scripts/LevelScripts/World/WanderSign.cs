@@ -56,7 +56,7 @@ public class WanderSign : MonoBehaviour
     private IEnumerator ActivateDelay()
     {
         _active = false;
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(60f);
         _active = true;
     }
 

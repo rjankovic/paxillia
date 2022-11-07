@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SanctuarySign : MonoBehaviour
+public class WorldEndSign : MonoBehaviour
 {
     
     // Start is called before the first frame update
@@ -39,7 +39,7 @@ public class SanctuarySign : MonoBehaviour
         {
             Messages = new List<Message>()
             {
-                new Message() { Text = $"This is a sanctuary place for all the poor paddles terrorized by that Teutonic beast Gertruda.\n\nVive la résistance à la pagaie!" }
+                new Message() { Text = $"The last paddle before you, that wandered to this forsaken good-for-nothing outhouse of a place, lost their balls out of sheer desperation.\n\nNow you are here. Oh well..." }
             }
         });
 
