@@ -87,6 +87,10 @@ public class BallScript : MonoBehaviour
         {
             Debug.Log("Ball lost");
             GameManager.Instance.BallLost(gameObject);
+
+            EventHub.Instance.OnDialogPaused -= OnDialogPaused;
+            EventHub.Instance.OnDialogUnpaused -= OnDialogUnpaused;
+
             Destroy(gameObject);
         }
     }
