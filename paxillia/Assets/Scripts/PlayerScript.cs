@@ -19,6 +19,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private bool _verticalMovementEnabled = false;
 
+    [SerializeField]
+    private bool _serveBallOnTop = true;
+
     //private bool _movingUp = false;
     //private bool _movingDown = false;
 
@@ -145,6 +148,12 @@ public class PlayerScript : MonoBehaviour
         Debug.Log("Serving ball");
 
         var ballPosition = new Vector3(transform.position.x, transform.position.y + transform.localScale.y / 2 + _ballPrefab.transform.localScale.y / 2 + 0.1f, 0);
+
+        if (!_serveBallOnTop)
+        {
+            ballPosition = new Vector3(transform.position.x, transform.position.y - transform.localScale.y / 2 - _ballPrefab.transform.localScale.y / 2 + 0.1f, 0);
+        }
+
         var ballObject = Instantiate(_ballPrefab, ballPosition, Quaternion.identity);
         GameManager.Instance.BallServed(ballObject);
 
