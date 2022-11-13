@@ -15,7 +15,7 @@ public class CrackableWallScript : MonoBehaviour
     private  int sideWidth = 7;
     private  int midWidth = 2;
 
-    private class WallColumn
+    public class WallColumn
     {
         public float LeftX;
         public float RightX;
@@ -25,7 +25,7 @@ public class CrackableWallScript : MonoBehaviour
         public int ColumnNumber;
     }
 
-    private List<WallColumn> columns = new List<WallColumn>();
+    public static List<WallColumn> Columns = new List<WallColumn>();
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +47,7 @@ public class CrackableWallScript : MonoBehaviour
             s.InsertPointAt(s.GetPointCount(), new Vector3(i, topHeight, 0));
             s.InsertPointAt(s.GetPointCount(), new Vector3((float)i - (i > sideWidth + midWidth + 1 ? 0.5f : 1f), topHeight, 0));
 
-            columns.Add(new WallColumn()
+            Columns.Add(new WallColumn()
             {
                 LeftX = position.x + i - 1,
                 RightX = position.x + i,
@@ -57,7 +57,7 @@ public class CrackableWallScript : MonoBehaviour
                 ColumnNumber = columnsLeft--
             });
 
-            var c = columns[columns.Count - 1];
+            var c = Columns[Columns.Count - 1];
             Debug.Log($"{c.ColumnNumber} L {c.LeftX} R {c.RightX}");
 
             pointCount += 2;
@@ -68,7 +68,7 @@ public class CrackableWallScript : MonoBehaviour
             s.InsertPointAt(s.GetPointCount(), new Vector3(i, bottomHeight, 0));
             s.InsertPointAt(s.GetPointCount(), new Vector3((float)i - (i > sideWidth + 1 ? 0.5f : 1f), bottomHeight, 0));
 
-            columns.Add(new WallColumn()
+            Columns.Add(new WallColumn()
             {
                 LeftX = position.x + i - 1,
                 RightX = position.x + i,
@@ -78,7 +78,7 @@ public class CrackableWallScript : MonoBehaviour
                 ColumnNumber = columnsLeft--
             });
 
-            var c = columns[columns.Count - 1];
+            var c = Columns[Columns.Count - 1];
             Debug.Log($"{c.ColumnNumber} L {c.LeftX} R {c.RightX}");
 
             pointCount += 2;
@@ -89,7 +89,7 @@ public class CrackableWallScript : MonoBehaviour
             s.InsertPointAt(s.GetPointCount(), new Vector3(i, topHeight, 0));
             s.InsertPointAt(s.GetPointCount(), new Vector3((float)i - (i > 1 ? 0.5f : 1f), topHeight, 0));
 
-            columns.Add(new WallColumn()
+            Columns.Add(new WallColumn()
             {
                 LeftX = position.x + i - 1,
                 RightX = position.x + i,
@@ -99,7 +99,7 @@ public class CrackableWallScript : MonoBehaviour
                 ColumnNumber = columnsLeft--
             });
 
-            var c = columns[columns.Count - 1];
+            var c = Columns[Columns.Count - 1];
             Debug.Log($"{c.ColumnNumber} L {c.LeftX} R {c.RightX}");
 
             pointCount += 2;
@@ -135,10 +135,16 @@ public class CrackableWallScript : MonoBehaviour
 
         var contactPoint = collision.contacts[0].point;
         Debug.Log($"C {contactPoint}");
-        var column = columns.First(x => x.LeftX <= contactPoint.x && x.RightX >= contactPoint.x);
+        var column = Columns.First(x => x.LeftX <= contactPoint.x && x.RightX >= contactPoint.x);
         Debug.Log($"Column {column.ColumnNumber} H {column.Height} L {column.LeftX} R {column.RightX}");
 
-        WallColumn columnToLeft = columns.FirstOrDefault(x => x.ColumnNumber == column.ColumnNumber - 1);
+        // do not crack if hitting from the side
+        if (column.Height + position.y - contactPoint.y > 0.1)
+        {
+            return;
+        }
+
+        WallColumn columnToLeft = Columns.FirstOrDefault(x => x.ColumnNumber == column.ColumnNumber - 1);
         bool midWay = false;
         if (columnToLeft != null)
         {
@@ -150,15 +156,20 @@ public class CrackableWallScript : MonoBehaviour
             }
         }
 
-        WallColumn columnToRight = columns.FirstOrDefault(x => x.ColumnNumber == column.ColumnNumber + 1);
+        WallColumn columnToRight = Columns.FirstOrDefault(x => x.ColumnNumber == column.ColumnNumber + 1);
         bool shiftRightColumn = false;
+        bool unshiftRightColumn = false;
         if (columnToRight != null)
         {
             // columns that were at the same height will now not be - the the left point to the right needs to be all the way
-            // (right column was lower)
             if (System.Math.Abs(columnToRight.Height - column.Height) < 0.1)
             {
                 shiftRightColumn = true;
+            }
+            // columns that were not at the same height will now be - the the left point to the right needs to be half way
+            if (System.Math.Abs(columnToRight.Height + 1 - column.Height) < 0.1)
+            {
+                unshiftRightColumn = true;
             }
         }
 
@@ -171,6 +182,11 @@ public class CrackableWallScript : MonoBehaviour
             {
                 s.RemovePointAt(columnToRight.LeftPointIndex);
                 s.InsertPointAt(columnToRight.LeftPointIndex, new Vector3(columnToRight.RightX - 1 - position.x, columnToRight.Height, 0));
+            }
+            if (unshiftRightColumn)
+            {
+                s.RemovePointAt(columnToRight.LeftPointIndex);
+                s.InsertPointAt(columnToRight.LeftPointIndex, new Vector3(columnToRight.RightX - 0.5f - position.x, columnToRight.Height, 0));
             }
             s.InsertPointAt(column.RightPointIndex, new Vector3(column.RightX - position.x, column.Height, 0));
             s.InsertPointAt(column.LeftPointIndex, new Vector3((midWay ? (column.LeftX + 0.5f) : column.LeftX) - position.x, column.Height, 0));
