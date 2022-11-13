@@ -201,6 +201,10 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
 
         if (GameManager.Instance.Ball == null && GameManager.Instance.GameState == GameStateEnum.World)
         {

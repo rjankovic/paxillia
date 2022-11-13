@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class EscapeDogScript : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
-
+        lastX = rigidBody.position.x;
         
         StartCoroutine(Jump());
     }
@@ -28,13 +29,22 @@ public class EscapeDogScript : MonoBehaviour
 
     }
 
+    private int movingDirection = -1;
+    private float lastX = 0;
+
     private IEnumerator Jump()
     {
         while (true)
         {
             yield return new WaitForSeconds(3);
-            Debug.Log("jump");
-            rigidBody.AddForce(new Vector2(0f, 200f));
+            if (Math.Sign(rigidBody.position.x - lastX) != movingDirection)
+            {
+                movingDirection *= -1;
+            }
+
+            //Debug.Log("jump");
+            lastX = rigidBody.position.x;
+            rigidBody.AddForce(new Vector2(200f * movingDirection, 200f));
         }
     }
 }
