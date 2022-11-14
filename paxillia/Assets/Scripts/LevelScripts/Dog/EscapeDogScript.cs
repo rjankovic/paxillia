@@ -36,7 +36,7 @@ public class EscapeDogScript : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2.5f);
             if (Math.Sign(rigidBody.position.x - lastX) != movingDirection)
             {
                 movingDirection *= -1;
@@ -44,7 +44,9 @@ public class EscapeDogScript : MonoBehaviour
 
             //Debug.Log("jump");
             lastX = rigidBody.position.x;
-            rigidBody.AddForce(new Vector2(200f * movingDirection, 200f));
+            rigidBody.AddForce(new Vector2(0, 220f));
+            yield return new WaitForSeconds(0.3f);
+            rigidBody.AddForce(new Vector2(200f * movingDirection, 0));
         }
     }
 }

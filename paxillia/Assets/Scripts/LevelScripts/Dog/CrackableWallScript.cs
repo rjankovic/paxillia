@@ -8,11 +8,13 @@ public class CrackableWallScript : MonoBehaviour
 {
     private SpriteShapeController controller;
     private Spline s;
-    private Vector2 position = new Vector2 (-8f, -5.5f);
-    
+    //private Vector2 position = new Vector2 (-8f, -5.5f);
+    private Vector2 position = new Vector2(-7f, -5.5f);
+
     private  int topHeight = 6;
     private  int bottomHeight = 2;
-    private  int sideWidth = 7;
+    //private  int sideWidth = 7;
+    private int sideWidth = 6;
     private  int midWidth = 2;
 
     public class WallColumn
