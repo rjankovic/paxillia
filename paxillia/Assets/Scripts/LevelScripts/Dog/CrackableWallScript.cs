@@ -27,6 +27,8 @@ public class CrackableWallScript : MonoBehaviour
         public int ColumnNumber;
     }
 
+    //private bool jumpPathOpen = false;
+
     public static List<WallColumn> Columns = new List<WallColumn>();
 
     // Start is called before the first frame update
@@ -192,6 +194,27 @@ public class CrackableWallScript : MonoBehaviour
             }
             s.InsertPointAt(column.RightPointIndex, new Vector3(column.RightX - position.x, column.Height, 0));
             s.InsertPointAt(column.LeftPointIndex, new Vector3((midWay ? (column.LeftX + 0.5f) : column.LeftX) - position.x, column.Height, 0));
+
+            // in-game explanation
+            //if (column.ColumnNumber == sideWidth + midWidth + 1 || column.ColumnNumber == sideWidth)
+            //{
+            //    if (!jumpPathOpen && column.Height < bottomHeight + 1.5f)
+            //    {
+            //        jumpPathOpen = true;
+
+            //        DialogManager.Instance.StartIngameDialog(new Dialog()
+            //        {
+            //            Messages = new List<Message>()
+            //            {
+            //                new Message() { Character = Constants.CHAR_DOG, Text = "Wof! Wof-waf! Wooof!", Duration = 3 },
+            //                new Message() { Character = Constants.CHAR_PAL, Text = "The dog says he can now jump on the ledge!", Duration = 5 },
+            //                new Message() { Character = Constants.CHAR_PAL, Text = "He wants to get to the bone! Maybe I can make a staircase for him!", Duration = 5 },
+            //            }
+            //        });
+            //    }
+            //}
+
+
             //if (shiftRightColumn)
             //{
             //    s.InsertPointAt(columnToRight.LeftPointIndex, new Vector3(columnToRight.RightX - 1 - position.x, columnToRight.Height, 0));

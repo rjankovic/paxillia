@@ -11,7 +11,7 @@ public class BallScript : MonoBehaviour
     new SpriteRenderer renderer = null;
     //private Vector2 _velocity;
 
-    [SerializeField] private float _ballSpeed = 10;
+    //[SerializeField] private float _ballSpeed = 10;
     private int _ballLostDelay = 0; //5;
 
     private Vector2 _velocity;
@@ -22,7 +22,7 @@ public class BallScript : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         if (rigidbody.velocity.magnitude == 0)
         {
-            rigidbody.velocity = new Vector2(0, 1 * _ballSpeed);
+            rigidbody.velocity = new Vector2(0, 1 * GameManager.Instance.BallSpeed);
         }
         renderer = GetComponent<SpriteRenderer>();
 
@@ -142,7 +142,7 @@ public class BallScript : MonoBehaviour
         
         var normalAdjusted = MathUtils.RotateVector(normal, -1 * relativePoint * upDown);
 
-        var defaultVelocity = new Vector2(0, -1 * _ballSpeed * upDown);
+        var defaultVelocity = new Vector2(0, -1 * GameManager.Instance.BallSpeed * upDown);
         
         var reflection = Vector2.Reflect(defaultVelocity, normalAdjusted);
 

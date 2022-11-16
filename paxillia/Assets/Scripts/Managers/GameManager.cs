@@ -31,12 +31,16 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D _playerRigidBody;
     private Vector2 _pausedBallVelocity = Vector2.zero;
 
+    public bool DialogPaused { get; private set; } = false;
+
     private Dictionary<string, GameObjectSaveState> _worldSaveStates = new Dictionary<string, GameObjectSaveState>();
 
     public GameObject Ball { get; private set; }
 
     public int BallEscapeCount { get; set; }
     public int BallEscapeTarget { get; set; }
+
+    public int BallSpeed { get; set; } = 10;
 
     public bool LoadedLevelStart { get; private set; }
 
@@ -80,6 +84,9 @@ public class GameManager : MonoBehaviour
             EventHub.Instance.OnInputEnabled += EventHub_OnInputEnabled;
             EventHub.Instance.OnWorldSaveStateUpdated += OnWorldSaveStateUpdated;
             EventHub.Instance.OnPausedBallVelocity += (v) => _pausedBallVelocity = v;
+
+            EventHub.Instance.OnDialogPaused += () => DialogPaused = true;
+            EventHub.Instance.OnDialogUnpaused += () => DialogPaused = false;
         }
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
@@ -235,6 +242,9 @@ public class GameManager : MonoBehaviour
         crossFader.SetTrigger("Fadeout");
 
         yield return new WaitForSeconds(0.5f);
+
+        BallSpeed = 10;
+        //DialogPaused = false;
 
         SceneManager.LoadScene(levelName);
         

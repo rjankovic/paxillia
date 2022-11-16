@@ -10,46 +10,27 @@ public class LevelDogScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //var wall = GameObject.Instantiate<SpriteShapeController>(crackableWallPrefab, transform);
-        //wall.splineDetail = 32;
+        GameManager.Instance.BallSpeed = 5;
 
-        //var s = wall.spline;
-        //var pointCount = s.GetPointCount();
-        //for (int i = 0; i < pointCount; i++)
-        //{
-        //    Debug.Log("-----------------");
-        //    Debug.Log($"Point {i}");
-        //    var pointLeft = s.GetLeftTangent(i);
-        //    var pointRight = s.GetRightTangent(i);
-        //    Debug.Log($"L: {pointLeft}");
-        //    Debug.Log($"R: {pointRight}");
+        EventHub.Instance.DialogPause();
+        EventHub.Instance.OnDialogClose += OnIntroDialogClose;
 
-        //}
+        DialogManager.Instance.StartDialog(new Dialog()
+        {
+            Messages = new List<Message>()
+        {
+            new Message() { Text = "Oh look, that little puppy apparently made one of his worse decisions when it jumped into that pit. Was probably running after one of those juicy bones on the sides of the pit." },
+            new Message() { Text = "But how to help him? Let's think about it... wait, you're a paddle, you don't have a head, hm." },
+            new Message() { Text = "But you've got balls! See the cracks in the bricks around the pit? Maybe you could grind them down and help the puppy make his way out somehow..." },
+        }
+        });
 
-        //s.InsertPointAt(3, new Vector3(3f, 3f, 0));
+    }
 
-
-
-        //s.InsertPointAt(s.GetPointCount(), new Vector3(0f, 0f, 0));
-        //s.InsertPointAt(s.GetPointCount(), new Vector3(3f, 0f, 0));
-        //s.InsertPointAt(s.GetPointCount(), new Vector3(3f, 3f, 0));
-
-
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    s.RemovePointAt(0);
-        //}
-
-        //s.InsertPointAt(s.GetPointCount(), new Vector3(2f, 3f, 0));
-        //s.InsertPointAt(s.GetPointCount(), new Vector3(2f, 2f, 0));
-        //s.InsertPointAt(s.GetPointCount(), new Vector3(1f, 2f, 0));
-        //s.InsertPointAt(s.GetPointCount(), new Vector3(1f, 3f, 0));
-        //s.InsertPointAt(s.GetPointCount(), new Vector3(0f, 3f, 0));
-
-
-
-
-
+    private void OnIntroDialogClose(Dialog obj)
+    {
+        EventHub.Instance.DialogUnpause();
+        EventHub.Instance.OnDialogClose -= OnIntroDialogClose;
     }
 
     // Update is called once per frame

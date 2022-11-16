@@ -36,6 +36,18 @@ public class EscapeDogScript : MonoBehaviour
     {
         while (true)
         {
+            if (GameManager.Instance == null)
+            {
+                yield return new WaitForSeconds(2.5f); ;
+                continue;
+            }
+
+            if (GameManager.Instance.DialogPaused)
+            {
+                yield return new WaitForSeconds(2.5f);
+                continue;
+            }
+
             yield return new WaitForSeconds(2.5f);
             if (Math.Sign(rigidBody.position.x - lastX) != movingDirection)
             {
