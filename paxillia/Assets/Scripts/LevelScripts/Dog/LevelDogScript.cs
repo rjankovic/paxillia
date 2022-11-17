@@ -10,6 +10,8 @@ public class LevelDogScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.Instance.SaveGame();
+
         GameManager.Instance.BallSpeed = 5;
 
         EventHub.Instance.DialogPause();
@@ -25,6 +27,32 @@ public class LevelDogScript : MonoBehaviour
         }
         });
 
+        EventHub.Instance.OnBallLost += OnBallLost; ;
+    }
+
+    private void OnBallLost(GameObject obj)
+    {
+        if (GameManager.Instance.BallCount > 0)
+        {
+            return;
+        }
+
+        EventHub.Instance.InputEnabled(false);
+
+        DialogManager.Instance.StartDialog(new Dialog()
+        {
+            Messages = new List<Message>()
+                    {
+                        new Message() { Text = $"Hmm, the dog's still too deep in the pit and you are all out of balls.\nHow did that happen, buddy?\nLet's pretend it didn't :)"}
+                    }
+        });
+
+        EventHub.Instance.OnDialogClose += (x) =>
+        {
+            //Time.timeScale = 1;
+            EventHub.Instance.InputEnabled(true);
+            GameManager.Instance.LoadGame();
+        };
     }
 
     private void OnIntroDialogClose(Dialog obj)

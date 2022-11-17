@@ -8,6 +8,7 @@ TagManager:
   - Ball
   - Wall
   - SaveState
+  - Dog
   layers:
   - Default
   - TransparentFX

@@ -31,8 +31,8 @@ public class CrackableWallScript : MonoBehaviour
 
     public static List<WallColumn> Columns = new List<WallColumn>();
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
         transform.position = position;
         controller = GetComponent<SpriteShapeController>();
@@ -128,6 +128,11 @@ public class CrackableWallScript : MonoBehaviour
         //s.InsertPointAt(s.GetPointCount(), new Vector3(1f, 3f, 0));
         //s.InsertPointAt(s.GetPointCount(), new Vector3(0f, 3f, 0));
     }
+
+    //private void Start()
+    //{
+        
+    //}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
