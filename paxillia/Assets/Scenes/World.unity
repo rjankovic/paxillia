@@ -2536,6 +2536,7 @@ GameObject:
   m_Component:
   - component: {fileID: 515692950}
   - component: {fileID: 515692949}
+  - component: {fileID: 515692951}
   m_Layer: 0
   m_Name: dog_in_hole_1
   m_TagString: Untagged
@@ -2610,6 +2611,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &515692951
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515692948}
+  m_BodyType: 0
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 3
 --- !u!4 &590889973 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8975714257907313205, guid: 61a47398652600d4caf0869dc8af6f4e, type: 3}

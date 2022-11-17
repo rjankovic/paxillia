@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D _playerRigidBody;
     private Vector2 _pausedBallVelocity = Vector2.zero;
 
+    public Vector2 WorldReturnPosition = Vector2.zero;
+
     public bool DialogPaused { get; private set; } = false;
 
     private Dictionary<string, GameObjectSaveState> _worldSaveStates = new Dictionary<string, GameObjectSaveState>();
@@ -130,7 +132,11 @@ public class GameManager : MonoBehaviour
             //_saveStateAfterLoad = null;
         }
 
-        
+        if (WorldReturnPosition != Vector2.zero && CurrentLevel == LevelEnum.World)
+        {
+            _playerRigidBody.position = WorldReturnPosition;
+            WorldReturnPosition = Vector2.zero;
+        }
 
         //Debug.Log("Getting player script");
         //var playerScript = gameObject.GetComponent<PlayerScript>();
@@ -360,6 +366,8 @@ public class GameManager : MonoBehaviour
             SavedWorldItems = _worldSaveStates.Select(x => x.Value).ToList(),
             Level = sceneName,
             BallCount = BallCount,
+            WorldReturnPositionX = WorldReturnPosition.x,
+            WorldReturnPositionY = WorldReturnPosition.y
         };
 
         if (_playerRigidBody != null)
@@ -403,7 +411,7 @@ public class GameManager : MonoBehaviour
         LoadedLevelStart = true;
         StartCoroutine(LoadLevel(saveState.Level));
         BallCount = saveState.BallCount;
-
+        WorldReturnPosition = new Vector2(saveState.WorldReturnPositionX, saveState.WorldReturnPositionY);
         
     }
 

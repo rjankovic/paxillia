@@ -18,6 +18,9 @@ namespace Assets.Scripts.Managers
         public float BallVelocityX { get; set; }
         public float BallVelocityY { get; set; }
 
+        public float WorldReturnPositionX { get; set; }
+        public float WorldReturnPositionY { get; set; }
+
         public bool BallInGame { get; set; }
 
         public int BallCount { get; set; }

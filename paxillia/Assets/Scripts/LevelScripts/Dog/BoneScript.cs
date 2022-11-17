@@ -39,6 +39,14 @@ public class BoneScript : MonoBehaviour
                 new Message() { Text = "Ah Rolly, you sure went far this time... Guess we'll have to pay grandma a visit...oh boy." },
             }
         });
+
+        GameManager.Instance.SaveOnLevelStart = true;
+
+        EventHub.Instance.OnDialogClose += (x) =>
+        {
+            EventHub.Instance.InputEnabled(true);
+            GameManager.Instance.GotoLevel(GameManager.LevelEnum.World);
+        };
     }
 
     private void OnDialogClose(Dialog obj)
