@@ -9,6 +9,12 @@ namespace Assets.Scripts.Managers
 {
     public class SaveState
     {
+        public bool DogLevelCompleted { get; set; }
+
+        public bool TreeLevelCompleted { get; set; }
+
+        public bool RoadblockRemoved { get; set; }
+        
         public string Level { get; set; }
         public float PositionX { get; set; }
         public float PositionY { get; set; }
@@ -36,6 +42,10 @@ namespace Assets.Scripts.Managers
     }
 
     public class CollectibleGameObjectSaveSate : GameObjectSaveState
+    {
+    }
+
+    public class CompletionGameObjectSaveSate : GameObjectSaveState
     {
     }
 

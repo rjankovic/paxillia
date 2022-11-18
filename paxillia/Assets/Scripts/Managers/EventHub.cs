@@ -72,6 +72,10 @@ public class EventHub : MonoBehaviour
 
     public event Action OnBallServeRequest;
 
+    public event Action OnDogLevelCompleted;
+    public event Action OnTreeLevelCompleted;
+    public event Action OnRoadblockRemoved;
+
     //public event Action OnLevelLoaded;
 
     public void BallBumpOffWall()
@@ -205,6 +209,32 @@ public class EventHub : MonoBehaviour
             OnResetLevelAfterLoad();
         }
     }
+
+
+    public void DogLevelCompleted()
+    {
+        if (OnDogLevelCompleted != null)
+        {
+            OnDogLevelCompleted();
+        }
+    }
+
+    public void TreeLevelCompleted() 
+    {
+        if (OnTreeLevelCompleted != null)
+        {
+            OnTreeLevelCompleted();
+        }
+    }
+
+    public void RoadblockRemoved()
+    {
+        if (OnRoadblockRemoved != null)
+        {
+            OnRoadblockRemoved();
+        }
+    }
+
 
 
     //public void LevelLoaded()

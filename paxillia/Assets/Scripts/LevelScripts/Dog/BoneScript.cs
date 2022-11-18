@@ -41,6 +41,7 @@ public class BoneScript : MonoBehaviour
         });
 
         GameManager.Instance.SaveOnLevelStart = true;
+        GameManager.Instance.DogLevelCompleted = true;
 
         EventHub.Instance.OnDialogClose += (x) =>
         {

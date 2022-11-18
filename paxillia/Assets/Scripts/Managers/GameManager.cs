@@ -44,6 +44,12 @@ public class GameManager : MonoBehaviour
 
     public int BallSpeed { get; set; } = 10;
 
+    public bool DogLevelCompleted { get; set; }
+
+    public bool TreeLevelCompleted { get; set; }
+
+    public bool RoadblockRemoved { get; set; }
+
     public bool LoadedLevelStart { get; private set; }
 
     public int BallCount
@@ -104,6 +110,18 @@ public class GameManager : MonoBehaviour
         EventHub.Instance.OnDialogPaused += () => { Debug.Log("Dialog paused in GM"); DialogPaused = true; };
         EventHub.Instance.OnDialogUnpaused += () => DialogPaused = false;
 
+        if (DogLevelCompleted)
+        {
+            EventHub.Instance.DogLevelCompleted();
+        }
+        if (TreeLevelCompleted)
+        {
+            EventHub.Instance.TreeLevelCompleted();
+        }
+        if (RoadblockRemoved)
+        {
+            EventHub.Instance.RoadblockRemoved();
+        }
     }
 
     private void OnWorldSaveStateUpdated(GameObjectSaveState obj)
@@ -395,7 +413,10 @@ public class GameManager : MonoBehaviour
             Level = sceneName,
             BallCount = BallCount,
             WorldReturnPositionX = WorldReturnPosition.x,
-            WorldReturnPositionY = WorldReturnPosition.y
+            WorldReturnPositionY = WorldReturnPosition.y,
+            DogLevelCompleted = DogLevelCompleted,
+            TreeLevelCompleted = TreeLevelCompleted,
+            RoadblockRemoved = RoadblockRemoved
         };
 
         if (_playerRigidBody != null)
@@ -436,6 +457,11 @@ public class GameManager : MonoBehaviour
         _saveStateAfterLoad = saveState;
 
         Debug.Log($"Loading level {saveState.Level}");
+
+        DogLevelCompleted = saveState.DogLevelCompleted;
+        TreeLevelCompleted = saveState.TreeLevelCompleted;
+        RoadblockRemoved = saveState.RoadblockRemoved;
+
         LoadedLevelStart = true;
         StartCoroutine(LoadLevel(saveState.Level));
         BallCount = saveState.BallCount;
