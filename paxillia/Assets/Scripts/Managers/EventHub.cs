@@ -24,7 +24,10 @@ public class EventHub : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ReviveEventHub();
+        }
     }
 
     public event Action OnBallBumpOffWall;
@@ -50,6 +53,8 @@ public class EventHub : MonoBehaviour
     public event Action<GameObject> OnBallLost;
 
     public event Action OnBallPassed;
+
+    public event Action OnResetLevelAfterLoad;
 
     public event Action OnPaused;
     public event Action OnUnpaused;
@@ -190,6 +195,14 @@ public class EventHub : MonoBehaviour
         if (OnPausedBallVelocity != null)
         {
             OnPausedBallVelocity(velocity);
+        }
+    }
+
+    public void ResetLevelAfterLoad()
+    {
+        if (OnResetLevelAfterLoad != null)
+        {
+            OnResetLevelAfterLoad();
         }
     }
 

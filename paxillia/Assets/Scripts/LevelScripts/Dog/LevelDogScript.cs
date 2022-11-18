@@ -10,6 +10,8 @@ public class LevelDogScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Level dog starting");
+
         GameManager.Instance.SaveGame();
 
         GameManager.Instance.BallSpeed = 5;
@@ -17,17 +19,19 @@ public class LevelDogScript : MonoBehaviour
         EventHub.Instance.DialogPause();
         EventHub.Instance.OnDialogClose += OnIntroDialogClose;
 
+        Debug.Log("Starting level dog dialog");
         DialogManager.Instance.StartDialog(new Dialog()
         {
             Messages = new List<Message>()
         {
-            new Message() { Text = "Oh look, that little puppy apparently made one of his worse decisions when it jumped into that pit. Was probably running after one of those juicy bones on the sides of the pit." },
+            new Message() { Text = "Oh look, that little puppy apparently made one of his worse decisions when he jumped into that pit. Was probably running after one of those juicy bones on the sides of the pit." },
             new Message() { Text = "But how to help him? Let's think about it... wait, you're a paddle, you don't have a head, hm." },
             new Message() { Text = "But you've got balls! See the cracks in the bricks around the pit? Maybe you could grind them down and help the puppy make his way out somehow..." },
         }
         });
+        Debug.Log("Started level dog dialog");
 
-        EventHub.Instance.OnBallLost += OnBallLost; ;
+        EventHub.Instance.OnBallLost += OnBallLost;
     }
 
     private void OnBallLost(GameObject obj)
@@ -57,6 +61,7 @@ public class LevelDogScript : MonoBehaviour
 
     private void OnIntroDialogClose(Dialog obj)
     {
+        Debug.Log("Intro dialog over");
         EventHub.Instance.DialogUnpause();
         EventHub.Instance.OnDialogClose -= OnIntroDialogClose;
     }

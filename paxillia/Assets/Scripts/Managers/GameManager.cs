@@ -83,15 +83,26 @@ public class GameManager : MonoBehaviour
 
         if (EventHub.Instance != null)
         {
-            EventHub.Instance.OnInputEnabled += EventHub_OnInputEnabled;
-            EventHub.Instance.OnWorldSaveStateUpdated += OnWorldSaveStateUpdated;
-            EventHub.Instance.OnPausedBallVelocity += (v) => _pausedBallVelocity = v;
-
-            EventHub.Instance.OnDialogPaused += () => DialogPaused = true;
-            EventHub.Instance.OnDialogUnpaused += () => DialogPaused = false;
+            ReviveEventHub();
         }
 
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+
+    }
+
+    public void ReviveEventHub()
+    {
+
+        EventHub.Instance.OnInputEnabled -= EventHub_OnInputEnabled;
+        EventHub.Instance.OnWorldSaveStateUpdated -= OnWorldSaveStateUpdated;
+
+
+        EventHub.Instance.OnInputEnabled += EventHub_OnInputEnabled;
+        EventHub.Instance.OnWorldSaveStateUpdated += OnWorldSaveStateUpdated;
+        EventHub.Instance.OnPausedBallVelocity += (v) => _pausedBallVelocity = v;
+
+        EventHub.Instance.OnDialogPaused += () => { Debug.Log("Dialog paused in GM"); DialogPaused = true; };
+        EventHub.Instance.OnDialogUnpaused += () => DialogPaused = false;
 
     }
 
@@ -252,6 +263,8 @@ public class GameManager : MonoBehaviour
         BallSpeed = 10;
         //DialogPaused = false;
 
+
+        Debug.Log("Loading scene " + levelName);
         SceneManager.LoadScene(levelName);
         
 
@@ -274,6 +287,21 @@ public class GameManager : MonoBehaviour
         }
 
         crossFader.SetTrigger("Fadein");
+
+        if (EventHub.Instance != null)
+        {
+            EventHub.Instance.ResetLevelAfterLoad();
+        }
+
+        //_gamePaused = false;
+        //_pausePanel.SetActive(false);
+        //if (_inputWasEnabled)
+        //{
+        //    EventHub.Instance.InputEnabled(true);
+        //}
+        Debug.Log("Unpause");
+        EventHub.Instance.InputEnabled(true);
+        Time.timeScale = 1;
     }
 
     public GameStateEnum GameState

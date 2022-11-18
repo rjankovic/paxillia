@@ -115,6 +115,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (!_inputEnabled)
         {
+            Debug.Log("Input disabled, not serving ball");
             return;
         }
 

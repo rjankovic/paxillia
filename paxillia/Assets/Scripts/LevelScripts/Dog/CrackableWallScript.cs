@@ -34,6 +34,9 @@ public class CrackableWallScript : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Destructible wall start");
+
+        Columns = new List<WallColumn>();
         transform.position = position;
         controller = GetComponent<SpriteShapeController>();
         s = controller.spline;
@@ -62,7 +65,7 @@ public class CrackableWallScript : MonoBehaviour
             });
 
             var c = Columns[Columns.Count - 1];
-            Debug.Log($"{c.ColumnNumber} L {c.LeftX} R {c.RightX}");
+            //Debug.Log($"{c.ColumnNumber} L {c.LeftX} R {c.RightX}");
 
             pointCount += 2;
         }
@@ -83,7 +86,7 @@ public class CrackableWallScript : MonoBehaviour
             });
 
             var c = Columns[Columns.Count - 1];
-            Debug.Log($"{c.ColumnNumber} L {c.LeftX} R {c.RightX}");
+            //Debug.Log($"{c.ColumnNumber} L {c.LeftX} R {c.RightX}");
 
             pointCount += 2;
         }
@@ -104,7 +107,7 @@ public class CrackableWallScript : MonoBehaviour
             });
 
             var c = Columns[Columns.Count - 1];
-            Debug.Log($"{c.ColumnNumber} L {c.LeftX} R {c.RightX}");
+            //Debug.Log($"{c.ColumnNumber} L {c.LeftX} R {c.RightX}");
 
             pointCount += 2;
         }
@@ -127,6 +130,23 @@ public class CrackableWallScript : MonoBehaviour
         //s.InsertPointAt(s.GetPointCount(), new Vector3(1f, 2f, 0));
         //s.InsertPointAt(s.GetPointCount(), new Vector3(1f, 3f, 0));
         //s.InsertPointAt(s.GetPointCount(), new Vector3(0f, 3f, 0));
+
+        EventHub.Instance.OnResetLevelAfterLoad += ResetColumnBackendHeight;
+    }
+
+    private void ResetColumnBackendHeight()
+    {
+        for (int i = 0; i < Columns.Count; i++)
+        {
+            if (i < sideWidth || i >= sideWidth + midWidth)
+            {
+                Columns[i].Height = topHeight;
+            }
+            else
+            {
+                Columns[i].Height = bottomHeight;
+            }
+        }
     }
 
     //private void Start()

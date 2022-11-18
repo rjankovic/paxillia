@@ -17,6 +17,10 @@ public class WorldScript : MonoBehaviour
         {
             StartCoroutine(WorldIntroDialog());
         }
+        else
+        {
+            StartCoroutine(ServeNextBall(1));
+        }
 
         EventHub.Instance.OnBallLost += OnBallLost;
     }
