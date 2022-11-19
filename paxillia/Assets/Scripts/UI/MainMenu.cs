@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("New game pressed");
         //SceneManager.LoadScene(1);
+        GameManager.Instance.NewGameReset();
         GameManager.Instance.GotoLevel(GameManager.LevelEnum.IntroAnimation);
     }
 

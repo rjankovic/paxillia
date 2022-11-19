@@ -81,6 +81,7 @@ public class Level1Script : MonoBehaviour
 
                 GameManager.Instance.BallCount = GameManager.Instance.BallEscapeCount;
                 GameManager.Instance.SaveOnLevelStart = true;
+                GameManager.Instance.FirstTimeOutside = true;
 
                 EventHub.Instance.OnDialogClose += (x) =>
                 {

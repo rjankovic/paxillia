@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
 
     public bool LoadedLevelStart { get; private set; }
 
+    public bool FirstTimeOutside { get; set; } = false;
+
     public int BallCount
     {
         get => ballCount;
@@ -112,6 +114,7 @@ public class GameManager : MonoBehaviour
 
         if (DogLevelCompleted)
         {
+            Debug.Log("Dog level completed to EH");
             EventHub.Instance.DogLevelCompleted();
         }
         if (TreeLevelCompleted)
@@ -481,5 +484,13 @@ public class GameManager : MonoBehaviour
                 saveComponent.ApplySaveState(_worldSaveStates[saveObject.name]);
             }
         }
+    }
+
+    public void NewGameReset()
+    {
+        _worldSaveStates = new Dictionary<string, GameObjectSaveState>();
+        DogLevelCompleted = false;
+        TreeLevelCompleted = false;
+        RoadblockRemoved = false;
     }
 }

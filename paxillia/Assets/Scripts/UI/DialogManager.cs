@@ -47,6 +47,8 @@ public class DialogManager : MonoBehaviour
 
     private bool _gamePaused = false;
 
+    
+
     //[SerializeField]
     //private Animator _animator;
 
@@ -123,7 +125,7 @@ public class DialogManager : MonoBehaviour
 
     public void DisplayNextMessage()
     {
-        Debug.Log("Display next message");
+        //Debug.Log("Display next message");
         if (_messages.Count == 0)
         {
             EndDialog();
@@ -216,7 +218,7 @@ public class DialogManager : MonoBehaviour
 
     public void OnSubmit(InputValue value)
     {
-        Debug.Log("Dialog manager submit");
+        //Debug.Log("Dialog manager submit");
         if (_dialog != null)
         {
             DisplayNextMessage();
@@ -233,7 +235,7 @@ public class DialogManager : MonoBehaviour
             _ingameMessages.Enqueue(message);
         }
 
-        Debug.Log(EventHub.Instance);
+        //Debug.Log(EventHub.Instance);
         EventHub.Instance.IngameDialogOpen(_ingameDialog);
 
         StartCoroutine(DisplayNextIngameMessage(_ingameMessages.Count));
@@ -252,7 +254,7 @@ public class DialogManager : MonoBehaviour
 
     public void OnEscape(InputValue inputValue)
     {
-        Debug.Log("OnExcape!");
+        //Debug.Log("OnExcape!");
 
         if (!_gamePaused)
         {

@@ -13,7 +13,7 @@ public class WorldScript : MonoBehaviour
             GameManager.Instance.SaveOnLevelStart = false;
         }
 
-        if (!GameManager.Instance.LoadedLevelStart)
+        if ((!GameManager.Instance.LoadedLevelStart) && GameManager.Instance.FirstTimeOutside)
         {
             StartCoroutine(WorldIntroDialog());
         }
@@ -32,6 +32,8 @@ public class WorldScript : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         EventHub.Instance.OnDialogClose += IntroDialogClosed;
+
+        GameManager.Instance.FirstTimeOutside = false;
 
         DialogManager.Instance.StartDialog(new Dialog()
         {
