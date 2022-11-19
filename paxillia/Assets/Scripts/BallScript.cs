@@ -124,6 +124,7 @@ public class BallScript : MonoBehaviour
     {
         var collider = collision.contacts[0].collider;
         var collisionObject = collider.gameObject;
+        //collisionObject.transform.rotation.
 
         //Debug.Log("VP " + _velocity);
         var relativePosition = rigidbody.position.x - collisionObject.transform.position.x;

@@ -20,6 +20,9 @@ public class PlayerScript : MonoBehaviour
     private bool _verticalMovementEnabled = false;
 
     [SerializeField]
+    private bool _horizontalMovementEnabled = true;
+
+    [SerializeField]
     private bool _serveBallOnTop = true;
 
     //private bool _movingUp = false;
@@ -224,20 +227,31 @@ public class PlayerScript : MonoBehaviour
             _targetWorldPosition.y = rigidBody.position.y; // transform.position.y;
         }
 
+        if (!_horizontalMovementEnabled)
+        {
+            _targetWorldPosition.x = rigidBody.position.x; // transform.position.y;
+        }
+
         if (_targetWorldPosition.x != -1 /*&& !_inWall*/)
         {
             var delta = (Vector2)_targetWorldPosition - rigidBody.position;
 
             frameRelative = (frameRelative++) % frequency;
-            if (frameRelative == 0)
-            {
-                //Debug.Log($"T {_targetWorldPosition.y}\tR {rigidBody.position.y}\t{delta}");
-            }
+            //if (frameRelative == 0 && !_horizontalMovementEnabled)
+            //{
+            //    Debug.Log($"T {_targetWorldPosition.y}\tR {rigidBody.position.y}\t{delta}");
+            //}
 
             if (!_verticalMovementEnabled)
             {
                 //Debug.Log("NV");
                 delta.y = 0;
+            }
+
+            if (!_horizontalMovementEnabled)
+            {
+                //Debug.Log("NV");
+                delta.x = 0;
             }
 
             //Debug.Log($"Delta {delta}");
@@ -257,6 +271,10 @@ public class PlayerScript : MonoBehaviour
 
             //rigidBody.MovePosition(rigidBody.position + delta * movementSpeed * Time.fixedDeltaTime);
             rigidBody.velocity = delta * movementSpeed;
+            //if (frameRelative == 0 && !_horizontalMovementEnabled)
+            //{
+            //    Debug.Log($"M {rigidBody.velocity}");
+            //}
 
             gameObject.GetInstanceID();
         }
