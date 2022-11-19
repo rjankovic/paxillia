@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     public int BallEscapeCount { get; set; }
     public int BallEscapeTarget { get; set; }
 
-    public int BallSpeed { get; set; } = 10;
+    public int BallSpeed { get; set; } = 10; //3; // 10;
 
     public bool DogLevelCompleted { get; set; }
 

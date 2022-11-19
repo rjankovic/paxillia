@@ -111,8 +111,14 @@ public class BallScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log("Ball collision enter " + collision.collider.name);
-        if (collision.collider.name == "Player")
+        Debug.Log("Ball collision enter " + collision.collider.name);
+        //if (collision.gameObject.tag != Constants.TAG_DOG)
+        //{
+        //    return;
+        //}
+
+        //if (collision.collider.name == "Player")
+        if (collision.gameObject.tag == Constants.TAG_PLAYER)
         {
             
             BumpOffPlayer(collision);
@@ -122,33 +128,71 @@ public class BallScript : MonoBehaviour
 
     private void BumpOffPlayer(Collision2D collision)
     {
+        Debug.Log("Calc bump");
         var collider = collision.contacts[0].collider;
         var collisionObject = collider.gameObject;
         //collisionObject.transform.rotation.
 
         //Debug.Log("VP " + _velocity);
-        var relativePosition = rigidbody.position.x - collisionObject.transform.position.x;
+        bool horizontalPaddle = collisionObject.transform.rotation.eulerAngles.z < 45;
+
+        Debug.Log($"Euler {collisionObject.transform.rotation.eulerAngles}");
+
+        if (!horizontalPaddle)
+        {
+            Debug.Log("Vertical paddle");
+        }
+
+        float relativePosition = 0f;
+        float width = 0f;
+        if (horizontalPaddle)
+        {
+            relativePosition = rigidbody.position.x - collisionObject.transform.position.x;
+            width = collider.bounds.size.x; //collisionObject.  //collisionObject.transform.localScale.x;
+        }
+        else 
+        {
+            relativePosition = rigidbody.position.y - collisionObject.transform.position.y;
+            width = collider.bounds.size.y; //collisionObject.  //collisionObject.transform.localScale.x;
+        }
         //var collidingBody = collisionObject.GetComponent<BoxCollider2D>();
 
-        var width = collider.bounds.size.x; //collisionObject.  //collisionObject.transform.localScale.x;
+        //width = collider.bounds.size.x; //collisionObject.  //collisionObject.transform.localScale.x;
         //Debug.Log($"Bump width: {width}");
         var relativePoint = relativePosition / width;
 
+        Debug.Log($"RP {relativePoint}");
 
         //Debug.Log($"normal: {collision.contacts[0].normal}");
         var upDown = Mathf.Sign(collision.contacts[0].normal.y);
-        
-        var normal = new Vector2(0, upDown); // collision.contacts[0].normal;
-
-        
-        var normalAdjusted = MathUtils.RotateVector(normal, -1 * relativePoint * upDown);
-
-        var defaultVelocity = new Vector2(0, -1 * GameManager.Instance.BallSpeed * upDown);
-        
-        var reflection = Vector2.Reflect(defaultVelocity, normalAdjusted);
+        var leftRight = Mathf.Sign(collision.contacts[0].normal.x);
 
 
-        rigidbody.velocity = reflection;
+        if (horizontalPaddle)
+        {
+            var normal = new Vector2(0, upDown); // collision.contacts[0].normal;
+
+            var normalAdjusted = MathUtils.RotateVector(normal, -1 * relativePoint * upDown);
+
+            var defaultVelocity = new Vector2(0, -1 * GameManager.Instance.BallSpeed * upDown);
+
+            var reflection = Vector2.Reflect(defaultVelocity, normalAdjusted);
+
+            rigidbody.velocity = reflection;
+        }
+        else
+        {
+            Debug.Log("LR: " + leftRight + $" | RP: {relativePoint}");
+            var normal = new Vector2(leftRight, 0); // collision.contacts[0].normal;
+
+            var normalAdjusted = MathUtils.RotateVector(normal, relativePoint * leftRight);
+
+            var defaultVelocity = new Vector2(-1 * GameManager.Instance.BallSpeed * leftRight, 0);
+
+            var reflection = Vector2.Reflect(defaultVelocity, normalAdjusted);
+
+            rigidbody.velocity = reflection;
+        }
 
     }
 }
