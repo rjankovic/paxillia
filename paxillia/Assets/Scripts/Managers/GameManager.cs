@@ -54,10 +54,27 @@ public class GameManager : MonoBehaviour
 
     public bool FirstTimeOutside { get; set; } = false;
 
+    private int _appleCount = 0;
+    public int AppleCount
+    {
+        get => _appleCount;
+        set
+        {
+            bool drop = _appleCount > 0 && value == 0;
+            _appleCount = value;
+            if (drop)
+            {
+                //Debug.Log("OUT OF APPLES");
+                EventHub.Instance.AppleCountDownToZero();
+            }
+            //Debug.Log("A " + AppleCount);
+        }
+    }
+
     public int BallCount
     {
         get => ballCount;
-        set { ballCount = value; if(EventHub.Instance != null) EventHub.Instance.BallCountUpdate(value); }
+        set { ballCount = value; if (EventHub.Instance != null) EventHub.Instance.BallCountUpdate(value); }
     }
 
     private SaveState _saveStateAfterLoad;
@@ -183,12 +200,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
     public enum AnimationEnum
-    { 
+    {
         Intro
     }
 
@@ -207,7 +224,7 @@ public class GameManager : MonoBehaviour
     }
 
     public enum GameStateEnum
-    { 
+    {
         MainMenu,
         PauseMenu,
         Animation,
@@ -218,10 +235,11 @@ public class GameManager : MonoBehaviour
 
     public LevelEnum CurrentLevel
     {
-        get {
+        get
+        {
             switch (SceneManager.GetActiveScene().name)
             {
-                case "Level1_Home": 
+                case "Level1_Home":
                     return LevelEnum.Home;
                 case "Level_Dog":
                     return LevelEnum.Dog;
@@ -287,7 +305,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Loading scene " + levelName);
         SceneManager.LoadScene(levelName);
-        
+
 
         //crossFader.SetTrigger("Fadein");
 
@@ -301,7 +319,7 @@ public class GameManager : MonoBehaviour
 
     private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        
+
         if (CurrentLevel == LevelEnum.World)
         {
             LoadWorldState();
@@ -344,7 +362,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool InputEnabled { get => _inputEnabled; }
-    
+
     //public void GoToLevel(LevelEnum level)
     //{ 
 
@@ -361,8 +379,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void GoToPauseMenu()
-    { 
-    
+    {
+
     }
 
     public void BallServed(GameObject ballObject)
@@ -469,7 +487,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoadLevel(saveState.Level));
         BallCount = saveState.BallCount;
         WorldReturnPosition = new Vector2(saveState.WorldReturnPositionX, saveState.WorldReturnPositionY);
-        
+
     }
 
     private void LoadWorldState()

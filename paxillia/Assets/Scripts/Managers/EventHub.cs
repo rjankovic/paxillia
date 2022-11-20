@@ -76,6 +76,8 @@ public class EventHub : MonoBehaviour
     public event Action OnTreeLevelCompleted;
     public event Action OnRoadblockRemoved;
 
+    public event Action OnAppleCountDownToZero;
+
     //public event Action OnLevelLoaded;
 
     public void BallBumpOffWall()
@@ -232,6 +234,14 @@ public class EventHub : MonoBehaviour
         if (OnRoadblockRemoved != null)
         {
             OnRoadblockRemoved();
+        }
+    }
+
+    public void AppleCountDownToZero()
+    {
+        if (OnAppleCountDownToZero != null)
+        {
+            OnAppleCountDownToZero();
         }
     }
 

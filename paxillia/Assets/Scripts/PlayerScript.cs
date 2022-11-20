@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private bool _inputEnabled = false;
 
-    private bool _inputEnabledBeforePause = false;
+    private bool _inputEnabledBeforePause = true;
 
     [SerializeField]
     private GameObject _ballPrefab = null;
@@ -24,6 +24,9 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField]
     private bool _serveBallOnTop = true;
+
+    [SerializeField]
+    private bool _canServeBall = true;
 
     //private bool _movingUp = false;
     //private bool _movingDown = false;
@@ -140,6 +143,11 @@ public class PlayerScript : MonoBehaviour
         }
 
         if (GameManager.Instance.CurrentLevel == LevelEnum.World)
+        {
+            return;
+        }
+
+        if (!_canServeBall)
         {
             return;
         }

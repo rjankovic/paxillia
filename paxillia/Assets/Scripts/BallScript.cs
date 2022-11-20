@@ -28,7 +28,7 @@ public class BallScript : MonoBehaviour
 
         if (GameManager.Instance.CurrentLevel == GameManager.LevelEnum.World)
         {
-            Debug.Log("Ball in world - 5s lost delay");
+            //Debug.Log("Ball in world - 5s lost delay");
             _ballLostDelay = 5;
         }
         //var sceneName = SceneManager.GetActiveScene().name;
@@ -111,7 +111,7 @@ public class BallScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Ball collision enter " + collision.collider.name);
+        //Debug.Log("Ball collision enter " + collision.collider.name);
         //if (collision.gameObject.tag != Constants.TAG_DOG)
         //{
         //    return;
@@ -128,7 +128,7 @@ public class BallScript : MonoBehaviour
 
     private void BumpOffPlayer(Collision2D collision)
     {
-        Debug.Log("Calc bump");
+        //Debug.Log("Calc bump");
         var collider = collision.contacts[0].collider;
         var collisionObject = collider.gameObject;
         //collisionObject.transform.rotation.
@@ -136,12 +136,12 @@ public class BallScript : MonoBehaviour
         //Debug.Log("VP " + _velocity);
         bool horizontalPaddle = collisionObject.transform.rotation.eulerAngles.z < 45;
 
-        Debug.Log($"Euler {collisionObject.transform.rotation.eulerAngles}");
+        //Debug.Log($"Euler {collisionObject.transform.rotation.eulerAngles}");
 
-        if (!horizontalPaddle)
-        {
-            Debug.Log("Vertical paddle");
-        }
+        //if (!horizontalPaddle)
+        //{
+        //    Debug.Log("Vertical paddle");
+        //}
 
         float relativePosition = 0f;
         float width = 0f;
@@ -161,7 +161,7 @@ public class BallScript : MonoBehaviour
         //Debug.Log($"Bump width: {width}");
         var relativePoint = relativePosition / width;
 
-        Debug.Log($"RP {relativePoint}");
+        //Debug.Log($"RP {relativePoint}");
 
         //Debug.Log($"normal: {collision.contacts[0].normal}");
         var upDown = Mathf.Sign(collision.contacts[0].normal.y);
@@ -182,7 +182,7 @@ public class BallScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("LR: " + leftRight + $" | RP: {relativePoint}");
+            //Debug.Log("LR: " + leftRight + $" | RP: {relativePoint}");
             var normal = new Vector2(leftRight, 0); // collision.contacts[0].normal;
 
             var normalAdjusted = MathUtils.RotateVector(normal, relativePoint * leftRight);
