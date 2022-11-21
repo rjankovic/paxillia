@@ -94,6 +94,7 @@ public class EventHub : MonoBehaviour
 
     public void DialogOpen(Dialog dialog)
     {
+        Debug.Log("EH dialog open");
         if (OnDialogOpen != null)
             OnDialogOpen(dialog);
     }

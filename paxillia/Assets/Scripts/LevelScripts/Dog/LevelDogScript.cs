@@ -10,16 +10,20 @@ public class LevelDogScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Level dog starting");
-
         GameManager.Instance.SaveGame();
+        //EventHub.Instance.DialogPause();
+        //EventHub.Instance.DialogUnpause();
+        //EventHub.Instance.InputEnabled(true);
+
+        Debug.Log("Level dog starting");
 
         GameManager.Instance.BallSpeed = 5;
 
-        EventHub.Instance.DialogPause();
-        EventHub.Instance.OnDialogClose += OnIntroDialogClose;
-
+        
         Debug.Log("Starting level dog dialog");
+        Debug.Log(DialogManager.Instance);
+
+
         DialogManager.Instance.StartDialog(new Dialog()
         {
             Messages = new List<Message>()
@@ -29,6 +33,11 @@ public class LevelDogScript : MonoBehaviour
             new Message() { Text = "But you've got balls! See the cracks in the bricks around the pit? Maybe you could grind them down and help the puppy make his way out somehow..." },
         }
         });
+
+        //EventHub.Instance.DialogPause();
+
+        EventHub.Instance.OnDialogClose += OnIntroDialogClose;
+
         Debug.Log("Started level dog dialog");
 
         EventHub.Instance.OnBallLost += OnBallLost;
@@ -63,6 +72,7 @@ public class LevelDogScript : MonoBehaviour
     {
         Debug.Log("Intro dialog over");
         EventHub.Instance.DialogUnpause();
+        EventHub.Instance.InputEnabled();
         EventHub.Instance.OnDialogClose -= OnIntroDialogClose;
     }
 

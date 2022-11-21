@@ -8,8 +8,9 @@ public class TreeLevelScript : MonoBehaviour
     void Start()
     {
         GameManager.Instance.SaveGame();
+        EventHub.Instance.DialogPause();
         Debug.Log("Level tree starting");
-        EventHub.Instance.DialogUnpause();
+        //EventHub.Instance.DialogUnpause();
         
         //Time.timeScale = 1;
         
@@ -36,7 +37,7 @@ public class TreeLevelScript : MonoBehaviour
         }
         });
 
-        EventHub.Instance.DialogPause();
+        
         EventHub.Instance.OnDialogClose += OnIntroDialogClose;
 
         EventHub.Instance.OnBallLost += OnBallLost;
@@ -55,7 +56,17 @@ public class TreeLevelScript : MonoBehaviour
         {
             Messages = new List<Message>()
                     {
-                        new Message() { Text = $"Retry..."}
+                        new Message() { Text = $"Jimmy: \"Snap! Pal's out of balls and the juiciest apples are still up there!\""},
+                        new Message() { Text = $"Pal: \"See? This whole apple-borrowing enterprise was bollocks from the get-go!\""},
+                        new Message() { Text = $"Billy: \"What do we do now?\""},
+                        new Message() { Text = $"Jimmy: \"Willy, do you still have that thing of yours?\""},
+                        new Message() { Text = $"Willy: \"My lucky poo on a stick?\""},
+                        new Message() { Text = $"Jimmy: \"No, I mean that other thing, that pocket time travel thingy...\""},
+                        new Message() { Text = $"Willy: \"Oh yes, I have the time machine here! Great idea, Jim - we can get back in time and get all the apples!\""},
+                        new Message() { Text = $"Pal: \"W-w-whaat?? You built a time machine?\""},
+                        new Message() { Text = $"Willy: \"Yup, well, it was an accident...\""},
+                        new Message() { Text = $"Pal: \"William, you are the dumbest genius in the history of dumb geniuses, maybe ever!\""},
+                        new Message() { Text = $"Willy: \"Don't get all methan-philological now, Pal! Get in the Clockcracker!\""},
                     }
         });
 

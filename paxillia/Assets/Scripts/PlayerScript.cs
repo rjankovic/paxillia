@@ -65,6 +65,7 @@ public class PlayerScript : MonoBehaviour
 
     private void OnDialogPaused()
     {
+        Debug.Log("Player paused for dialog");
         _previousVelocity = rigidBody.velocity;
         rigidBody.velocity = Vector2.zero;
         _inputEnabledBeforePause = _inputEnabled;
@@ -73,6 +74,7 @@ public class PlayerScript : MonoBehaviour
 
     private void OnDialogUnpaused()
     {
+        Debug.Log("Player UNPAUSED for dialog");
         _inputEnabled = _inputEnabledBeforePause;
         rigidBody.velocity = _previousVelocity;
     }

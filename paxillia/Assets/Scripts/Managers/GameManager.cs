@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
         _player = gameObject;
         _playerRigidBody = _player.GetComponent<Rigidbody2D>();
 
-        if (_saveStateAfterLoad != null)
+        if (_saveStateAfterLoad != null && CurrentLevel == LevelEnum.World)
         {
             //Debug.Log("save state after load");
             //Debug.Log($"{_playerRigidBody}");

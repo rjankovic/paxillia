@@ -58,6 +58,12 @@ public class DialogManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            UnityEngine.Object.Destroy(gameObject);
+            return;
+        }
+
         if (Instance == null)
         {
             Instance = this;
@@ -68,6 +74,19 @@ public class DialogManager : MonoBehaviour
         }
 
     }
+
+    //private void Start()
+    //{
+    //    DontDestroyOnLoad(gameObject);
+
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        UnityEngine.Object.Destroy(gameObject);
+    //        return;
+    //    }
+
+    //}
+
 
     private void SetButtonsForDialog()
     {
@@ -85,6 +104,31 @@ public class DialogManager : MonoBehaviour
 
     public void StartDialog(Dialog dialog)
     {
+        StartCoroutine(StartDialogInner(dialog));
+        //SetButtonsForDialog();
+        //_dialog = dialog;
+        //_messages = new Queue<Message>();
+        //foreach (var message in dialog.Messages)
+        //{
+        //    _messages.Enqueue(message);
+        //}
+
+        ////_animator.SetBool("DialogOpen", true);
+
+        //EventHub.Instance.DialogOpen(_dialog);
+        ////if (OnDialogStart != null)
+        ////{
+        ////    OnDialogStart(this, new DialogEventArgs() { Dialog = _dialog });
+        ////}
+
+        //DisplayNextMessage();
+    }
+
+
+    private IEnumerator StartDialogInner(Dialog dialog)
+    {
+        yield return new WaitForSeconds(0.2f);
+
         SetButtonsForDialog();
         _dialog = dialog;
         _messages = new Queue<Message>();
@@ -103,7 +147,6 @@ public class DialogManager : MonoBehaviour
 
         DisplayNextMessage();
     }
-
 
     public void StartYesNoDialog(Dialog dialog, Action yesAction, Action noAction)
     {
@@ -125,7 +168,7 @@ public class DialogManager : MonoBehaviour
 
     public void DisplayNextMessage()
     {
-        //Debug.Log("Display next message");
+        Debug.Log("Display next message, MC " + _messages.Count);
         if (_messages.Count == 0)
         {
             EndDialog();
@@ -246,6 +289,15 @@ public class DialogManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //DontDestroyOnLoad(gameObject);
+
+        //if (Instance != null && Instance != this)
+        //{
+        //    UnityEngine.Object.Destroy(gameObject);
+        //    return;
+        //}
+
+
         _gamePaused = false;
         _pausePanel.SetActive(false);
         EventHub.Instance.OnPaused += Pause;
