@@ -41,6 +41,8 @@ public class TreeLevelScript : MonoBehaviour
         EventHub.Instance.OnDialogClose += OnIntroDialogClose;
 
         EventHub.Instance.OnBallLost += OnBallLost;
+
+        EventHub.Instance.OnAppleCountDownToZero += OnAppleCountDownToZero;
     }
 
     private void OnBallLost(GameObject obj)
@@ -75,6 +77,33 @@ public class TreeLevelScript : MonoBehaviour
             //Time.timeScale = 1;
             EventHub.Instance.InputEnabled(true);
             GameManager.Instance.LoadGame();
+        };
+
+        
+    }
+
+    private void OnAppleCountDownToZero()
+    {
+        EventHub.Instance.DialogPause();
+
+        DialogManager.Instance.StartDialog(new Dialog()
+        {
+            Messages = new List<Message>()
+            {
+                new Message() { Text = "Jimmy: \"Awesome! All the apples are collected!\"" },
+                new Message() { Text = "Willy: \"Thanks Pal! Come on, have an apple\"" },
+                new Message() { Text = "Pal: \"Nom, nom... see you, guys!\"" },
+            }
+        });
+
+        GameManager.Instance.SaveOnLevelStart = true;
+        GameManager.Instance.TreeLevelCompleted = true;
+
+        EventHub.Instance.OnDialogClose += (x) =>
+        {
+            EventHub.Instance.DialogUnpause(); 
+            EventHub.Instance.InputEnabled(true);
+            GameManager.Instance.GotoLevel(GameManager.LevelEnum.World);
         };
     }
 

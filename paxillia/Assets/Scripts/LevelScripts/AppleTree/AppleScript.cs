@@ -10,6 +10,11 @@ public class AppleScript : MonoBehaviour
         GameManager.Instance.AppleCount++;
     }
 
+    //private void OnDestroy()
+    //{
+    //    GameManager.Instance.AppleCount--;
+    //}
+
     // Update is called once per frame
     void Update()
     {

@@ -64,10 +64,10 @@ public class GameManager : MonoBehaviour
             _appleCount = value;
             if (drop)
             {
-                //Debug.Log("OUT OF APPLES");
+                Debug.Log("OUT OF APPLES");
                 EventHub.Instance.AppleCountDownToZero();
             }
-            //Debug.Log("A " + AppleCount);
+            Debug.Log("A " + AppleCount);
         }
     }
 
@@ -299,6 +299,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        _appleCount = 0;
         BallSpeed = 10;
         //DialogPaused = false;
 
