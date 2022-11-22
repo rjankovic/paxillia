@@ -24,7 +24,12 @@ public class RoadblockSign : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (GameManager.Instance.RoadblockRemoved)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         nameIndex = ((int)(Mathf.Floor(Random.value * names.Count))) % names.Count;
     }
 

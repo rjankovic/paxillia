@@ -1813,6 +1813,7 @@ GameObject:
   - component: {fileID: 164198708}
   - component: {fileID: 164198707}
   - component: {fileID: 164198709}
+  - component: {fileID: 164198710}
   m_Layer: 0
   m_Name: roadblock4
   m_TagString: Untagged
@@ -1913,6 +1914,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10.24, y: 3.04}
   m_EdgeRadius: 0
+--- !u!114 &164198710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164198706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe34d7d48a89a0241abce655ceb79af8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &174403428
 GameObject:
   m_ObjectHideFlags: 0

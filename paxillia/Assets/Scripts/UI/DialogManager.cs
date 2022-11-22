@@ -270,6 +270,27 @@ public class DialogManager : MonoBehaviour
 
     public void StartIngameDialog(Dialog dialog)
     {
+        StartCoroutine(StartIngameDialogInner(dialog));
+        //_ingameDialog = dialog;
+
+        //_ingameMessages = new Queue<Message>();
+        //foreach (var message in dialog.Messages)
+        //{
+        //    _ingameMessages.Enqueue(message);
+        //}
+
+        ////Debug.Log(EventHub.Instance);
+        //EventHub.Instance.IngameDialogOpen(_ingameDialog);
+
+        //StartCoroutine(DisplayNextIngameMessage(_ingameMessages.Count));
+        //StartCoroutine(DisplayIngameDialog());
+    }
+
+
+    private IEnumerator StartIngameDialogInner(Dialog dialog)
+    {
+        yield return new WaitForSeconds(0.2f);
+
         _ingameDialog = dialog;
 
         _ingameMessages = new Queue<Message>();
@@ -284,7 +305,6 @@ public class DialogManager : MonoBehaviour
         StartCoroutine(DisplayNextIngameMessage(_ingameMessages.Count));
         //StartCoroutine(DisplayIngameDialog());
     }
-
 
     // Start is called before the first frame update
     void Start()

@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D _playerRigidBody;
     private Vector2 _pausedBallVelocity = Vector2.zero;
 
+    private Dialog _scheduledIngameDialog = null;
+
     public Vector2 WorldReturnPosition = Vector2.zero;
 
     public bool DialogPaused { get; private set; } = false;
@@ -44,11 +46,31 @@ public class GameManager : MonoBehaviour
 
     public int BallSpeed { get; set; } = 10; //3; // 10;
 
-    public bool DogLevelCompleted { get; set; }
+    private bool _dogLevelCompleted = false;
+    private bool _treeLevelCompleted = false;
 
-    public bool TreeLevelCompleted { get; set; }
+    public bool DogLevelCompleted { get => _dogLevelCompleted; set { _dogLevelCompleted = value; CheckRoadblock(); } }
+
+    public bool TreeLevelCompleted { get => _treeLevelCompleted; set { _treeLevelCompleted = value; CheckRoadblock(); } }
 
     public bool RoadblockRemoved { get; set; }
+
+    private void CheckRoadblock()
+    {
+        if (!RoadblockRemoved && (_dogLevelCompleted && _treeLevelCompleted))
+        {
+            RoadblockRemoved = true;
+            EventHub.Instance.RoadblockRemoved();
+            Debug.Log("Scheduling Gertruda reminder");
+            _scheduledIngameDialog = new Dialog()
+            {
+                Messages = new List<Message>()
+                {
+                    new Message() { Character = Constants.CHAR_PAL, Text = "I should check up on grandma up north. Maybe she is back home already.", Duration = 10 }
+                }
+            };
+        }
+    }
 
     public bool LoadedLevelStart { get; private set; }
 
@@ -342,6 +364,13 @@ public class GameManager : MonoBehaviour
         Debug.Log("Unpause");
         EventHub.Instance.InputEnabled(true);
         Time.timeScale = 1;
+
+        if(_scheduledIngameDialog != null)
+        {
+            Debug.Log("Starting scheduled dialog");
+            DialogManager.Instance.StartIngameDialog(_scheduledIngameDialog);
+            _scheduledIngameDialog = null;
+        }
     }
 
     public GameStateEnum GameState
