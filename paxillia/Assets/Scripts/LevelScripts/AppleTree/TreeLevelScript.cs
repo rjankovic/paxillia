@@ -98,6 +98,7 @@ public class TreeLevelScript : MonoBehaviour
 
         GameManager.Instance.SaveOnLevelStart = true;
         GameManager.Instance.TreeLevelCompleted = true;
+        GameManager.Instance.BallCount++;
 
         EventHub.Instance.OnDialogClose += (x) =>
         {

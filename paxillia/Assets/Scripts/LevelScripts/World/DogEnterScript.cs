@@ -52,6 +52,7 @@ public class DogEnterScript : MonoBehaviour //: SaveableWorldObject
         }
 
         Debug.Log("Entering dog level");
+        GameManager.Instance.BallCount++;
 
         GameManager.Instance.WorldReturnPosition = GameManager.Instance.Ball.GetComponent<Rigidbody2D>().position;
 

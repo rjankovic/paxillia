@@ -50,6 +50,7 @@ public class TreeEnterScript : MonoBehaviour
         }
 
         Debug.Log("Entering tree level");
+        GameManager.Instance.BallCount++;
 
         GameManager.Instance.WorldReturnPosition = GameManager.Instance.Ball.GetComponent<Rigidbody2D>().position;
 

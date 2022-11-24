@@ -66,15 +66,34 @@ public class WorldScript : MonoBehaviour
         if (GameManager.Instance.BallCount > 0)
         {
             DialogManager.Instance.StartIngameDialog(new Dialog()
-            { 
+            {
                 Messages = new List<Message>()
-                { 
+                {
                     new Message() { Character = Constants.CHAR_PAL, Text = "Ooh, another ball out os sight... better take a new one.", Duration = 5 }
                 }
             });
 
             StartCoroutine(ServeNextBall());
             return;
+        }
+        else
+        {
+            EventHub.Instance.InputEnabled(false);
+
+            DialogManager.Instance.StartDialog(new Dialog()
+            {
+                Messages = new List<Message>()
+                    {
+                        new Message() { Text = $"You went out to find Rolly and instead of that you lost all remaining balls...\nWell done. Well, well, well...done.\nLet's try that again, shall we?"},
+                    }
+            });
+
+            EventHub.Instance.OnDialogClose += (x) =>
+            {
+                //Time.timeScale = 1;
+                EventHub.Instance.InputEnabled(true);
+                GameManager.Instance.LoadGame();
+            };
         }
     }
 

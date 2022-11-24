@@ -134,6 +134,11 @@ public class PlayerScript : MonoBehaviour
 
     private void TrySereBall()
     {
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
+
         if (GameManager.Instance.BallCount < 1)
         {
             return;

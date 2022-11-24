@@ -6,14 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
     path: Assets/Scenes/Level_AppleTree.unity
     guid: 2ef83984e41894c4185c5807856c7649
   - enabled: 1
     path: Assets/Scenes/Level_Dog.unity
     guid: db01e91193f4d0c408689d4eff1c27b1
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Animations/Anim_Intro.unity
     guid: d82c9614d94f7ff45ac1fb90d0cf79f8
