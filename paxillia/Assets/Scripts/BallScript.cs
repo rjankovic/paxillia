@@ -167,6 +167,10 @@ public class BallScript : MonoBehaviour
         var upDown = Mathf.Sign(collision.contacts[0].normal.y);
         var leftRight = Mathf.Sign(collision.contacts[0].normal.x);
 
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
 
         if (horizontalPaddle)
         {
