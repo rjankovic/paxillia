@@ -17,6 +17,9 @@ public class CrackableWallScript : MonoBehaviour
     private int sideWidth = 6;
     private  int midWidth = 2;
 
+    [SerializeField]
+    private AudioSource _breakSound;
+
     public class WallColumn
     {
         public float LeftX;
@@ -205,6 +208,7 @@ public class CrackableWallScript : MonoBehaviour
         if (column.Height > bottomHeight)
         {
             column.Height--;
+            _breakSound.Play();
             s.RemovePointAt(column.LeftPointIndex);
             s.RemovePointAt(column.RightPointIndex);
             if (shiftRightColumn)

@@ -70,6 +70,7 @@ public class Level1Script : MonoBehaviour
             {
                 //Time.timeScale = 0;
                 EventHub.Instance.InputEnabled(false);
+                EventHub.Instance.LevelWon();
 
                 DialogManager.Instance.StartDialog(new Dialog()
                 {

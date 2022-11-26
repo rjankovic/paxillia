@@ -77,6 +77,7 @@ public class EventHub : MonoBehaviour
     public event Action OnRoadblockRemoved;
 
     public event Action OnAppleCountDownToZero;
+    public event Action OnLevelWon;
 
     //public event Action OnLevelLoaded;
 
@@ -246,7 +247,13 @@ public class EventHub : MonoBehaviour
         }
     }
 
-
+    public void LevelWon()
+    {
+        if (OnLevelWon != null)
+        {
+            OnLevelWon();
+        }
+    }
 
     //public void LevelLoaded()
     //{

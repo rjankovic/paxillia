@@ -8,7 +8,12 @@ public class WindowScript : MonoBehaviour
     [SerializeField]
     private Sprite brokenSprite;
 
+    [SerializeField]
+    private AudioSource brokenSound;
+
     private new SpriteRenderer renderer;
+
+    private bool _broken = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +34,14 @@ public class WindowScript : MonoBehaviour
         {
             return;
         }
+        if (_broken)
+        {
+            return;
+        }
+        _broken = true;
         Debug.Log("Window broken by " + collision.gameObject.tag);
         renderer.sprite = brokenSprite;
+        brokenSound.Play();
         EventHub.Instance.WindowBroken();
     }
 }

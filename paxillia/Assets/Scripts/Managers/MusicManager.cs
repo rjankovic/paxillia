@@ -107,8 +107,10 @@ public class MusicManager : MonoBehaviour
 
         while (true)
         {
-            _music[l[playIndex]].Play();
-            yield return new WaitForSeconds(_music[l[playIndex]].clip.length + 5f);
+            var music = _music[l[playIndex]];
+            music.volume = 0.5f;
+            music.Play();
+            yield return new WaitForSeconds(music.clip.length + 5f);
             playIndex++;
             playIndex = playIndex % count;
         }

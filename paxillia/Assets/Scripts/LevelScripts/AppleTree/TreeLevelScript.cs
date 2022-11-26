@@ -85,6 +85,7 @@ public class TreeLevelScript : MonoBehaviour
     private void OnAppleCountDownToZero()
     {
         EventHub.Instance.DialogPause();
+        EventHub.Instance.LevelWon();
 
         DialogManager.Instance.StartDialog(new Dialog()
         {

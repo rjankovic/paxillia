@@ -55,6 +55,12 @@ public class GameManager : MonoBehaviour
 
     public bool RoadblockRemoved { get; set; }
 
+    [SerializeField]
+    private AudioSource _lostSound;
+
+    [SerializeField]
+    private AudioSource _winSound;
+
     private void CheckRoadblock()
     {
         if (!RoadblockRemoved && (_dogLevelCompleted && _treeLevelCompleted))
@@ -164,6 +170,8 @@ public class GameManager : MonoBehaviour
         {
             EventHub.Instance.RoadblockRemoved();
         }
+
+        EventHub.Instance.OnLevelWon += LevelWon;
     }
 
     private void OnWorldSaveStateUpdated(GameObjectSaveState obj)
@@ -423,6 +431,12 @@ public class GameManager : MonoBehaviour
     {
         Ball = null;
         EventHub.Instance.BallLost(ballObject);
+
+        if (CurrentLevel != GameManager.LevelEnum.Home && CurrentLevel != GameManager.LevelEnum.IntroAnimation)
+        {
+            Debug.Log("Playing lost sound");
+            _lostSound.Play();
+        }
     }
 
     public bool LoadGame()
@@ -540,5 +554,10 @@ public class GameManager : MonoBehaviour
         DogLevelCompleted = false;
         TreeLevelCompleted = false;
         RoadblockRemoved = false;
+    }
+
+    private void LevelWon()
+    {
+        _winSound.Play();
     }
 }

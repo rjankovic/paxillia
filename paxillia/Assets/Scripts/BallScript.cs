@@ -16,6 +16,12 @@ public class BallScript : MonoBehaviour
 
     private Vector2 _velocity;
 
+    [SerializeField]
+    AudioSource _bounceSound;
+
+    //[SerializeField]
+    //AudioSource _lostSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -91,6 +97,12 @@ public class BallScript : MonoBehaviour
             EventHub.Instance.OnDialogPaused -= OnDialogPaused;
             EventHub.Instance.OnDialogUnpaused -= OnDialogUnpaused;
 
+            //Debug.Log(GameManager.Instance.CurrentLevel.ToString());
+            //if (GameManager.Instance.CurrentLevel != GameManager.LevelEnum.Home && GameManager.Instance.CurrentLevel != GameManager.LevelEnum.IntroAnimation)
+            //{
+            //    Debug.Log("Playing lost sound");
+            //    _lostSound.Play();
+            //}
             Destroy(gameObject);
         }
     }
@@ -123,7 +135,10 @@ public class BallScript : MonoBehaviour
             
             BumpOffPlayer(collision);
             EventHub.Instance.BallBumpOffPlayer();
+
+            _bounceSound.Play();
         }
+
     }
 
     private void BumpOffPlayer(Collision2D collision)

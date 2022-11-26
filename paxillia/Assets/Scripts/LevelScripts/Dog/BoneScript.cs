@@ -26,6 +26,7 @@ public class BoneScript : MonoBehaviour
         //Debug.Log("Ball collision");
 
         EventHub.Instance.DialogPause();
+        EventHub.Instance.LevelWon();
 
         EventHub.Instance.OnDialogClose += OnDialogClose;
         DialogManager.Instance.StartDialog(new Dialog()
