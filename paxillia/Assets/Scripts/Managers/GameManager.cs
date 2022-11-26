@@ -64,6 +64,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private AudioSource _appleSound;
 
+    [SerializeField]
+    private AudioSource _ballsCollectedSound;
+
     private void CheckRoadblock()
     {
         if (!RoadblockRemoved && (_dogLevelCompleted && _treeLevelCompleted))
@@ -124,6 +127,7 @@ public class GameManager : MonoBehaviour
 
         _instance = this;
         _savePath = Path.Combine(Application.persistentDataPath, "save.json");
+        Debug.Log("Save path: " + _savePath);
     }
 
     // Start is called before the first frame update
@@ -568,5 +572,10 @@ public class GameManager : MonoBehaviour
     private void LevelWon()
     {
         _winSound.Play();
+    }
+
+    public void BallsCollected()
+    {
+        _ballsCollectedSound.Play();
     }
 }

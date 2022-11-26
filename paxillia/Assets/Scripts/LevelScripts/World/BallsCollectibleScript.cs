@@ -23,6 +23,7 @@ public class BallsCollectibleScript : MonoBehaviour
         {
             Destroy(gameObject);
             GameManager.Instance.BallCount += 3;
+            GameManager.Instance.BallsCollected();
             DialogManager.Instance.StartIngameDialog(new Dialog()
             {
                 Messages = new List<Message>()
