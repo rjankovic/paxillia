@@ -61,6 +61,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private AudioSource _winSound;
 
+    [SerializeField]
+    private AudioSource _appleSound;
+
     private void CheckRoadblock()
     {
         if (!RoadblockRemoved && (_dogLevelCompleted && _treeLevelCompleted))
@@ -172,6 +175,12 @@ public class GameManager : MonoBehaviour
         }
 
         EventHub.Instance.OnLevelWon += LevelWon;
+        EventHub.Instance.OnAppleDrop += OnAppleDrop;
+    }
+
+    private void OnAppleDrop()
+    {
+        _appleSound.Play();
     }
 
     private void OnWorldSaveStateUpdated(GameObjectSaveState obj)

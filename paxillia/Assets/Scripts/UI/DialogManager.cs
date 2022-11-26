@@ -47,7 +47,8 @@ public class DialogManager : MonoBehaviour
 
     private bool _gamePaused = false;
 
-    
+    [SerializeField]
+    private AudioSource _dialogSound;
 
     //[SerializeField]
     //private Animator _animator;
@@ -104,6 +105,7 @@ public class DialogManager : MonoBehaviour
 
     public void StartDialog(Dialog dialog)
     {
+        _dialogSound.Play();
         StartCoroutine(StartDialogInner(dialog));
         //SetButtonsForDialog();
         //_dialog = dialog;

@@ -24,6 +24,7 @@ public class AppleScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log("Apple Collision Enter");
+        EventHub.Instance.AppleDrop();
         GameManager.Instance.AppleCount--;
         Destroy(gameObject);
     }

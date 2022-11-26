@@ -78,6 +78,7 @@ public class EventHub : MonoBehaviour
 
     public event Action OnAppleCountDownToZero;
     public event Action OnLevelWon;
+    public event Action OnAppleDrop;
 
     //public event Action OnLevelLoaded;
 
@@ -252,6 +253,14 @@ public class EventHub : MonoBehaviour
         if (OnLevelWon != null)
         {
             OnLevelWon();
+        }
+    }
+
+    public void AppleDrop()
+    {
+        if (OnAppleDrop != null)
+        {
+            OnAppleDrop();
         }
     }
 
