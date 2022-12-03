@@ -107,30 +107,14 @@ public class DialogManager : MonoBehaviour
     {
         _dialogSound.Play();
         StartCoroutine(StartDialogInner(dialog));
-        //SetButtonsForDialog();
-        //_dialog = dialog;
-        //_messages = new Queue<Message>();
-        //foreach (var message in dialog.Messages)
-        //{
-        //    _messages.Enqueue(message);
-        //}
 
-        ////_animator.SetBool("DialogOpen", true);
-
-        //EventHub.Instance.DialogOpen(_dialog);
-        ////if (OnDialogStart != null)
-        ////{
-        ////    OnDialogStart(this, new DialogEventArgs() { Dialog = _dialog });
-        ////}
-
-        //DisplayNextMessage();
     }
 
 
     private IEnumerator StartDialogInner(Dialog dialog)
     {
         yield return new WaitForSeconds(0.2f);
-
+        
         SetButtonsForDialog();
         _dialog = dialog;
         _messages = new Queue<Message>();
@@ -156,6 +140,7 @@ public class DialogManager : MonoBehaviour
         _yesAction = yesAction;
         _noAction = noAction;
 
+        _dialogSound.Play();
         _dialog = dialog;
         _messages = new Queue<Message>();
         foreach (var message in dialog.Messages)
