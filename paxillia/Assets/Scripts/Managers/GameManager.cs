@@ -288,6 +288,10 @@ public class GameManager : MonoBehaviour
                     return LevelEnum.Dog;
                 case "Level_AppleTree":
                     return LevelEnum.AppleTree;
+                case "Level_Kraut":
+                    return LevelEnum.GrandmasKraut;
+                case "Level_Grandma":
+                    return LevelEnum.EscapeFromGrandma;
                 case "MainMenu":
                     return LevelEnum.MainMenu;
                 case "Anim_Intro":
@@ -310,6 +314,10 @@ public class GameManager : MonoBehaviour
                 return "Level_Dog";
             case LevelEnum.AppleTree:
                 return "Level_AppleTree";
+            case LevelEnum.GrandmasKraut:
+                return "Level_Kraut";
+            case LevelEnum.EscapeFromGrandma:
+                return "Level_Grandma";
             //case LevelEnum.GrandmasBalls:
             //    break;
             //case LevelEnum.GrandmasKraut:
