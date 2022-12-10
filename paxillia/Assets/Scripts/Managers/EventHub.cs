@@ -81,6 +81,7 @@ public class EventHub : MonoBehaviour
     public event Action OnAppleDrop;
 
     public event Action OnGrassDrop;
+    public event Action OnGrassCountUpdate;
     public event Action OnEnoughGrassDropped;
     public event Action OnKrautDestroyed;
 
@@ -289,6 +290,14 @@ public class EventHub : MonoBehaviour
         if (OnKrautDestroyed != null)
         {
             OnKrautDestroyed();
+        }
+    }
+
+    public void GrassCountUpdate()
+    {
+        if (OnGrassCountUpdate != null)
+        {
+            OnGrassCountUpdate();
         }
     }
 

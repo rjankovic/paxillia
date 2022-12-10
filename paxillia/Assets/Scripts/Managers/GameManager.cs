@@ -114,11 +114,12 @@ public class GameManager : MonoBehaviour
         set
         {
             _grassCount = value;
-            bool enough = _grassCount / (float)TotalGrassCount < 0.2; 
-            if (enough)
-            {
-                EventHub.Instance.EnoughGrassDropped();
-            }
+            EventHub.Instance.GrassCountUpdate();
+            //bool enough = _grassCount / (float)TotalGrassCount < 0.2; 
+            //if (enough)
+            //{
+            //    EventHub.Instance.EnoughGrassDropped();
+            //}
         }
     }
 
@@ -374,6 +375,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         _appleCount = 0;
+        GrassCount = 0;
+        TotalGrassCount = 0;
         BallSpeed = 10;
         //DialogPaused = false;
 
