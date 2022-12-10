@@ -80,6 +80,10 @@ public class EventHub : MonoBehaviour
     public event Action OnLevelWon;
     public event Action OnAppleDrop;
 
+    public event Action OnGrassDrop;
+    public event Action OnEnoughGrassDropped;
+    public event Action OnKrautDestroyed;
+
     //public event Action OnLevelLoaded;
 
     public void BallBumpOffWall()
@@ -261,6 +265,30 @@ public class EventHub : MonoBehaviour
         if (OnAppleDrop != null)
         {
             OnAppleDrop();
+        }
+    }
+
+    public void GrassDrop()
+    {
+        if (OnGrassDrop != null)
+        {
+            OnGrassDrop();
+        }
+    }
+
+    public void EnoughGrassDropped()
+    {
+        if (OnEnoughGrassDropped != null)
+        {
+            OnEnoughGrassDropped();
+        }
+    }
+
+    public void KrautDestroyed()
+    {
+        if (OnKrautDestroyed != null)
+        {
+            OnKrautDestroyed();
         }
     }
 

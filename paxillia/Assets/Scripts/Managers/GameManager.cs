@@ -105,6 +105,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int TotalGrassCount { get; set; } = 0;
+
+    private int _grassCount = 0;
+    public int GrassCount
+    {
+        get => _grassCount;
+        set
+        {
+            _grassCount = value;
+            bool enough = _grassCount / (float)TotalGrassCount < 0.2; 
+            if (enough)
+            {
+                EventHub.Instance.EnoughGrassDropped();
+            }
+        }
+    }
+
     public int BallCount
     {
         get => ballCount;
@@ -180,11 +197,17 @@ public class GameManager : MonoBehaviour
 
         EventHub.Instance.OnLevelWon += LevelWon;
         EventHub.Instance.OnAppleDrop += OnAppleDrop;
+        EventHub.Instance.OnGrassDrop += OnGrassDrop;
     }
 
     private void OnAppleDrop()
     {
         _appleSound.Play();
+    }
+
+    private void OnGrassDrop()
+    {
+        //_appleSound.Play();
     }
 
     private void OnWorldSaveStateUpdated(GameObjectSaveState obj)
