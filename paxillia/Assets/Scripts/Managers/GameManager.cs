@@ -129,6 +129,8 @@ public class GameManager : MonoBehaviour
         set { ballCount = value; if (EventHub.Instance != null) EventHub.Instance.BallCountUpdate(value); }
     }
 
+    public bool RollyCollected { get; set; } = false;
+
     private SaveState _saveStateAfterLoad;
     private bool _saveOnLevelStart = false;
     public bool SaveOnLevelStart { get => _saveOnLevelStart; set => _saveOnLevelStart = value; }
@@ -377,6 +379,7 @@ public class GameManager : MonoBehaviour
         _appleCount = 0;
         GrassCount = 0;
         TotalGrassCount = 0;
+        RollyCollected = false;
         BallSpeed = 10;
         //DialogPaused = false;
 
@@ -608,7 +611,7 @@ public class GameManager : MonoBehaviour
         _winSound.Play();
     }
 
-    public void BallsCollected()
+    public void BallsCollectedSound()
     {
         _ballsCollectedSound.Play();
     }
