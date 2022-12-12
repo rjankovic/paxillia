@@ -83,6 +83,7 @@ public class EventHub : MonoBehaviour
     public event Action OnGrassDrop;
     public event Action OnGrassCountUpdate;
     public event Action OnEnoughGrassDropped;
+    public event Action OnRollyCollected;
     public event Action OnKrautDestroyed;
 
     //public event Action OnLevelLoaded;
@@ -282,6 +283,14 @@ public class EventHub : MonoBehaviour
         if (OnEnoughGrassDropped != null)
         {
             OnEnoughGrassDropped();
+        }
+    }
+
+    public void RollyCollected()
+    {
+        if (OnRollyCollected != null)
+        {
+            OnRollyCollected();
         }
     }
 

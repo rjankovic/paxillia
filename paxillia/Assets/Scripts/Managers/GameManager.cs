@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool RollyCollected { get; set; } = false;
+    public bool GrassWiped { get; set; } = false;
 
     private SaveState _saveStateAfterLoad;
     private bool _saveOnLevelStart = false;
@@ -380,6 +381,7 @@ public class GameManager : MonoBehaviour
         GrassCount = 0;
         TotalGrassCount = 0;
         RollyCollected = false;
+        GrassWiped = false;
         BallSpeed = 10;
         //DialogPaused = false;
 

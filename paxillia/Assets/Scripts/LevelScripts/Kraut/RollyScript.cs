@@ -29,9 +29,10 @@ public class RollyScript : MonoBehaviour
         {
             Messages = new List<Message>()
             {
-                new Message() { Character = Constants.CHAR_PAL, Text = "Rolly! How did you get here? Let's get you back home as soon as we're done here!", Duration = 7 }
+                new Message() { Character = Constants.CHAR_PAL, Text = "Rolly! You're finally out of there! I'll get you back home as soon as we're done here!", Duration = 7 }
             }
         });
+        EventHub.Instance.RollyCollected();
         Destroy(gameObject);
     }
 }

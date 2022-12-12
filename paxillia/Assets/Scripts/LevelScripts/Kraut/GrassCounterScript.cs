@@ -38,6 +38,7 @@ public class GrassCounterScript : MonoBehaviour
         _text.text = $"{pct}/{_targetPercentage}%";
         if (pct >= _targetPercentage)
         {
+            GameManager.Instance.GrassWiped = true;
             EventHub.Instance.EnoughGrassDropped();
         }
     }

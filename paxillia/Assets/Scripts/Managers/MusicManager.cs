@@ -59,6 +59,9 @@ public class MusicManager : MonoBehaviour
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode arg1)
     {
+        // TODO: remove later
+        return;
+
         Debug.Log("Music manager: scene loaded");
 
         if (scene.name == "MainMenu" && !_startDone)
