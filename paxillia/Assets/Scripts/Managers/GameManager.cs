@@ -287,6 +287,8 @@ public class GameManager : MonoBehaviour
         GrandmasBalls,
         GrandmasKraut,
         EscapeFromGrandma,
+        Anim_Grandma,
+        Anim_Grandma2,
         IntroAnimation,
         MainMenu,
         World,
@@ -325,6 +327,10 @@ public class GameManager : MonoBehaviour
                     return LevelEnum.IntroAnimation;
                 case "World":
                     return LevelEnum.World;
+                case "Anim_Grandma":
+                    return LevelEnum.Anim_Grandma;
+                case "Anim_Grandma2":
+                    return LevelEnum.Anim_Grandma2;
                 default:
                     return LevelEnum.NA;
             }
@@ -357,6 +363,10 @@ public class GameManager : MonoBehaviour
                 return "MainMenu";
             case LevelEnum.World:
                 return "World";
+            case LevelEnum.Anim_Grandma:
+                return "Anim_Grandma";
+            case LevelEnum.Anim_Grandma2:
+                return "Anim_Grandma2";
             case LevelEnum.NA:
                 throw new KeyNotFoundException();
                 //break;

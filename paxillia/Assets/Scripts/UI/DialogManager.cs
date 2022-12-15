@@ -205,19 +205,26 @@ public class DialogManager : MonoBehaviour
             yield return null;
         }
 
-        if (_ingameMessages.Count < remainingCount)
+        else if (_ingameMessages.Count < remainingCount)
         {
             yield return null;
         }
-        if (_ingameMessages.Count > 0)
+        else if (_ingameMessages.Count > 0)
         {
-
+            Debug.Log($"{DateTime.Now}, P {remainingCount} Q {_ingameMessages.Count}");
             _ingameMessage = _ingameMessages.Dequeue();
             _currentIngameText.text = _ingameMessage.Text;
             _currentIngameDialogCharacter.text = _ingameMessage.Character ?? string.Empty;
             yield return new WaitForSeconds(_ingameMessage.Duration);
 
-            StartCoroutine(DisplayNextIngameMessage(_ingameMessages.Count));
+            if (_ingameMessages.Count < remainingCount - 1)
+            {
+                yield return null;
+            }
+            else
+            {
+                StartCoroutine(DisplayNextIngameMessage(remainingCount - 1));
+            }
         }
     }
 
@@ -252,6 +259,10 @@ public class DialogManager : MonoBehaviour
         if (_dialog != null)
         {
             DisplayNextMessage();
+        }
+        else if (_ingameDialog != null)
+        {
+            DisplayNextIngameMessage(_ingameMessages.Count);
         }
     }
 
