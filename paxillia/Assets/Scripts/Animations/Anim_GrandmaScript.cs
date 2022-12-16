@@ -36,7 +36,7 @@ public class Anim_GrandmaScript : MonoBehaviour
             }
         });
 
-        EventHub.Instance.OnDialogClose += IntroDialog_End;
+        EventHub.Instance.OnIngameDialogClose += IntroDialog_End;
 
         //DialogManager.Instance.OnDialogEnd += IntroDialog_End;
         // Code to execute after the delay
@@ -44,7 +44,7 @@ public class Anim_GrandmaScript : MonoBehaviour
 
     private void IntroDialog_End(Dialog dialog)
     {
-        //GameManager.Instance.GotoLevel(GameManager.LevelEnum.GrandmasKraut);
+        GameManager.Instance.GotoLevel(GameManager.LevelEnum.GrandmasKraut);
     }
 
 }

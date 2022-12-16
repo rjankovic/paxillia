@@ -99,6 +99,10 @@ public class GameManager : MonoBehaviour
             if (drop)
             {
                 Debug.Log("OUT OF APPLES");
+                if (EventHub.Instance == null)
+                {
+                    return;
+                }
                 EventHub.Instance.AppleCountDownToZero();
             }
             Debug.Log("A " + AppleCount);
@@ -114,6 +118,10 @@ public class GameManager : MonoBehaviour
         set
         {
             _grassCount = value;
+            if (EventHub.Instance == null)
+            {
+                return;
+            }
             EventHub.Instance.GrassCountUpdate();
             //bool enough = _grassCount / (float)TotalGrassCount < 0.2; 
             //if (enough)
@@ -585,10 +593,10 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"Loading level {saveState.Level}");
 
+        RoadblockRemoved = saveState.RoadblockRemoved;
         DogLevelCompleted = saveState.DogLevelCompleted;
         TreeLevelCompleted = saveState.TreeLevelCompleted;
-        RoadblockRemoved = saveState.RoadblockRemoved;
-
+        
         LoadedLevelStart = true;
         StartCoroutine(LoadLevel(saveState.Level));
         BallCount = saveState.BallCount;
