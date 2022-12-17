@@ -73,7 +73,7 @@ public class LevelKrautScript : MonoBehaviour
         {
             EventHub.Instance.DialogUnpause();
             EventHub.Instance.InputEnabled(true);
-            GameManager.Instance.GotoLevel(GameManager.LevelEnum.EscapeFromGrandma);
+            GameManager.Instance.GotoLevel(GameManager.LevelEnum.Anim_Grandma2);
         };
     }
 

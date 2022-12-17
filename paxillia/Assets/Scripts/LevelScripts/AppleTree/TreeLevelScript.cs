@@ -92,7 +92,7 @@ public class TreeLevelScript : MonoBehaviour
             Messages = new List<Message>()
             {
                 new Message() { Text = "Jimmy: \"Awesome! All the apples are collected!\"" },
-                new Message() { Text = "Willy: \"Thanks Pal! Come on, have an apple\"" },
+                new Message() { Text = "Willy: \"Thanks Pal! Come on, have an apple!\"" },
                 new Message() { Text = "Pal: \"Nom, nom... see you, guys!\"" },
             }
         });
