@@ -15,7 +15,7 @@ public class LevelKrautScript : MonoBehaviour
         {
             Messages = new List<Message>()
         {
-            new Message() { Text = "Well, here we are, grandma's kabbages. Let's try not to manage them too much while we deal with the grass weed." },
+            new Message() { Text = "Well, here we are, grandma's cabbages. Let's try not to damage them too much while we deal with the grass weed." },
             new Message() { Text = "Hey, that's Rolly hiding in the grass! Oh boy, you sure rolled way too far this time! I'll get you back, don't worry little one." },
         }
         });

@@ -44,6 +44,7 @@ public class Anim_Grandma2Script : MonoBehaviour
 
     private void IntroDialog_End(Dialog dialog)
     {
+        GameManager.Instance.SaveOnLevelStart = true;
         GameManager.Instance.GotoLevel(GameManager.LevelEnum.EscapeFromGrandma);
     }
 
