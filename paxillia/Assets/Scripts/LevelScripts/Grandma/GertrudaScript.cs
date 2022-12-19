@@ -6,7 +6,7 @@ public class GertrudaScript : MonoBehaviour
 {
     private const int MIN_POS = -14;
     private const int MAX_POS = 14;
-    private const float MOVEMENT_SPEED = 0.01f;
+    private const float MOVEMENT_SPEED = 0.1f;
 
     private int movementDirection = 0;
     private Transform transform;
@@ -15,6 +15,19 @@ public class GertrudaScript : MonoBehaviour
     void Start()
     {
         transform = GetComponent<Transform>();
+        EventHub.Instance.OnInputEnabled += OnInputEnabled;
+        EventHub.Instance.OnBallBumOffPlayer += OnBallBumOffPlayer;
+    }
+
+    private void OnBallBumOffPlayer()
+    {
+        // 50% chance switch direction
+        movementDirection *= (Random.value >= 0.5 ? 1 : -1);
+    }
+
+    private void OnInputEnabled(bool obj)
+    {
+        StartMovement();
     }
 
     // Update is called once per frame
