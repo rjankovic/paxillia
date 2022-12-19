@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     private GameObject _player;
     private Rigidbody2D _playerRigidBody;
+    public Rigidbody2D PlayerRigidBody { get => _playerRigidBody; }
+
     private Vector2 _pausedBallVelocity = Vector2.zero;
 
     private Dialog _scheduledIngameDialog = null;

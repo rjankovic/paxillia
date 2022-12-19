@@ -5,11 +5,16 @@ using UnityEngine;
 public class GertrudaScript : MonoBehaviour
 {
     private const int MIN_POS = -14;
-    private const int MAX_POS = 14;
+    private const int MAX_POS = 13; //14;
     private const float MOVEMENT_SPEED = 0.1f;
 
     private int movementDirection = 0;
+    private bool shootingEnabled = false;
     private Transform transform;
+    [SerializeField]
+    private GameObject gun;
+    [SerializeField]
+    private GameObject _speckPrefab = null;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +22,25 @@ public class GertrudaScript : MonoBehaviour
         transform = GetComponent<Transform>();
         EventHub.Instance.OnInputEnabled += OnInputEnabled;
         EventHub.Instance.OnBallBumOffPlayer += OnBallBumOffPlayer;
+        EventHub.Instance.OnGrandmaHealthUpdated += OnGrandmaHealthUpdated;
+        gun.active = false;
+    }
+
+    private void OnGrandmaHealthUpdated()
+    {
+        if (GameManager.Instance.GrandmaHealth <= 950 && !shootingEnabled)
+        {
+            DialogManager.Instance.StartIngameDialog(new Dialog()
+            {
+                Messages = new List<Message>()
+                {
+                    new Message() { Character = Constants.CHAR_GRANDMA, Text = "Au! Time das Speckgewehr 89 zu deploy!", Duration = 5 }
+                }
+            });
+
+            shootingEnabled = true;
+            gun.SetActive(true);
+        }
     }
 
     private void OnBallBumOffPlayer()
@@ -44,6 +68,7 @@ public class GertrudaScript : MonoBehaviour
     private void FixedUpdate()
     {
         Movement();
+        ShootSpeck();
     }
 
     private void Movement()
@@ -85,5 +110,24 @@ public class GertrudaScript : MonoBehaviour
         }
 
         GameManager.Instance.GrandmaHealth -= 50;
+    }
+
+    private void ShootSpeck()
+    {
+        if (!shootingEnabled)
+        {
+            return;
+        }
+
+        var r = Random.value;
+        var shoot = r < Time.fixedDeltaTime / 3f;
+        if (!shoot)
+        {
+            return;
+        }
+
+        var speckPosition = new Vector3(transform.position.x + 2f, transform.position.y - 1f, 0);
+        var speckObject = Instantiate(_speckPrefab, speckPosition, Quaternion.identity);
+
     }
 }
