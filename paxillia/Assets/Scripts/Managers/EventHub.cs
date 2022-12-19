@@ -86,6 +86,9 @@ public class EventHub : MonoBehaviour
     public event Action OnRollyCollected;
     public event Action OnKrautDestroyed;
 
+    public event Action OnGrandmaHealthUpdated;
+    public event Action OnCalorieCounterUpdated;
+
     //public event Action OnLevelLoaded;
 
     public void BallBumpOffWall()
@@ -307,6 +310,22 @@ public class EventHub : MonoBehaviour
         if (OnGrassCountUpdate != null)
         {
             OnGrassCountUpdate();
+        }
+    }
+
+    public void GrandmaHealthUpdated()
+    {
+        if (OnGrandmaHealthUpdated != null)
+        {
+            OnGrandmaHealthUpdated();
+        }
+    }
+
+    public void CalorieCounterUpdated()
+    {
+        if (OnCalorieCounterUpdated != null)
+        {
+            OnCalorieCounterUpdated();
         }
     }
 

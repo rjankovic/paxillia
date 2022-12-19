@@ -144,6 +144,28 @@ public class GameManager : MonoBehaviour
     private bool _saveOnLevelStart = false;
     public bool SaveOnLevelStart { get => _saveOnLevelStart; set => _saveOnLevelStart = value; }
 
+    private int _grandmaHealth = 1000;
+    private int _caloriesCounter = 0;
+
+    public int GrandmaHealth { get => _grandmaHealth; set
+        {
+            _grandmaHealth = value;
+            if (EventHub.Instance != null)
+            {
+                EventHub.Instance.GrandmaHealthUpdated();
+            }
+        } 
+    }
+
+    public int CaloriesCounter { get => _caloriesCounter; set
+        {
+            _caloriesCounter = value;
+            if (EventHub.Instance != null)
+            {
+                EventHub.Instance.CalorieCounterUpdated();
+            }
+        } 
+    }
 
     private void Awake()
     {

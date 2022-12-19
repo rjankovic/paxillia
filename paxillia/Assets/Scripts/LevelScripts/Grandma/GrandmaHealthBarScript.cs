@@ -10,7 +10,12 @@ public class GrandmaHealthBarScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        EventHub.Instance.OnGrandmaHealthUpdated += OnGrandmaHealthUpdated;
+    }
+
+    private void OnGrandmaHealthUpdated()
+    {
+        SetValue(GameManager.Instance.GrandmaHealth);
     }
 
     // Update is called once per frame
