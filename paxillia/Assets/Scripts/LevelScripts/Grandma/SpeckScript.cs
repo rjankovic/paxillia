@@ -24,4 +24,15 @@ public class SpeckScript : MonoBehaviour
     {
         transform.position = transform.position + direction;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag != Constants.TAG_PLAYER)
+        {
+            return;
+        }
+
+        GameManager.Instance.CaloriesCounter += 50;
+        Destroy(gameObject);
+    }
 }

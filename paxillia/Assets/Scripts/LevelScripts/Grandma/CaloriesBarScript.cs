@@ -10,6 +10,11 @@ public class CaloriesBarScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.CaloriesCounter = 0;
+        }
+
         EventHub.Instance.OnCalorieCounterUpdated += OnCalorieCounterUpdated;
     }
 

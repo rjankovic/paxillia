@@ -23,6 +23,8 @@ public class GertrudaScript : MonoBehaviour
         EventHub.Instance.OnInputEnabled += OnInputEnabled;
         EventHub.Instance.OnBallBumOffPlayer += OnBallBumOffPlayer;
         EventHub.Instance.OnGrandmaHealthUpdated += OnGrandmaHealthUpdated;
+
+        movementDirection = 0;
         gun.active = false;
     }
 
