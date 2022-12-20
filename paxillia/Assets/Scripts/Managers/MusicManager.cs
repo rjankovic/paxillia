@@ -18,6 +18,11 @@ public class MusicManager : MonoBehaviour
     [SerializeField] AudioSource[] _music;
     [SerializeField] AudioSource[] _gerMusic;
 
+    private enum MusicTheme { Neutral, Prussian };
+    private MusicTheme musicTheme = MusicTheme.Neutral;
+
+    private AudioSource currentMusic = null;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -65,9 +70,6 @@ public class MusicManager : MonoBehaviour
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode arg1)
     {
-        // TODO: remove later
-        return;
-
         Debug.Log("Music manager: scene loaded");
 
         if (scene.name == "MainMenu" && !_startDone)
@@ -77,6 +79,22 @@ public class MusicManager : MonoBehaviour
         }
 
         _startDone = true;
+
+        var newTheme = (IsGerScene(scene.name) ? MusicTheme.Prussian : MusicTheme.Neutral);
+
+        if (newTheme != musicTheme)
+        {
+            Debug.Log($"Switching to {newTheme.ToString()} music");
+            if (currentMusic != null)
+            {
+                if (currentMusic.isPlaying)
+                {
+                    currentMusic.Stop();
+                }
+            }
+            _playingStarted = false;
+            musicTheme = newTheme;   
+        }
 
         if (scene.name != "MainMenu" && !_playingStarted)
         {
@@ -99,6 +117,7 @@ public class MusicManager : MonoBehaviour
 
     private IEnumerator PlayMusic(float delay = 0)
     {
+        var loopTheme = musicTheme;
         yield return new WaitForSeconds(delay);
 
         var count = _music.Length;
@@ -111,17 +130,35 @@ public class MusicManager : MonoBehaviour
         var r = new System.Random();
         l.Shuffle(r);
 
+
+
+        var count_g = _gerMusic.Length;
+        List<int> l_g = new List<int>();
+        for (int i = 0; i < count_g; i++)
+        {
+            l_g.Add(i);
+        }
+
+        var r2 = new System.Random();
+        l_g.Shuffle(r2);
+
+
         int playIndex = 0;
         Debug.Log($"Music: {count} tracks, playing {l[playIndex]}");
 
-        while (true)
+        while (true && musicTheme == loopTheme)
         {
             var music = _music[l[playIndex]];
+            if (loopTheme == MusicTheme.Prussian)
+            {
+                music = _gerMusic[l_g[playIndex]];
+            }
             music.volume = 0.5f;
+            currentMusic = music;
             music.Play();
             yield return new WaitForSeconds(music.clip.length + 5f);
             playIndex++;
-            playIndex = playIndex % count;
+            playIndex = playIndex % (loopTheme == MusicTheme.Neutral ? count : count_g);
         }
     }
 
