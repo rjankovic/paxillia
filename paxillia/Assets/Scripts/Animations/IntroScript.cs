@@ -59,6 +59,12 @@ public class IntroScript : MonoBehaviour
     private void IntroDialog_End(Dialog dialog)
     {
         EventHub.Instance.OnDialogClose -= IntroDialog_End;
+        EventHub.Instance.OnBallBumOffPlayer += WaitForBounce;
+    }
+
+    private void WaitForBounce()
+    {
+        EventHub.Instance.OnBallBumOffPlayer -= WaitForBounce;
         movingRight = true;
         EventHub.Instance.OnBallBumOffPlayer += BounceOffToWindow;
     }
