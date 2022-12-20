@@ -16,6 +16,7 @@ public class MusicManager : MonoBehaviour
 
     [SerializeField] AudioSource _introMusic;
     [SerializeField] AudioSource[] _music;
+    [SerializeField] AudioSource[] _gerMusic;
 
     private void Awake()
     {
@@ -55,6 +56,11 @@ public class MusicManager : MonoBehaviour
         }
 
         
+    }
+
+    private bool IsGerScene(string sceneName)
+    {
+        return sceneName.Contains("Grandma") || sceneName.Contains("Kraut");
     }
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode arg1)
