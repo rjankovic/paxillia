@@ -324,6 +324,7 @@ public class GameManager : MonoBehaviour
         IntroAnimation,
         MainMenu,
         World,
+        End,
         NA
     }
 
@@ -363,6 +364,8 @@ public class GameManager : MonoBehaviour
                     return LevelEnum.Anim_Grandma;
                 case "Anim_Grandma2":
                     return LevelEnum.Anim_Grandma2;
+                case "End":
+                    return LevelEnum.End;
                 default:
                     return LevelEnum.NA;
             }
@@ -399,6 +402,8 @@ public class GameManager : MonoBehaviour
                 return "Anim_Grandma";
             case LevelEnum.Anim_Grandma2:
                 return "Anim_Grandma2";
+            case LevelEnum.End:
+                return "End";
             case LevelEnum.NA:
                 throw new KeyNotFoundException();
                 //break;

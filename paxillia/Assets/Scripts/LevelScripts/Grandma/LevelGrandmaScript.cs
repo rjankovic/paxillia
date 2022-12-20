@@ -22,6 +22,8 @@ public class LevelGrandmaScript : MonoBehaviour
         });
 
         EventHub.Instance.OnIngameDialogClose += OnIntroDialogPt1Close;
+
+        EventHub.Instance.OnBallLost += OnBallLost;
     }
 
     private void OnIntroDialogPt1Close(Dialog obj)
@@ -46,6 +48,33 @@ public class LevelGrandmaScript : MonoBehaviour
         EventHub.Instance.DialogUnpause();
         EventHub.Instance.InputEnabled();
         EventHub.Instance.OnDialogClose -= OnIntroDialogClose;
+    }
+
+    private void OnBallLost(GameObject obj)
+    {
+        if (GameManager.Instance.BallCount > 0)
+        {
+            return;
+        }
+
+        EventHub.Instance.InputEnabled(false);
+
+        DialogManager.Instance.StartDialog(new Dialog()
+        {
+            Messages = new List<Message>()
+                    {
+                        new Message() { Text = $"Out of balls... What will save you from grandma's speck now? No, no, that cannot be...!"},
+                    }
+        });
+
+        EventHub.Instance.OnDialogClose += (x) =>
+        {
+            //Time.timeScale = 1;
+            EventHub.Instance.InputEnabled(true);
+            GameManager.Instance.LoadGame();
+        };
+
+
     }
 
     // Update is called once per frame

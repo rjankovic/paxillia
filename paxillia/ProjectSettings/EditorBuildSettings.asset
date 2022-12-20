@@ -29,5 +29,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_Kraut.unity
     guid: fe233d6a02572d44c91c0a463845b1b4
+  - enabled: 1
+    path: Assets/Scenes/Level_Grandma.unity
+    guid: 86697f1bb383f7c4989ba12f46b1813b
+  - enabled: 1
+    path: Assets/Scenes/End.unity
+    guid: 4693ab6976cef1a429a539ea178c086c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 632dd454851c453458f5b7d5a287d69c, type: 2}

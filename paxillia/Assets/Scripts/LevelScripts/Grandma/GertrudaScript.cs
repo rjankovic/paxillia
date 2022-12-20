@@ -23,9 +23,25 @@ public class GertrudaScript : MonoBehaviour
         EventHub.Instance.OnInputEnabled += OnInputEnabled;
         EventHub.Instance.OnBallBumOffPlayer += OnBallBumOffPlayer;
         EventHub.Instance.OnGrandmaHealthUpdated += OnGrandmaHealthUpdated;
+        EventHub.Instance.OnBallLost += OnBallLost;
+        EventHub.Instance.OnLevelWon += OnLevelWon;
 
         movementDirection = 0;
         gun.active = false;
+    }
+
+    private void OnLevelWon()
+    {
+        shootingEnabled = false;
+        movementDirection = 0;
+    }
+
+    private void OnBallLost(GameObject obj)
+    {
+        if (GameManager.Instance.BallCount == 0)
+        {
+            shootingEnabled = false;
+        }
     }
 
     private void OnGrandmaHealthUpdated()
