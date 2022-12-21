@@ -7,36 +7,65 @@ using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {
+    [Serializable]
     public class SaveState
     {
-        public bool DogLevelCompleted { get; set; }
+        public bool DogLevelCompleted ;
 
-        public bool TreeLevelCompleted { get; set; }
+        public bool TreeLevelCompleted ;
 
-        public bool RoadblockRemoved { get; set; }
+        public bool RoadblockRemoved ;
         
-        public string Level { get; set; }
-        public float PositionX { get; set; }
-        public float PositionY { get; set; }
+        public string Level ;
+        public float PositionX ;
+        public float PositionY ;
 
-        public float BallPositionX { get; set; }
-        public float BallPositionY { get; set; }
-        public float BallVelocityX { get; set; }
-        public float BallVelocityY { get; set; }
+        public float BallPositionX ;
+        public float BallPositionY ;
+        public float BallVelocityX ;
+        public float BallVelocityY ;
 
-        public float WorldReturnPositionX { get; set; }
-        public float WorldReturnPositionY { get; set; }
+        public float WorldReturnPositionX ;
+        public float WorldReturnPositionY ;
 
-        public bool BallInGame { get; set; }
+        public bool BallInGame ;
 
-        public int BallCount { get; set; }
-        public List<GameObjectSaveState> SavedWorldItems { get; set; }
+        public int BallCount ;
+        public string SavedWorldItemsString = string.Empty;
+        public List<GameObjectSaveState> SavedWorldItems = new List<GameObjectSaveState>() ;
+        public void ItemsFromString()
+        {
+            var pts = SavedWorldItemsString.Split("|");
+            SavedWorldItems = new List<GameObjectSaveState>();
+            foreach (var pt in pts)
+            {
+                var spl = pt.Split(";");
+                if (spl[0] == "COL")
+                {
+                    SavedWorldItems.Add(new CollectibleGameObjectSaveSate() { ObjectName = spl[1] });
+                }
+                else {
+                    SavedWorldItems.Add(new CompletionGameObjectSaveSate() { ObjectName = spl[1] });
+                }
+            }
+        }
+
+        public void ItemsToString()
+        {
+            List<string> pts = new List<string>();
+            foreach (var it in SavedWorldItems)
+            {
+                pts.Add((it is CollectibleGameObjectSaveSate ? "COL" : "COM") + ";" + it.ObjectName);
+            }
+            SavedWorldItemsString = String.Join("|", pts);
+        }
 
     }
 
+    [Serializable]
     public abstract class GameObjectSaveState
-    { 
-        public string ObjectName { get; set; }
+    {
+        public string ObjectName;
 
         
     }

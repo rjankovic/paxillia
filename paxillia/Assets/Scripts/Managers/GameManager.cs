@@ -1,5 +1,5 @@
 using Assets.Scripts.Managers;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -143,6 +143,9 @@ public class GameManager : MonoBehaviour
     public bool GrassWiped { get; set; } = false;
 
     private SaveState _saveStateAfterLoad;
+
+    private SaveState _webSaveState = null;
+
     private bool _saveOnLevelStart = false;
     public bool SaveOnLevelStart { get => _saveOnLevelStart; set => _saveOnLevelStart = value; }
 
@@ -540,14 +543,26 @@ public class GameManager : MonoBehaviour
 
     public bool LoadGame()
     {
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            if (_webSaveState == null)
+            {
+                return false;
+            }
+            var state = _webSaveState;
+            ApplySaveState(state);
+            return true;
+        }
+
         if (!File.Exists(_savePath))
         {
             return false;
         }
-
         Debug.Log($"Loading from {_savePath}");
         var saveData = File.ReadAllText(_savePath, Encoding.UTF8);
-        var saveState = JsonConvert.DeserializeObject<SaveState>(saveData, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented });
+        //var saveState = JsonConvert.DeserializeObject<SaveState>(saveData, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented });
+        var saveState = JsonUtility.FromJson(saveData, typeof(SaveState)) as SaveState;
+        saveState.ItemsFromString();
         ApplySaveState(saveState);
 
         return true;
@@ -560,9 +575,19 @@ public class GameManager : MonoBehaviour
             return false;
         }
 
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            var state = GetSaveState();
+            _webSaveState = state;
+            return true;
+        }
+
         Debug.Log($"Saving to {_savePath}");
         var saveState = GetSaveState();
-        var saveData = JsonConvert.SerializeObject(saveState, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented });
+        saveState.ItemsToString();
+        var saveData = JsonUtility.ToJson(saveState);
+        Debug.Log("Saving: " + saveData);
+        //var saveData = JsonConvert.SerializeObject(saveState, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All, Formatting = Formatting.Indented });
         File.WriteAllText(_savePath, saveData, Encoding.UTF8);
 
         return true;

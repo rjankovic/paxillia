@@ -127,7 +127,7 @@ public class PlayerScript : MonoBehaviour
             return;
         }
 
-        TrySereBall();
+        //TrySereBall();
 
         //Debug.Log("Fire pressed");
     }
@@ -231,6 +231,11 @@ public class PlayerScript : MonoBehaviour
         }
 
         //Debug.Log("Look");
+
+        if (Mouse.current.leftButton.isPressed)
+        {
+            TrySereBall();
+        }
 
         //var deltaVector = inputValue.Get<Vector2>();
         var absoluteVector = Mouse.current.position.ReadValue();
